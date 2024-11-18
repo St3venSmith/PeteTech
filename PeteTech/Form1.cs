@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace PeteTech
 {
@@ -8,8 +10,9 @@ namespace PeteTech
         private HotkeyHelper hotkey2; // Helper for Pause
         private HotkeyHelper hotkey3; // helper for 27k
         private HotkeyHelper hotkey4; // helper for 3074
-        private HotkeyHelper hotkey5; // helper for fusion breach
+        private HotkeyHelper hotkey5; // helper for fusion breachz
         private Macros macros;
+        private GlobalKeyListener _keyListener;
 
 
 
@@ -19,6 +22,10 @@ namespace PeteTech
             this.KeyPreview = true;
             this.KeyPress += Form_KeyPress;
 
+            _keyListener = new GlobalKeyListener(this); // Pass the form instance
+            _keyListener.InstallGlobalKeyHook(); // Start listening for global key presses
+
+
             macros = new Macros();
 
             // Create instances of HotkeyHelper for each TextBox
@@ -27,15 +34,6 @@ namespace PeteTech
             hotkey3 = new HotkeyHelper(txt27HK, macros);
             hotkey4 = new HotkeyHelper(txt3074HK, macros);
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
-
-
-            // Attach the hotkeys to the form
-            hotkey1.AttachHotkey(this);
-            hotkey2.AttachHotkey(this);
-            hotkey3.AttachHotkey(this);
-            hotkey4.AttachHotkey(this);
-            hotkey5.AttachHotkey(this);
-
         }
 
         private void btn27K_Click(object sender, EventArgs e)
@@ -83,6 +81,13 @@ namespace PeteTech
 
         }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
+            base.OnFormClosed(e);
+        }
+
+
 
 
 
@@ -92,8 +97,8 @@ namespace PeteTech
 
         // Code for Other Methods
         // could make a class for this but i was on lunch
-       
 
-        
+
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +37,20 @@ namespace PeteTech
         public void txtFBHK()
         {
             MessageBox.Show("Hotkey for fuison pressed!");
+            SendKeys.Send("{ENTER}");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+            Thread.Sleep(1000);
+            SendKeys.Send("e");
+
         }
 
         public void SoloScript()

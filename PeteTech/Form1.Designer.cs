@@ -252,6 +252,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
@@ -259,7 +260,6 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "PeteTech";
-            TopMost = true;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();

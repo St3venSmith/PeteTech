@@ -1,58 +1,148 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PeteTech
 {
     public class HotkeyHelper
     {
-        private readonly System.Windows.Forms.TextBox _textBox; // The TextBox associated with this hotkey
-        private readonly object _targetClass;
+        private readonly TextBox _textBox; // Associated TextBox
+        private readonly object _targetClass; // Target class containing the methods
+        private IntPtr _keyboardHookID = IntPtr.Zero; // Hook ID
+        private HookProc _hookProc; // Hook callback delegate
 
-        public HotkeyHelper(System.Windows.Forms.TextBox textBox, object targetClass)
+        // Hook constants
+        private const int WH_KEYBOARD_LL = 13;
+        private const int WM_KEYDOWN = 0x0100;
+
+        // Import user32.dll functions
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowsHookEx(int hookType, HookProc callback, IntPtr hInstance, uint threadId);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnhookWindowsHookEx(IntPtr hook);
+
+        [DllImport("user32.dll")]
+        public static extern int CallNextHookEx(IntPtr hook, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        // Hook delegate
+        public delegate int HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        public HotkeyHelper(TextBox textBox, object targetClass)
         {
-            _textBox = textBox;
-            _targetClass = targetClass;
+            _textBox = textBox ?? throw new ArgumentNullException(nameof(textBox));
+            _targetClass = targetClass ?? throw new ArgumentNullException(nameof(targetClass));
+            _hookProc = KeyPressCallback;
+            InstallGlobalKeyHook();
         }
 
-        public void AttachHotkey(Form form)
+        private void InstallGlobalKeyHook()
         {
-            form.KeyPreview = true; // Ensure the form captures key presses (Important)
-            form.KeyPress += Form_KeyPress; // Attach the KeyPress event, I hate Squiggle
+            _keyboardHookID = SetWindowsHookEx(
+                WH_KEYBOARD_LL,
+                _hookProc,
+                GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName),
+                0);
         }
 
-        private void Form_KeyPress(object sender, KeyPressEventArgs e)
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int ToUnicode(uint wVirtKey,uint wScanCode,byte[] lpKeyState,[Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff,int cchBuff,uint wFlags);
+
+        private int KeyPressCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
+            if (nCode >= 0 && (int)wParam == WM_KEYDOWN) // Check if a key is being pressed
             {
-                char targetChar = _textBox.Text[0]; // Get the first character from the TextBox (shouldnt worry all macro hotkey boxs should have max character limit set to 1 anyway)
+                int vkCode = Marshal.ReadInt32(lParam); // Get the virtual key code from lParam
+                char pressedKey = MapVirtualKeyToChar((uint)vkCode); // Map VK to actual char
 
-                if (e.KeyChar == targetChar) // Compare the pressed key with the TextBox character
+                Debug.WriteLine($"Key Pressed: {pressedKey} (VK Code: {vkCode})");
+
+                if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
                 {
-                    InvokeMethodFromClass();
+                    char targetChar = _textBox.Text[0]; // First character of the TextBox text
+
+                    Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetChar}");
+
+                    if (pressedKey == targetChar) // Exact match
+                    {
+                        Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
+                        InvokeMethodFromClass();
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Key mismatch: {pressedKey} != {targetChar}");
+                    }
                 }
             }
+
+            return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
         }
-        // Dynamically invoke the method based on the TextBox's Name
+
+        // Helper to map VK code to a character
+        private char MapVirtualKeyToChar(uint vkCode)
+        {
+            StringBuilder buffer = new StringBuilder(2);
+            byte[] keyboardState = new byte[256];
+            GetKeyboardState(keyboardState);
+
+            int result = ToUnicode(
+                vkCode,
+                0,
+                keyboardState,
+                buffer,
+                buffer.Capacity,
+                0
+            );
+
+            if (result > 0)
+            {
+                return buffer[0]; // Return the first character in the buffer
+            }
+
+            return '\0'; // Return null char if no mapping found
+        }
+
+        // Import GetKeyboardState
+        [DllImport("user32.dll")]
+        private static extern bool GetKeyboardState(byte[] lpKeyState);
+
         private void InvokeMethodFromClass()
         {
-            string methodName = _textBox.Name; // Get the name of the TextBox (e.g., "txtPboxHotKey")
+            string methodName = _textBox.Name; // Use TextBox.Name to find the method in the target class
 
-            // Use reflection to find and invoke a method in the target class with the same name as the TextBox
-            MethodInfo method = _targetClass.GetType().GetMethod(methodName);
-            if (method != null)
+            try
             {
-                method.Invoke(_targetClass, null); // Invoke the method
+                MethodInfo method = _targetClass.GetType().GetMethod(methodName);
+
+                if (method != null)
+                {
+                    method.Invoke(_targetClass, null); // Invoke the method with no parameters
+                }
+                else
+                {
+                    MessageBox.Show($"Method '{methodName}' not found in class {_targetClass.GetType().Name}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show($"Method {methodName} not found in class {_targetClass.GetType().Name}"); // funny error big sad
+                MessageBox.Show($"Error invoking method '{methodName}': {ex.Message}");
+            }
+        }
+
+        public void UnhookKeyboardHook()
+        {
+            if (_keyboardHookID != IntPtr.Zero)
+            {
+                UnhookWindowsHookEx(_keyboardHookID);
+                _keyboardHookID = IntPtr.Zero;
             }
         }
     }
 }
+
