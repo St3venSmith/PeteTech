@@ -34,12 +34,21 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            tbFpsBar = new TrackBar();
+            btnSolo = new Button();
+            txtFBHK = new TextBox();
+            lblFusion = new Label();
+            txt27HK = new TextBox();
+            txt3074HK = new TextBox();
+            txtPauseHotKey = new TextBox();
+            label3 = new Label();
+            txtPboxHotKey = new TextBox();
+            label2 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
-            label2 = new Label();
-            textBox1 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
             tabPage2.SuspendLayout();
             SuspendLayout();
             // 
@@ -104,7 +113,15 @@
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(textBox1);
+            tabPage1.Controls.Add(tbFpsBar);
+            tabPage1.Controls.Add(btnSolo);
+            tabPage1.Controls.Add(txtFBHK);
+            tabPage1.Controls.Add(lblFusion);
+            tabPage1.Controls.Add(txt27HK);
+            tabPage1.Controls.Add(txt3074HK);
+            tabPage1.Controls.Add(txtPauseHotKey);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(txtPboxHotKey);
             tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(btn3074);
             tabPage1.Controls.Add(chkSounds);
@@ -118,6 +135,96 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tbFpsBar
+            // 
+            tbFpsBar.BackColor = SystemColors.AppWorkspace;
+            tbFpsBar.Location = new Point(6, 142);
+            tbFpsBar.Maximum = 255;
+            tbFpsBar.Minimum = 30;
+            tbFpsBar.Name = "tbFpsBar";
+            tbFpsBar.Size = new Size(354, 45);
+            tbFpsBar.TabIndex = 13;
+            tbFpsBar.Value = 30;
+            // 
+            // btnSolo
+            // 
+            btnSolo.Location = new Point(6, 224);
+            btnSolo.Name = "btnSolo";
+            btnSolo.Size = new Size(75, 23);
+            btnSolo.TabIndex = 12;
+            btnSolo.Text = "Solo Script";
+            btnSolo.UseVisualStyleBackColor = true;
+            btnSolo.Click += btnSolo_Click;
+            // 
+            // txtFBHK
+            // 
+            txtFBHK.Location = new Point(91, 193);
+            txtFBHK.MaxLength = 1;
+            txtFBHK.Name = "txtFBHK";
+            txtFBHK.Size = new Size(21, 23);
+            txtFBHK.TabIndex = 11;
+            // 
+            // lblFusion
+            // 
+            lblFusion.AutoSize = true;
+            lblFusion.Location = new Point(6, 196);
+            lblFusion.Name = "lblFusion";
+            lblFusion.Size = new Size(81, 15);
+            lblFusion.TabIndex = 10;
+            lblFusion.Text = "Fusion Breach";
+            // 
+            // txt27HK
+            // 
+            txt27HK.Location = new Point(91, 4);
+            txt27HK.MaxLength = 1;
+            txt27HK.Name = "txt27HK";
+            txt27HK.Size = new Size(23, 23);
+            txt27HK.TabIndex = 9;
+            // 
+            // txt3074HK
+            // 
+            txt3074HK.Location = new Point(91, 30);
+            txt3074HK.MaxLength = 1;
+            txt3074HK.Name = "txt3074HK";
+            txt3074HK.Size = new Size(23, 23);
+            txt3074HK.TabIndex = 8;
+            // 
+            // txtPauseHotKey
+            // 
+            txtPauseHotKey.Location = new Point(48, 89);
+            txtPauseHotKey.MaxLength = 1;
+            txtPauseHotKey.Name = "txtPauseHotKey";
+            txtPauseHotKey.Size = new Size(37, 23);
+            txtPauseHotKey.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(4, 92);
+            label3.Name = "label3";
+            label3.Size = new Size(38, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Pause";
+            // 
+            // txtPboxHotKey
+            // 
+            txtPboxHotKey.Location = new Point(48, 118);
+            txtPboxHotKey.MaxLength = 1;
+            txtPboxHotKey.Name = "txtPboxHotKey";
+            txtPboxHotKey.Size = new Size(37, 23);
+            txtPboxHotKey.TabIndex = 5;
+            txtPboxHotKey.TextChanged += textBox1_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(4, 121);
+            label2.Name = "label2";
+            label2.Size = new Size(34, 15);
+            label2.TabIndex = 4;
+            label2.Text = "Pbox";
+            label2.Click += label2_Click;
             // 
             // tabPage2
             // 
@@ -141,36 +248,22 @@
             label1.Text = "Pete and Delta";
             label1.Click += label1_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(8, 86);
-            label2.Name = "label2";
-            label2.Size = new Size(34, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Pbox";
-            label2.Click += label2_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(48, 83);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 5;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
+            KeyPreview = true;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "PeteTech";
+            TopMost = true;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tbFpsBar).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ResumeLayout(false);
@@ -187,6 +280,14 @@
         private TabPage tabPage2;
         private Label label1;
         private Label label2;
-        private TextBox textBox1;
+        private TextBox txtPboxHotKey;
+        private Label label3;
+        private TextBox txtPauseHotKey;
+        private TextBox txt27HK;
+        private TextBox txt3074HK;
+        private Button btnSolo;
+        private TextBox txtFBHK;
+        private Label lblFusion;
+        private TrackBar tbFpsBar;
     }
 }
