@@ -156,9 +156,9 @@ namespace PeteTech
             // Simulate N key down and hold for delayPBox
             KeyDown(VK_N);
             Thread.Sleep(delayPBox);  // Hold for the custom delay
-            SuspendProcess("BlackOps3.exe");  // Suspend the process
+            SuspendProcess("destiny2.exe");  // Suspend the process
             Thread.Sleep(1300);  // Sleep for the specified duration
-            ResumeProcess("BlackOps3.exe");  // Resume the process
+            ResumeProcess("destiny2.exe");  // Resume the process
 
             // Simulate N key up after delay
             KeyUp(VK_N);
