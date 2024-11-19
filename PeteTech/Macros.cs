@@ -64,12 +64,30 @@ namespace PeteTech
 
         public void txt27HK()
         {
-            MessageBox.Show("Hotkey for 27k pressed!");
+            if (RulesEnabled27K)  // Check if the rules are enabled
+            {
+                Disable27K();
+                RulesEnabled27K = false;
+            }
+            else
+            {
+                Enable27K();
+                RulesEnabled27K = true;
+            }
         }
 
         public void txt3074HK()
         {
-            MessageBox.Show("Hotkey for 3074 pressed!");
+            if (RulesEnabled3074)  // Check if the rules are enabled
+            {
+                Disable3074();
+                RulesEnabled3074 = false;
+            }
+            else
+            {
+                Enable3074();
+                RulesEnabled3074 = true;
+            }
         }
 
         public void txtFBHK()
