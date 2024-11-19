@@ -8,7 +8,7 @@ namespace PeteTech
 {
     internal class Macros
     {
-
+        public bool togglePause;
         public bool RulesEnabled3074 { get; set; } = false;
         public bool RulesEnabled27K { get; set; } = false;
 
@@ -59,8 +59,31 @@ namespace PeteTech
 
         public void txtPauseHotKey()
         {
-            MessageBox.Show("Hotkey for Pause pressed!");
+            if (togglePause = !togglePause) // Toggle the state
+            {
+                // Update the GUI to show "ON" status
+               
+
+                // Suspend the "destiny2.exe" process
+                SuspendProcess("destiny2.exe");
+
+                // Play the sound cue for activation
+                PlaySoundCue(true);
+            }
+            else
+            {
+                // Update the GUI to show "OFF" status
+               
+
+                // Resume the "destiny2.exe" process
+                ResumeProcess("destiny2.exe");
+
+                // Play the sound cue for deactivation
+                PlaySoundCue(false);
+            }
         }
+
+
 
         public void txt27HK()
         {
@@ -267,6 +290,13 @@ namespace PeteTech
             {
                 MessageBox.Show("Error running command: " + ex.Message);
             }
+        }
+
+        // Method to play the sound cues
+        private void PlaySoundCue(bool isOn)
+        {
+            Console.Beep(isOn ? 523 : 750, 100); // Higher tone for "ON"
+            Console.Beep(isOn ? 750 : 523, 100); // Lower tone for "OFF"
         }
     }
 }
