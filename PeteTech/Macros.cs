@@ -91,11 +91,13 @@ namespace PeteTech
             {
                 Disable27K();
                 RulesEnabled27K = false;
+                PlaySoundCue(true);
             }
             else
             {
                 Enable27K();
                 RulesEnabled27K = true;
+                PlaySoundCue(false);
             }
         }
 
@@ -105,11 +107,13 @@ namespace PeteTech
             {
                 Disable3074();
                 RulesEnabled3074 = false;
+                PlaySoundCue(true);
             }
             else
             {
                 Enable3074();
                 RulesEnabled3074 = true;
+                PlaySoundCue(false);
             }
         }
 
