@@ -8,6 +8,10 @@ namespace PeteTech
 {
     internal class Macros
     {
+
+        public bool RulesEnabled3074 { get; set; } = false;
+        public bool RulesEnabled27K { get; set; } = false;
+
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
@@ -22,9 +26,35 @@ namespace PeteTech
         const byte VK_ENTER = 0x0D;             // Virtual key code for Enter
         const byte VK_P = 0x50;                 // Virtual key code for "P"
 
+        // Importing necessary Windows API functions for process manipulation
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SuspendThread(IntPtr hThread);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool ResumeThread(IntPtr hThread);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenThread(int dwDesiredAccess, bool bInheritHandle, int dwThreadId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr hObject);
+
+        // Constants for OpenProcess and other API calls
+        const int PROCESS_SUSPEND_RESUME = 0x0800;
+        const int PROCESS_QUERY_INFORMATION = 0x0400;
+        const int PROCESS_VM_READ = 0x0010;
+        const int PROCESS_VM_WRITE = 0x0020;
+        const int PROCESS_TERMINATE = 0x0001;
+
+        // Thread suspend/resume constants
+        const int THREAD_SUSPEND_RESUME = 0x0002;
+
         public void txtPboxHotKey()
         {
-            MessageBox.Show("Hotkey for Pbox pressed!");
+            txtPboxMacro(13000);
         }
 
         public void txtPauseHotKey()
@@ -85,7 +115,7 @@ namespace PeteTech
         }
 
         // Renamed method to txtPboxMacro
-        public void txtPboxMacro()
+        public void txtPboxMacro(int delayPBox)
         {
             // Simulate Enter key down and up
             KeyDown(VK_ENTER);
@@ -107,10 +137,10 @@ namespace PeteTech
 
             // Simulate N key down and hold for delayPBox
             KeyDown(VK_N);
-            Thread.Sleep(1300);  // Hold for the custom delay
-            SuspendProcess("BlackOps3.exe");
+            Thread.Sleep(delayPBox);  // Hold for the custom delay
+            SuspendProcess("BlackOps3.exe");  // Suspend the process
             Thread.Sleep(1300);  // Sleep for the specified duration
-            ResumeProcess("BlackOps3.exe");
+            ResumeProcess("BlackOps3.exe");  // Resume the process
 
             // Simulate N key up after delay
             KeyUp(VK_N);
@@ -123,34 +153,102 @@ namespace PeteTech
         }
 
         // Method to suspend a process
-        private void SuspendProcess(string processName)
+        public void SuspendProcess(string processName)
         {
-            Process process = Process.GetProcessesByName(processName).FirstOrDefault();
-            if (process != null)
+            var processes = Process.GetProcessesByName(processName);
+            if (processes.Length > 0)
             {
-                IntPtr handle = process.Handle;
-                // Suspend the process (this may require administrator privileges)
-                NtSuspendProcess(handle);
+                var process = processes[0];
+                IntPtr processHandle = OpenProcess(PROCESS_SUSPEND_RESUME | PROCESS_QUERY_INFORMATION, false, process.Id);
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Suspend all threads of the process
+                    foreach (ProcessThread thread in process.Threads)
+                    {
+                        IntPtr threadHandle = OpenThread(THREAD_SUSPEND_RESUME, false, thread.Id);
+                        if (threadHandle != IntPtr.Zero)
+                        {
+                            SuspendThread(threadHandle);
+                            CloseHandle(threadHandle);
+                        }
+                    }
+                    CloseHandle(processHandle);
+                }
             }
         }
 
         // Method to resume a suspended process
-        private void ResumeProcess(string processName)
+        public void ResumeProcess(string processName)
         {
-            Process process = Process.GetProcessesByName(processName).FirstOrDefault();
-            if (process != null)
+            var processes = Process.GetProcessesByName(processName);
+            if (processes.Length > 0)
             {
-                IntPtr handle = process.Handle;
-                // Resume the process (this may require administrator privileges)
-                NtResumeProcess(handle);
+                var process = processes[0];
+                IntPtr processHandle = OpenProcess(PROCESS_SUSPEND_RESUME | PROCESS_QUERY_INFORMATION, false, process.Id);
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Resume all threads of the process
+                    foreach (ProcessThread thread in process.Threads)
+                    {
+                        IntPtr threadHandle = OpenThread(THREAD_SUSPEND_RESUME, false, thread.Id);
+                        if (threadHandle != IntPtr.Zero)
+                        {
+                            ResumeThread(threadHandle);
+                            CloseHandle(threadHandle);
+                        }
+                    }
+                    CloseHandle(processHandle);
+                }
             }
         }
+        public void Enable3074()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+        }
 
-        // Importing suspend and resume process functions (Advanced, require P/Invoke)
-        [DllImport("ntdll.dll")]
-        public static extern int NtSuspendProcess(IntPtr processHandle);
+        public void Disable3074()
+        {
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
+        }
 
-        [DllImport("ntdll.dll")]
-        public static extern int NtResumeProcess(IntPtr processHandle);
+        public void Enable27K()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+        }
+
+        // Method to disable firewall rules for 27k
+        public void Disable27K()
+        {
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-tcp-out\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-out\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-tcp-in\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-in\"");
+        }
+
+        private void RunCommand(string command)
+        {
+            try
+            {
+                ProcessStartInfo pro = new ProcessStartInfo("cmd.exe", "/c " + command);
+                pro.RedirectStandardOutput = true;
+                pro.UseShellExecute = false;
+                pro.CreateNoWindow = true;
+                Process process = Process.Start(pro);
+                process.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error running command: " + ex.Message);
+            }
+        }
     }
 }

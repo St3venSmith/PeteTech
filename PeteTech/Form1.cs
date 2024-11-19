@@ -38,12 +38,30 @@ namespace PeteTech
 
         private void btn27K_Click(object sender, EventArgs e)
         {
-            macros.txt27HK();
+            if (macros.RulesEnabled27K)  // Check if the rules are enabled
+            {
+                macros.Disable27K();
+                macros.RulesEnabled27K = false;
+            }
+            else
+            {
+                macros.Enable27K();
+                macros.RulesEnabled27K = true;
+            }
         }
 
         private void btn3074_Click(object sender, EventArgs e)
         {
-            macros.txt3074HK();
+            if (macros.RulesEnabled3074)  // Check if the rules are enabled
+            {
+                macros.Disable3074();
+                macros.RulesEnabled3074 = false;
+            }
+            else
+            {
+                macros.Enable3074();
+                macros.RulesEnabled3074 = true;
+            }
         }
         private void btnSolo_Click(object sender, EventArgs e)
         {
@@ -84,6 +102,8 @@ namespace PeteTech
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
+            macros.Disable27K();
+            macros.Disable3074();
             base.OnFormClosed(e);
         }
 
