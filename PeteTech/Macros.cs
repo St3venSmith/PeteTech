@@ -7,11 +7,14 @@ namespace PeteTech
 {
     internal class Macros : ISuspend
     {
-       
+
+        
 
         public bool isSoundOn = false;
 
         public bool isBufferOn = false;
+
+        public int pBoxDelay;
 
         public bool togglePause;
         public bool RulesEnabled3074 { get; set; } = false;
@@ -59,6 +62,9 @@ namespace PeteTech
 
         // Thread suspend/resume constants
         const int THREAD_SUSPEND_RESUME = 0x0002;
+
+        // Constructor to initialize with the form instance
+        
 
         public void txtPboxHotKey()
         {
@@ -294,7 +300,7 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
         }
 
-        public void Enable3074KIN()
+        public void Enable3074IN()
         {
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");

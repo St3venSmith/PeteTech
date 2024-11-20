@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PeteTech.GlobalKeyListener" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQEAAADAIAAQAAAAAACBAAAhAgBCA=</HashCode>
+      <FileName>GlobalKeyboardHook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PeteTech.HotkeyHelper" Collapsed="true">
+    <Position X="7" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIAAAAAAAAAAAQEAAADAIAAUAAAAgAgBAQAhAgACA=</HashCode>
+      <FileName>HotkeyHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProcessManagement.ISuspend" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAIAAAICAAAAAAADBAAgAAAAAAAAs=</HashCode>
+      <FileName>ISuspend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PeteTech.Macros" Collapsed="true">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQEEEAACAgVDlgCBQIgAACAAAgAKAAAGgyBAIDCDAA0=</HashCode>
+      <FileName>Macros.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PeteTech.Program" Collapsed="true">
+    <Position X="2" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PeteTech.Form1" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ERCAEiYAgCAkghAAQACBAQjSgAAAAArkBQIAQAABBBA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PeteTech.ILimiter" Collapsed="true">
+    <Position X="1.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ILimiter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

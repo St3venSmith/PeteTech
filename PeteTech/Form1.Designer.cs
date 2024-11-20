@@ -51,6 +51,8 @@
             label2 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
+            label5 = new Label();
+            label6 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -118,6 +120,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(label6);
+            tabPage1.Controls.Add(label5);
             tabPage1.Controls.Add(cbo3074);
             tabPage1.Controls.Add(cmbo27k);
             tabPage1.Controls.Add(lblFPS);
@@ -297,6 +301,24 @@
             label1.Text = "Pete and Delta";
             label1.Click += label1_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(192, 11);
+            label5.Name = "label5";
+            label5.Size = new Size(38, 15);
+            label5.TabIndex = 18;
+            label5.Text = "label5";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(192, 38);
+            label6.Name = "label6";
+            label6.Size = new Size(38, 15);
+            label6.TabIndex = 19;
+            label6.Text = "label6";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -343,5 +365,7 @@
         private Label lblFPS;
         private ComboBox cbo3074;
         private ComboBox cmbo27k;
+        private Label label6;
+        private Label label5;
     }
 }

@@ -47,7 +47,14 @@ namespace PeteTech
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
         }
-       
+
+        // Expose FPS Bar value as a property
+        public int FpsBarValue
+        {
+            get => tbFpsBar.Value; // Get the current value
+            set => tbFpsBar.Value = value; // Set a new value
+        }
+
 
         private void btn27K_Click(object sender, EventArgs e)
         {
@@ -64,7 +71,7 @@ namespace PeteTech
                     macros.RulesEnabled27K = true;
                 }
             }
-            else if(cmbo27k.Text == "in")
+            else if (cmbo27k.Text == "in")
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
@@ -76,21 +83,64 @@ namespace PeteTech
                     macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
                 }
+
             }
-            
+            else if (cmbo27k.Text == "out")
+            {
+                if (macros.RulesEnabled27K)  // Check if the rules are enabled
+                {
+                    macros.Disable27K();
+                    macros.RulesEnabled27K = false;
+                }
+                else
+                {
+                    macros.Enable27KOUT();
+                    macros.RulesEnabled27K = true;
+                }
+            }
+
         }
 
         private void btn3074_Click(object sender, EventArgs e)
         {
-            if (macros.RulesEnabled3074)  // Check if the rules are enabled
+            if (cbo3074.Text == "in/out")
             {
-                macros.Disable3074();
-                macros.RulesEnabled3074 = false;
+                if (macros.RulesEnabled3074)  // Check if the rules are enabled
+                {
+                    macros.Disable3074();
+                    macros.RulesEnabled3074 = false;
+                }
+                else
+                {
+                    macros.Enable3074();
+                    macros.RulesEnabled3074 = true;
+                }
             }
-            else
+            else if (cbo3074.Text == "in")
             {
-                macros.Enable3074();
-                macros.RulesEnabled3074 = true;
+                if (macros.RulesEnabled3074)  // Check if the rules are enabled
+                {
+                    macros.Disable3074();
+                    macros.RulesEnabled3074 = false;
+                }
+                else
+                {
+                    macros.Enable3074IN();
+                    macros.RulesEnabled3074 = true;
+                }
+            }
+            else if (cbo3074.Text == "out")
+            {
+                if (macros.RulesEnabled3074)  // Check if the rules are enabled
+                {
+                    macros.Disable3074();
+                    macros.RulesEnabled3074 = false;
+                }
+                else
+                {
+                    macros.Enable3074OUT();
+                    macros.RulesEnabled3074 = true;
+                }
             }
         }
         private void btnSolo_Click(object sender, EventArgs e)
@@ -163,9 +213,10 @@ namespace PeteTech
             // Update label or use the value
             lblFPS.Text = $"Value: {tbFpsBar.Value}";
             delayPBox = 244 + (int)Math.Floor((tbFpsBar.Value * 50) / 220.0);
+            
 
             // Pass the delayPBox to macros
-           
+
         }
 
 
