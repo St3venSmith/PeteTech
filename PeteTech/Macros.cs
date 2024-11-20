@@ -1,13 +1,18 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Threading;
+﻿using ProcessManagement;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security.Authentication.ExtendedProtection;
 
 namespace PeteTech
 {
-    internal class Macros
+    internal class Macros : ISuspend
     {
+       
+
+        public bool isSoundOn = false;
+
+        public bool isBufferOn = false;
+
         public bool togglePause;
         public bool RulesEnabled3074 { get; set; } = false;
         public bool RulesEnabled27K { get; set; } = false;
@@ -54,7 +59,7 @@ namespace PeteTech
 
         public void txtPboxHotKey()
         {
-            txtPboxMacro(13000);
+            txtPboxMacro(120);
         }
 
         public void txtPauseHotKey()
@@ -62,24 +67,31 @@ namespace PeteTech
             if (togglePause = !togglePause) // Toggle the state
             {
                 // Update the GUI to show "ON" status
-               
+
 
                 // Suspend the "destiny2.exe" process
-                SuspendProcess("destiny2.exe");
+                Process_Suspend("focused");
 
                 // Play the sound cue for activation
-                PlaySoundCue(true);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(true);
+                }
+               
             }
             else
             {
                 // Update the GUI to show "OFF" status
-               
+
 
                 // Resume the "destiny2.exe" process
-                ResumeProcess("destiny2.exe");
+                Process_Resume("focused");
 
                 // Play the sound cue for deactivation
-                PlaySoundCue(false);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(false);
+                }
             }
         }
 
@@ -91,13 +103,19 @@ namespace PeteTech
             {
                 Disable27K();
                 RulesEnabled27K = false;
-                PlaySoundCue(true);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(false);
+                }
             }
             else
             {
                 Enable27K();
                 RulesEnabled27K = true;
-                PlaySoundCue(false);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(true);
+                }
             }
         }
 
@@ -107,13 +125,20 @@ namespace PeteTech
             {
                 Disable3074();
                 RulesEnabled3074 = false;
-                PlaySoundCue(true);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(false);
+                }
             }
             else
             {
                 Enable3074();
                 RulesEnabled3074 = true;
-                PlaySoundCue(false);
+                if (isSoundOn)
+                {
+                    PlaySoundCue(true);
+                }
+               
             }
         }
 
@@ -183,9 +208,9 @@ namespace PeteTech
             // Simulate N key down and hold for delayPBox
             KeyDown(VK_N);
             Thread.Sleep(delayPBox);  // Hold for the custom delay
-            SuspendProcess("destiny2.exe");  // Suspend the process
+            Process_Suspend("focused");  // Suspend the process
             Thread.Sleep(1300);  // Sleep for the specified duration
-            ResumeProcess("destiny2.exe");  // Resume the process
+            Process_Resume("focused");  // Resume the process
 
             // Simulate N key up after delay
             KeyUp(VK_N);

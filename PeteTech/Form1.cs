@@ -1,11 +1,15 @@
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
 namespace PeteTech
 {
     public partial class Form1 : Form
     {
+        public bool soundOn;
+        public int delayPBox;
+
+
+
+        
+
+
         private HotkeyHelper hotkey1; // Helper for Pbox
         private HotkeyHelper hotkey2; // Helper for Pause
         private HotkeyHelper hotkey3; // helper for 27k
@@ -34,7 +38,13 @@ namespace PeteTech
             hotkey3 = new HotkeyHelper(txt27HK, macros);
             hotkey4 = new HotkeyHelper(txt3074HK, macros);
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
+
+
+            // Attach Scroll event handler
+            tbFpsBar.Scroll += tbFpsBar_Scroll;
+            lblFPS.Text = $"Value: {tbFpsBar.Value}";
         }
+       
 
         private void btn27K_Click(object sender, EventArgs e)
         {
@@ -70,12 +80,28 @@ namespace PeteTech
 
         private void chkAutoBuffer_CheckedChanged(object sender, EventArgs e)
         {
+            if (this.chkSounds.Checked == true)
+            {
+                macros.isBufferOn = true;
 
+            }
+            else
+            {
+                macros.isBufferOn = false;
+            }
         }
 
         private void chkSounds_CheckedChanged(object sender, EventArgs e)
         {
+            if (this.chkSounds.Checked == true)
+            {
+                macros.isSoundOn = true;
 
+            }
+            else
+            {
+                macros.isSoundOn = false;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -105,6 +131,21 @@ namespace PeteTech
             macros.Disable27K();
             macros.Disable3074();
             base.OnFormClosed(e);
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbFpsBar_Scroll(object sender, EventArgs e)
+        {
+            // Update label or use the value
+            lblFPS.Text = $"Value: {tbFpsBar.Value}";
+            delayPBox = 244 + (int)Math.Floor((tbFpsBar.Value * 50) / 220.0);
+
+            // Pass the delayPBox to macros
+           
         }
 
 

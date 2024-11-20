@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 
 namespace PeteTech
 {
@@ -52,7 +50,7 @@ namespace PeteTech
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int ToUnicode(uint wVirtKey,uint wScanCode,byte[] lpKeyState,[Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff,int cchBuff,uint wFlags);
+        private static extern int ToUnicode(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags);
 
         private int KeyPressCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {

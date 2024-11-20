@@ -47,6 +47,8 @@
             label2 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
+            label4 = new Label();
+            lblFPS = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -114,6 +116,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(lblFPS);
+            tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(tbFpsBar);
             tabPage1.Controls.Add(btnSolo);
             tabPage1.Controls.Add(txtFBHK);
@@ -147,6 +151,7 @@
             tbFpsBar.Size = new Size(354, 45);
             tbFpsBar.TabIndex = 13;
             tbFpsBar.Value = 30;
+            tbFpsBar.Scroll += tbFpsBar_Scroll;
             // 
             // btnSolo
             // 
@@ -249,11 +254,30 @@
             label1.Text = "Pete and Delta";
             label1.Click += label1_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(366, 142);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 15);
+            label4.TabIndex = 14;
+            label4.Text = "FPS:";
+            label4.Click += label4_Click;
+            // 
+            // lblFPS
+            // 
+            lblFPS.AutoSize = true;
+            lblFPS.Location = new Point(401, 142);
+            lblFPS.Name = "lblFPS";
+            lblFPS.Size = new Size(38, 15);
+            lblFPS.TabIndex = 15;
+            lblFPS.Text = "label5";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoValidate = AutoValidate.EnablePreventFocusChange;
+            AutoValidate = AutoValidate.Disable;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
@@ -291,5 +315,7 @@
         private TextBox txtFBHK;
         private Label lblFusion;
         private TrackBar tbFpsBar;
+        private Label label4;
+        private Label lblFPS;
     }
 }
