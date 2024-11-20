@@ -35,6 +35,8 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl3074Status = new Label();
+            lbl27Status = new Label();
             cbo3074 = new ComboBox();
             cmbo27k = new ComboBox();
             lblFPS = new Label();
@@ -49,13 +51,15 @@
             label3 = new Label();
             txtPboxHotKey = new TextBox();
             label2 = new Label();
+            tabPage3 = new TabPage();
+            txtPboxMessage = new TextBox();
+            label5 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
-            label5 = new Label();
-            label6 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
+            tabPage3.SuspendLayout();
             tabPage2.SuspendLayout();
             SuspendLayout();
             // 
@@ -108,6 +112,7 @@
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
@@ -120,8 +125,8 @@
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(label6);
-            tabPage1.Controls.Add(label5);
+            tabPage1.Controls.Add(lbl3074Status);
+            tabPage1.Controls.Add(lbl27Status);
             tabPage1.Controls.Add(cbo3074);
             tabPage1.Controls.Add(cmbo27k);
             tabPage1.Controls.Add(lblFPS);
@@ -149,6 +154,24 @@
             tabPage1.Text = "Home";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // lbl3074Status
+            // 
+            lbl3074Status.AutoSize = true;
+            lbl3074Status.Location = new Point(192, 38);
+            lbl3074Status.Name = "lbl3074Status";
+            lbl3074Status.Size = new Size(38, 15);
+            lbl3074Status.TabIndex = 19;
+            lbl3074Status.Text = "label6";
+            // 
+            // lbl27Status
+            // 
+            lbl27Status.AutoSize = true;
+            lbl27Status.Location = new Point(192, 11);
+            lbl27Status.Name = "lbl27Status";
+            lbl27Status.Size = new Size(38, 15);
+            lbl27Status.TabIndex = 18;
+            lbl27Status.Text = "label5";
+            // 
             // cbo3074
             // 
             cbo3074.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
@@ -158,6 +181,7 @@
             cbo3074.Name = "cbo3074";
             cbo3074.Size = new Size(63, 23);
             cbo3074.TabIndex = 17;
+            cbo3074.SelectedIndexChanged += cbo3074_SelectedIndexChanged;
             // 
             // cmbo27k
             // 
@@ -168,6 +192,7 @@
             cmbo27k.Name = "cmbo27k";
             cmbo27k.Size = new Size(63, 23);
             cmbo27k.TabIndex = 16;
+            cmbo27k.SelectedIndexChanged += cmbo27k_SelectedIndexChanged;
             // 
             // lblFPS
             // 
@@ -279,6 +304,34 @@
             label2.Text = "Pbox";
             label2.Click += label2_Click;
             // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(txtPboxMessage);
+            tabPage3.Controls.Add(label5);
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new Size(692, 310);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Settings";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // txtPboxMessage
+            // 
+            txtPboxMessage.Location = new Point(97, 6);
+            txtPboxMessage.Name = "txtPboxMessage";
+            txtPboxMessage.Size = new Size(587, 23);
+            txtPboxMessage.TabIndex = 1;
+            txtPboxMessage.TextChanged += txtPboxMessage_TextChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(8, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(83, 15);
+            label5.TabIndex = 0;
+            label5.Text = "Pbox Message";
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(label1);
@@ -301,24 +354,6 @@
             label1.Text = "Pete and Delta";
             label1.Click += label1_Click;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(192, 11);
-            label5.Name = "label5";
-            label5.Size = new Size(38, 15);
-            label5.TabIndex = 18;
-            label5.Text = "label5";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(192, 38);
-            label6.Name = "label6";
-            label6.Size = new Size(38, 15);
-            label6.TabIndex = 19;
-            label6.Text = "label6";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -336,6 +371,8 @@
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).EndInit();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ResumeLayout(false);
@@ -365,7 +402,10 @@
         private Label lblFPS;
         private ComboBox cbo3074;
         private ComboBox cmbo27k;
-        private Label label6;
+        private Label lbl3074Status;
+        private Label lbl27Status;
+        private TabPage tabPage3;
         private Label label5;
+        private TextBox txtPboxMessage;
     }
 }

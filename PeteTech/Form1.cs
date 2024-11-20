@@ -4,10 +4,9 @@ namespace PeteTech
     {
         public bool soundOn;
         public int delayPBox;
+        public bool bufferON;
+        public bool buffer;
 
-
-
-        
 
 
         private HotkeyHelper hotkey1; // Helper for Pbox
@@ -31,6 +30,7 @@ namespace PeteTech
 
 
             macros = new Macros();
+
 
             // Create instances of HotkeyHelper for each TextBox
             hotkey1 = new HotkeyHelper(txtPboxHotKey, macros);
@@ -64,11 +64,19 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
                 }
                 else
                 {
                     macros.Enable27K();
                     macros.RulesEnabled27K = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
             }
             else if (cmbo27k.Text == "in")
@@ -77,11 +85,19 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
                 }
                 else
                 {
                     macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
 
             }
@@ -91,11 +107,19 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
                 }
                 else
                 {
                     macros.Enable27KOUT();
                     macros.RulesEnabled27K = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
             }
 
@@ -109,11 +133,19 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
                 }
                 else
                 {
                     macros.Enable3074();
                     macros.RulesEnabled3074 = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
             }
             else if (cbo3074.Text == "in")
@@ -122,11 +154,20 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
+
                 }
                 else
                 {
                     macros.Enable3074IN();
                     macros.RulesEnabled3074 = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
             }
             else if (cbo3074.Text == "out")
@@ -135,11 +176,20 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(false);
+                    }
+
                 }
                 else
                 {
                     macros.Enable3074OUT();
                     macros.RulesEnabled3074 = true;
+                    if (macros.isSoundOn)
+                    {
+                        macros.PlaySoundCue(true);
+                    }
                 }
             }
         }
@@ -150,7 +200,7 @@ namespace PeteTech
 
         private void chkAutoBuffer_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chkSounds.Checked == true)
+            if (this.chkAutoBuffer.Checked == true)
             {
                 macros.isBufferOn = true;
 
@@ -213,10 +263,28 @@ namespace PeteTech
             // Update label or use the value
             lblFPS.Text = $"Value: {tbFpsBar.Value}";
             delayPBox = 244 + (int)Math.Floor((tbFpsBar.Value * 50) / 220.0);
-            
+            macros.UpdateFps(tbFpsBar.Value);
+
+
 
             // Pass the delayPBox to macros
 
+        }
+
+        private void txtPboxMessage_TextChanged(object sender, EventArgs e)
+        {
+            macros.UpdatePboxText(txtPboxMessage.Text);
+        }
+
+        private void cmbo27k_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            macros.kStatus = cmbo27k.Text;
+
+        }
+
+        private void cbo3074_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            macros.tStatus = cbo3074.Text;
         }
 
 

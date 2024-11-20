@@ -1,4 +1,5 @@
-﻿using ProcessManagement;
+﻿using PeteTech; // If both classes are in the same namespace, this is not needed.
+using ProcessManagement;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Authentication.ExtendedProtection;
@@ -7,12 +8,21 @@ namespace PeteTech
 {
     internal class Macros : ISuspend
     {
-
         
+
+        public int FpsValue { get; set; }
+
+        public string Pmessage;
+
+        public string kStatus { get; set; }
+
+        public string tStatus { get; set; }
 
         public bool isSoundOn = false;
 
         public bool isBufferOn = false;
+
+        bool buff;
 
         public int pBoxDelay;
 
@@ -21,7 +31,7 @@ namespace PeteTech
         public bool RulesEnabled27K { get; set; } = false;
 
         
-
+        
 
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
@@ -30,12 +40,7 @@ namespace PeteTech
         // Constants for keybd_event function
         const uint KEYEVENTF_KEYDOWN = 0x0000; // Key down flag
         const uint KEYEVENTF_KEYUP = 0x0002;   // Key up flag
-        const byte VK_Q = 0x51;                 // Virtual key code for "Q"
-        const byte VK_N = 0x4E;                 // Virtual key code for "N"
-        const byte VK_A = 0x41;                 // Virtual key code for "A"
-        const byte VK_SPACE = 0x20;             // Virtual key code for Spacebar
-        const byte VK_ENTER = 0x0D;             // Virtual key code for Enter
-        const byte VK_P = 0x50;                 // Virtual key code for "P"
+        
 
         // Importing necessary Windows API functions for process manipulation
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -53,22 +58,78 @@ namespace PeteTech
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        // Constants for OpenProcess and other API calls
-        const int PROCESS_SUSPEND_RESUME = 0x0800;
-        const int PROCESS_QUERY_INFORMATION = 0x0400;
-        const int PROCESS_VM_READ = 0x0010;
-        const int PROCESS_VM_WRITE = 0x0020;
-        const int PROCESS_TERMINATE = 0x0001;
-
-        // Thread suspend/resume constants
-        const int THREAD_SUSPEND_RESUME = 0x0002;
-
-        // Constructor to initialize with the form instance
         
 
-        public void txtPboxHotKey()
+        // Helper method to simulate key down
+        private void KeyDown(byte key)
         {
-            txtPboxMacro(120);
+            keybd_event(key, 0, KEYEVENTF_KEYDOWN, 0);
+        }
+
+        // Helper method to simulate key up
+        private void KeyUp(byte key)
+        {
+            keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
+        }
+
+        // Constructor to initialize with the form instance
+
+        public void UpdateFps(int value)
+        {
+            FpsValue = 244 + (int)Math.Floor((value * 50) / 220.0); ;
+            // Perform operations with FpsValue
+            Console.WriteLine($"FPS Value Updated: {FpsValue}");
+        }
+        public void UpdatePboxText(string message)
+        {
+            Pmessage = message;
+        }
+
+        
+        public async void txtPboxHotKey()
+        {
+            // Sequence logic implementation
+            
+            // Send {Enter down}
+            KeyDown(VKC.VK_ENTER);
+            await Task.Delay(10);
+
+            // Send {Enter up}
+            KeyUp(VKC.VK_ENTER);
+            await Task.Delay(10);
+
+
+            SendKeys.Send(Pmessage);
+            KeyDown(VKC.VK_P);
+            await Task.Delay(10);
+            KeyUp(VKC.VK_P);
+            await Task.Delay(10);
+
+            // Send {Enter down}
+            KeyDown(VKC.VK_ENTER);
+            await Task.Delay(10);
+
+            // Send {Enter up}
+            KeyUp(VKC.VK_ENTER);
+            await Task.Delay(10);
+            
+            // Send {N down}
+            KeyDown(VKC.VK_N);
+            await Task.Delay(FpsValue);
+
+            // Suspend the process
+            Process_Suspend("focused");
+            await Task.Delay(1300);
+
+            // Resume the process
+            Process_Resume("focused");
+
+            // Send {N down}
+            KeyDown(VKC.VK_N);
+            await Task.Delay(325);
+
+            // Send {N up}
+            KeyUp(VKC.VK_N);
         }
 
         public void txtPauseHotKey()
@@ -108,74 +169,168 @@ namespace PeteTech
 
         public void txt27HK()
         {
-            
-            if (RulesEnabled27K)  // Check if the rules are enabled
+            if (kStatus == "in/out")
             {
-                Disable27K();
-                RulesEnabled27K = false;
-                if (isSoundOn)
+                if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    PlaySoundCue(false);
+                    Disable27K();
+                    RulesEnabled27K = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
+                }
+                else
+                {
+                    Enable27K();
+                    RulesEnabled27K = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
                 }
             }
-            else
+            else if (kStatus == "in")
             {
-                Enable27K();
-                RulesEnabled27K = true;
-                if (isSoundOn)
+                if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    PlaySoundCue(true);
+                    Disable27K();
+                    RulesEnabled27K = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
                 }
+                else
+                {
+                    Enable27KIN();
+                    RulesEnabled27K = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
+                }
+
+            }
+            else if (kStatus == "out")
+            {
+                if (RulesEnabled27K)  // Check if the rules are enabled
+                {
+                    Disable27K();
+                    RulesEnabled27K = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
+                }
+                else
+                {
+                    Enable27KOUT();
+                    RulesEnabled27K = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
+                }
+
             }
         }
 
         public void txt3074HK()
         {
-            
-            if (RulesEnabled3074)  // Check if the rules are enabled
+            if (tStatus == "in/out")
             {
-                Disable3074();
-                RulesEnabled3074 = false;
-                if (isSoundOn)
+                if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    PlaySoundCue(false);
+                    Disable3074();
+                    RulesEnabled3074 = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
+                }
+                else
+                {
+                    Enable3074();
+                    RulesEnabled3074 = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
                 }
             }
-            else
+            else if (tStatus == "in")
             {
-                Enable3074();
-                RulesEnabled3074 = true;
-                if (isSoundOn)
+                if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    PlaySoundCue(true);
+                    Disable3074();
+                    RulesEnabled3074 = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
+
                 }
-               
+                else
+                {
+                    Enable3074IN();
+                    RulesEnabled3074 = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
+                }
+            }
+            else if (tStatus == "out")
+            {
+                if (RulesEnabled3074)  // Check if the rules are enabled
+                {
+                    Disable3074();
+                    RulesEnabled3074 = false;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(false);
+                    }
+
+                }
+                else
+                {
+                    Enable3074OUT();
+                    RulesEnabled3074 = true;
+                    if (isSoundOn)
+                    {
+                        PlaySoundCue(true);
+                    }
+                }
             }
         }
 
-        public void txtFBHK()
+        public async void txtFBHK()
         {
             // Press and hold "Q"
-            KeyDown(VK_Q);
-            Thread.Sleep(200);
-            KeyUp(VK_Q);
+            KeyDown(VKC.VK_Q);
+            await Task.Delay(200);
+            KeyUp(VKC.VK_Q);
 
             // Press "N" and wait
-            KeyDown(VK_N);
-            Thread.Sleep(450);
-            KeyUp(VK_N);
+            KeyDown(VKC.VK_N);
+            await Task.Delay(450);
+            KeyUp(VKC.VK_N);
 
             // Press "A" and wait
-            KeyDown(VK_A);
-            Thread.Sleep(425);
-            KeyUp(VK_A);
+            KeyDown(VKC.VK_A);
+            await Task.Delay(425);
+
+
+
 
             // Press "Space" and "A"
-            KeyDown(VK_SPACE);
-            KeyDown(VK_A);
-            Thread.Sleep(200);
-            KeyUp(VK_A);
-            KeyUp(VK_SPACE);
+            KeyDown(VKC.VK_Q);
+            await Task.Delay(10);
+            KeyDown(VKC.VK_SPACE);
+            KeyUp(VKC.VK_A);
+            KeyUp(VKC.VK_Q);
+
         }
 
         public void SoloScript()
@@ -183,113 +338,53 @@ namespace PeteTech
             MessageBox.Show("Solo script pressed!");
         }
 
-        // Helper method to simulate key down
-        private void KeyDown(byte key)
+
+
+
+
+
+
+        public async void Enable3074()
         {
-            keybd_event(key, 0, KEYEVENTF_KEYDOWN, 0);
-        }
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
-        // Helper method to simulate key up
-        private void KeyUp(byte key)
-        {
-            keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
-        }
-
-        // Renamed method to txtPboxMacro
-        public void txtPboxMacro(int delayPBox)
-        {
-            // Simulate Enter key down and up
-            KeyDown(VK_ENTER);
-            Thread.Sleep(10);
-            KeyUp(VK_ENTER);
-            Thread.Sleep(10);
-
-            // Simulate P key down and up
-            KeyDown(VK_P);
-            Thread.Sleep(10);
-            KeyUp(VK_P);
-            Thread.Sleep(10);
-
-            // Simulate Enter key down and up again
-            KeyDown(VK_ENTER);
-            Thread.Sleep(10);
-            KeyUp(VK_ENTER);
-            Thread.Sleep(10);
-
-            // Simulate N key down and hold for delayPBox
-            KeyDown(VK_N);
-            Thread.Sleep(delayPBox);  // Hold for the custom delay
-            Process_Suspend("focused");  // Suspend the process
-            Thread.Sleep(1300);  // Sleep for the specified duration
-            Process_Resume("focused");  // Resume the process
-
-            // Simulate N key up after delay
-            KeyUp(VK_N);
-            Thread.Sleep(325);
-
-            // Simulate N key down and up again
-            KeyDown(VK_N);
-            Thread.Sleep(325);
-            KeyUp(VK_N);
-        }
-
-        // Method to suspend a process
-        public void SuspendProcess(string processName)
-        {
-            var processes = Process.GetProcessesByName(processName);
-            if (processes.Length > 0)
-            {
-                var process = processes[0];
-                IntPtr processHandle = OpenProcess(PROCESS_SUSPEND_RESUME | PROCESS_QUERY_INFORMATION, false, process.Id);
-                if (processHandle != IntPtr.Zero)
-                {
-                    // Suspend all threads of the process
-                    foreach (ProcessThread thread in process.Threads)
-                    {
-                        IntPtr threadHandle = OpenThread(THREAD_SUSPEND_RESUME, false, thread.Id);
-                        if (threadHandle != IntPtr.Zero)
-                        {
-                            SuspendThread(threadHandle);
-                            CloseHandle(threadHandle);
-                        }
-                    }
-                    CloseHandle(processHandle);
-                }
-            }
-        }
-
-        // Method to resume a suspended process
-        public void ResumeProcess(string processName)
-        {
-            var processes = Process.GetProcessesByName(processName);
-            if (processes.Length > 0)
-            {
-                var process = processes[0];
-                IntPtr processHandle = OpenProcess(PROCESS_SUSPEND_RESUME | PROCESS_QUERY_INFORMATION, false, process.Id);
-                if (processHandle != IntPtr.Zero)
-                {
-                    // Resume all threads of the process
-                    foreach (ProcessThread thread in process.Threads)
-                    {
-                        IntPtr threadHandle = OpenThread(THREAD_SUSPEND_RESUME, false, thread.Id);
-                        if (threadHandle != IntPtr.Zero)
-                        {
-                            ResumeThread(threadHandle);
-                            CloseHandle(threadHandle);
-                        }
-                    }
-                    CloseHandle(processHandle);
-                }
-            }
-        }
-        public void Enable3074()
-        {
+            // Add rules to block incoming and outgoing traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
 
-            
+            // Start the loop that will enable/disable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the firewall rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+
+                // Enable the firewall rules
+                Console.WriteLine("3074 Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the firewall rules
+                Console.WriteLine("3074 Status: OFF");
+                Disable3074();
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled3074)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                await Task.Delay(randUnlimit);  // Delay before next cycle
+            }
         }
 
         public void Disable3074()
@@ -300,30 +395,133 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
         }
 
-        public void Enable3074IN()
+        public async void Enable3074IN()
         {
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
+
+            // Add rules to block incoming traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+            // Start the loop that will enable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+
+                // Enable the incoming firewall rules
+                Console.WriteLine("3074 IN Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the incoming firewall rules
+                Console.WriteLine("3074 IN Status: OFF");
+                Disable3074();
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled3074)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                await Task.Delay(randUnlimit);  // Delay before next cycle
+            }
         }
-       
-        public void Enable3074OUT()
+
+
+        public async void Enable3074OUT()
         {
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
+
+            // Add rules to block outgoing traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+            // Start the loop that will enable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+
+                // Enable the outgoing firewall rules
+                Console.WriteLine("3074 OUT Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the outgoing firewall rules
+                Console.WriteLine("3074 OUT Status: OFF");
+                Disable3074();
+                
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled3074)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                await Task.Delay(randUnlimit);  // Delay before next cycle
+            }
         }
-    
-
-       
-    
 
 
-        public void Enable27K()
+
+
+
+
+
+        public async void Enable27K()
         {
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
+
+            // Add rules to block incoming and outgoing traffic on port range 27015-27200
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-           
+
+            // Start the loop that will enable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+                
+                // Enable the firewall rules (outbound and inbound)
+                Console.WriteLine("27k Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the firewall rules (outbound and inbound)
+                Console.WriteLine("27k Status: OFF");
+                Disable27K();
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled27K)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                 // Delay before next cycle
+            }
         }
 
         // Method to disable firewall rules for 27k
@@ -335,19 +533,84 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-in\"");
         }
 
-        public void Enable27KIN()
+        public async void Enable27KIN()
         {
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
+
+            // Add rules to block incoming traffic on port range 27015-27200
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-           
+
+            // Start the loop that will enable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+
+                // Enable the incoming traffic firewall rules
+                Console.WriteLine("27k IN Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the incoming traffic firewall rules
+                Console.WriteLine("27k IN Status: OFF");
+                Disable27K();
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled27K)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                await Task.Delay(randUnlimit);  // Delay before next cycle
+            }
         }
 
-        public void Enable27KOUT()
+
+        public async void Enable27KOUT()
         {
-            
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
+
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+
+            // Start the loop that will enable the rules while isBufferOn is true
+            while (isBufferOn)
+            {
+                // Wait for the random amount of time before enabling the rules
+                await Task.Delay(randUnlimit);  // Delay before enabling
+
+                // Add rules to block outgoing traffic on port range 27015-27200
+                Console.WriteLine("27k OUT Status: ON");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+
+                // Wait for the random duration before disabling the firewall rules
+                await Task.Delay(randLimit);  // Delay before disabling
+
+                // Disable the outgoing traffic firewall rules
+                Console.WriteLine("27k OUT Status: OFF");
+                Disable27K();
+
+                // If the buffer is turned off, stop the loop
+                if (!isBufferOn || !RulesEnabled27K)
+                {
+                    break;
+                }
+
+                // Optionally, add another random delay before starting the next cycle
+                await Task.Delay(randUnlimit);  // Delay before next cycle
+            }
         }
+
         private void RunCommand(string command)
         {
             try
@@ -366,7 +629,7 @@ namespace PeteTech
         }
 
         // Method to play the sound cues
-        private void PlaySoundCue(bool isOn)
+        public void PlaySoundCue(bool isOn)
         {
             Console.Beep(isOn ? 523 : 750, 100); // Higher tone for "ON"
             Console.Beep(isOn ? 750 : 523, 100); // Lower tone for "OFF"
