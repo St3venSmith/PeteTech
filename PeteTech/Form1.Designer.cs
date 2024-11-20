@@ -35,6 +35,10 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            cbo3074 = new ComboBox();
+            cmbo27k = new ComboBox();
+            lblFPS = new Label();
+            label4 = new Label();
             tbFpsBar = new TrackBar();
             btnSolo = new Button();
             txtFBHK = new TextBox();
@@ -47,8 +51,6 @@
             label2 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
-            label4 = new Label();
-            lblFPS = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -57,7 +59,7 @@
             // 
             // btn27K
             // 
-            btn27K.Location = new Point(3, 4);
+            btn27K.Location = new Point(75, 2);
             btn27K.Margin = new Padding(3, 2, 3, 2);
             btn27K.Name = "btn27K";
             btn27K.Size = new Size(82, 22);
@@ -68,7 +70,7 @@
             // 
             // btn3074
             // 
-            btn3074.Location = new Point(3, 30);
+            btn3074.Location = new Point(75, 31);
             btn3074.Margin = new Padding(3, 2, 3, 2);
             btn3074.Name = "btn3074";
             btn3074.Size = new Size(82, 22);
@@ -116,6 +118,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(cbo3074);
+            tabPage1.Controls.Add(cmbo27k);
             tabPage1.Controls.Add(lblFPS);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(tbFpsBar);
@@ -140,6 +144,45 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // cbo3074
+            // 
+            cbo3074.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo3074.FormattingEnabled = true;
+            cbo3074.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo3074.Location = new Point(6, 29);
+            cbo3074.Name = "cbo3074";
+            cbo3074.Size = new Size(63, 23);
+            cbo3074.TabIndex = 17;
+            // 
+            // cmbo27k
+            // 
+            cmbo27k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cmbo27k.FormattingEnabled = true;
+            cmbo27k.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cmbo27k.Location = new Point(6, 3);
+            cmbo27k.Name = "cmbo27k";
+            cmbo27k.Size = new Size(63, 23);
+            cmbo27k.TabIndex = 16;
+            // 
+            // lblFPS
+            // 
+            lblFPS.AutoSize = true;
+            lblFPS.Location = new Point(401, 142);
+            lblFPS.Name = "lblFPS";
+            lblFPS.Size = new Size(38, 15);
+            lblFPS.TabIndex = 15;
+            lblFPS.Text = "label5";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(366, 142);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 15);
+            label4.TabIndex = 14;
+            label4.Text = "FPS:";
+            label4.Click += label4_Click;
             // 
             // tbFpsBar
             // 
@@ -182,7 +225,7 @@
             // 
             // txt27HK
             // 
-            txt27HK.Location = new Point(91, 4);
+            txt27HK.Location = new Point(163, 3);
             txt27HK.MaxLength = 1;
             txt27HK.Name = "txt27HK";
             txt27HK.Size = new Size(23, 23);
@@ -190,7 +233,7 @@
             // 
             // txt3074HK
             // 
-            txt3074HK.Location = new Point(91, 30);
+            txt3074HK.Location = new Point(163, 29);
             txt3074HK.MaxLength = 1;
             txt3074HK.Name = "txt3074HK";
             txt3074HK.Size = new Size(23, 23);
@@ -254,25 +297,6 @@
             label1.Text = "Pete and Delta";
             label1.Click += label1_Click;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(366, 142);
-            label4.Name = "label4";
-            label4.Size = new Size(29, 15);
-            label4.TabIndex = 14;
-            label4.Text = "FPS:";
-            label4.Click += label4_Click;
-            // 
-            // lblFPS
-            // 
-            lblFPS.AutoSize = true;
-            lblFPS.Location = new Point(401, 142);
-            lblFPS.Name = "lblFPS";
-            lblFPS.Size = new Size(38, 15);
-            lblFPS.TabIndex = 15;
-            lblFPS.Text = "label5";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -317,5 +341,7 @@
         private TrackBar tbFpsBar;
         private Label label4;
         private Label lblFPS;
+        private ComboBox cbo3074;
+        private ComboBox cmbo27k;
     }
 }

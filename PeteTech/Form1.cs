@@ -43,21 +43,41 @@ namespace PeteTech
             // Attach Scroll event handler
             tbFpsBar.Scroll += tbFpsBar_Scroll;
             lblFPS.Text = $"Value: {tbFpsBar.Value}";
+
+            cbo3074.Text = "in/out";
+            cmbo27k.Text = "in/out";
         }
        
 
         private void btn27K_Click(object sender, EventArgs e)
         {
-            if (macros.RulesEnabled27K)  // Check if the rules are enabled
+            if (cmbo27k.Text == "in/out")
             {
-                macros.Disable27K();
-                macros.RulesEnabled27K = false;
+                if (macros.RulesEnabled27K)  // Check if the rules are enabled
+                {
+                    macros.Disable27K();
+                    macros.RulesEnabled27K = false;
+                }
+                else
+                {
+                    macros.Enable27K();
+                    macros.RulesEnabled27K = true;
+                }
             }
-            else
+            else if(cmbo27k.Text == "in")
             {
-                macros.Enable27K();
-                macros.RulesEnabled27K = true;
+                if (macros.RulesEnabled27K)  // Check if the rules are enabled
+                {
+                    macros.Disable27K();
+                    macros.RulesEnabled27K = false;
+                }
+                else
+                {
+                    macros.Enable27KIN();
+                    macros.RulesEnabled27K = true;
+                }
             }
+            
         }
 
         private void btn3074_Click(object sender, EventArgs e)

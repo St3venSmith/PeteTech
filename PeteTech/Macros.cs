@@ -17,6 +17,9 @@ namespace PeteTech
         public bool RulesEnabled3074 { get; set; } = false;
         public bool RulesEnabled27K { get; set; } = false;
 
+        
+
+
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
@@ -99,6 +102,7 @@ namespace PeteTech
 
         public void txt27HK()
         {
+            
             if (RulesEnabled27K)  // Check if the rules are enabled
             {
                 Disable27K();
@@ -121,6 +125,7 @@ namespace PeteTech
 
         public void txt3074HK()
         {
+            
             if (RulesEnabled3074)  // Check if the rules are enabled
             {
                 Disable3074();
@@ -277,6 +282,8 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+            
         }
 
         public void Disable3074()
@@ -287,12 +294,30 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
         }
 
+        public void Enable3074KIN()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+        }
+       
+        public void Enable3074OUT()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+        }
+    
+
+       
+    
+
+
         public void Enable27K()
         {
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+           
         }
 
         // Method to disable firewall rules for 27k
@@ -304,6 +329,19 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-in\"");
         }
 
+        public void Enable27KIN()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+           
+        }
+
+        public void Enable27KOUT()
+        {
+            
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
+        }
         private void RunCommand(string command)
         {
             try
