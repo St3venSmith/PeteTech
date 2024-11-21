@@ -218,11 +218,11 @@
             tbFpsBar.BackColor = SystemColors.AppWorkspace;
             tbFpsBar.Location = new Point(6, 142);
             tbFpsBar.Maximum = 255;
-            tbFpsBar.Minimum = 30;
+            tbFpsBar.Minimum = 60;
             tbFpsBar.Name = "tbFpsBar";
             tbFpsBar.Size = new Size(354, 45);
             tbFpsBar.TabIndex = 13;
-            tbFpsBar.Value = 30;
+            tbFpsBar.Value = 60;
             tbFpsBar.Scroll += tbFpsBar_Scroll;
             // 
             // btnSolo
