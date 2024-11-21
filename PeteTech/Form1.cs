@@ -55,6 +55,12 @@ namespace PeteTech
             set => tbFpsBar.Value = value; // Set a new value
         }
 
+        public void UpdateLables(string lblts, string lblt)
+        {
+            lbl27Status.Text = lblts;
+            lbl3074Status.Text = lblt;
+        }
+
 
         private void btn27K_Click(object sender, EventArgs e)
         {
@@ -198,6 +204,8 @@ namespace PeteTech
             macros.SoloScript();
         }
 
+        
+
         private void chkAutoBuffer_CheckedChanged(object sender, EventArgs e)
         {
             if (this.chkAutoBuffer.Checked == true)
@@ -286,6 +294,8 @@ namespace PeteTech
         {
             macros.tStatus = cbo3074.Text;
         }
+
+        
 
 
 

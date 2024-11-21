@@ -171,6 +171,7 @@
             lbl27Status.Size = new Size(38, 15);
             lbl27Status.TabIndex = 18;
             lbl27Status.Text = "label5";
+            
             // 
             // cbo3074
             // 
@@ -349,9 +350,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(7, 10);
             label1.Name = "label1";
-            label1.Size = new Size(83, 15);
+            label1.Size = new Size(30, 15);
             label1.TabIndex = 0;
-            label1.Text = "Pete and Delta";
+            label1.Text = "Pete";
             label1.Click += label1_Click;
             // 
             // Form1

@@ -16,6 +16,10 @@ namespace PeteTech
 
         public string tStatus { get; set; }
 
+        public string lbltS; // label for 27k
+
+        public string lbltrS; // lable for 3074
+
         public bool isSoundOn = false;
 
         public bool isBufferOn = false;
@@ -364,6 +368,8 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
+            lbltrS = "ON";
+
             // Add rules to block incoming and outgoing traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
@@ -383,6 +389,8 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
 
+                lbltrS = "ON";
+
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
 
@@ -390,9 +398,12 @@ namespace PeteTech
                 Console.WriteLine("3074 Status: OFF");
                 Disable3074();
 
+                lbltrS = "OFF";
+
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled3074)
                 {
+                    Disable3074();
                     break;
                 }
 
@@ -415,6 +426,8 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
+            lbltrS = "ON";
+
             // Add rules to block incoming traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
@@ -430,16 +443,20 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
 
+                lbltrS = "ON";
+
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
 
                 // Disable the incoming firewall rules
                 Console.WriteLine("3074 IN Status: OFF");
+                lbltrS = "OFF";
                 Disable3074();
 
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled3074)
                 {
+                    Disable3074();
                     break;
                 }
 
@@ -455,6 +472,8 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
+
+            lbltrS = "ON";
             // Add rules to block outgoing traffic on port 3074
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
@@ -465,6 +484,8 @@ namespace PeteTech
                 // Wait for the random amount of time before enabling the rules
                 await Task.Delay(randUnlimit);  // Delay before enabling
 
+                lbltrS = "ON";
+
                 // Enable the outgoing firewall rules
                 Console.WriteLine("3074 OUT Status: ON");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
@@ -472,6 +493,8 @@ namespace PeteTech
 
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
+
+                lbltrS = "OFF";
 
                 // Disable the outgoing firewall rules
                 Console.WriteLine("3074 OUT Status: OFF");
@@ -481,6 +504,7 @@ namespace PeteTech
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled3074)
                 {
+                    Disable3074();
                     break;
                 }
 
@@ -501,6 +525,8 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
 
+            lbltS = "ON";
+
             // Add rules to block incoming and outgoing traffic on port range 27015-27200
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
@@ -513,6 +539,8 @@ namespace PeteTech
                 // Wait for the random amount of time before enabling the rules
                 await Task.Delay(randUnlimit);  // Delay before enabling
 
+                lbltS = "ON";
+
                 // Enable the firewall rules (outbound and inbound)
                 Console.WriteLine("27k Status: ON");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
@@ -523,6 +551,8 @@ namespace PeteTech
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
 
+                lbltS = "OFF";
+
                 // Disable the firewall rules (outbound and inbound)
                 Console.WriteLine("27k Status: OFF");
                 Disable27K();
@@ -530,6 +560,7 @@ namespace PeteTech
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled27K)
                 {
+                    Disable27K();
                     break;
                 }
 
@@ -553,6 +584,8 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
+            lbltS = "ON";
+
             // Add rules to block incoming traffic on port range 27015-27200
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
@@ -563,6 +596,8 @@ namespace PeteTech
                 // Wait for the random amount of time before enabling the rules
                 await Task.Delay(randUnlimit);  // Delay before enabling
 
+                lbltS = "ON";
+
                 // Enable the incoming traffic firewall rules
                 Console.WriteLine("27k IN Status: ON");
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
@@ -571,6 +606,8 @@ namespace PeteTech
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
 
+                lbltS = "OFF";
+
                 // Disable the incoming traffic firewall rules
                 Console.WriteLine("27k IN Status: OFF");
                 Disable27K();
@@ -578,6 +615,7 @@ namespace PeteTech
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled27K)
                 {
+                    Disable27K();
                     break;
                 }
 
@@ -593,6 +631,10 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
 
+            
+
+            lbltS = "ON";
+
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
             RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
 
@@ -602,6 +644,8 @@ namespace PeteTech
                 // Wait for the random amount of time before enabling the rules
                 await Task.Delay(randUnlimit);  // Delay before enabling
 
+                lbltS = "ON";
+
                 // Add rules to block outgoing traffic on port range 27015-27200
                 Console.WriteLine("27k OUT Status: ON");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
@@ -610,6 +654,8 @@ namespace PeteTech
                 // Wait for the random duration before disabling the firewall rules
                 await Task.Delay(randLimit);  // Delay before disabling
 
+                lbltS = "OFF";
+
                 // Disable the outgoing traffic firewall rules
                 Console.WriteLine("27k OUT Status: OFF");
                 Disable27K();
@@ -617,6 +663,7 @@ namespace PeteTech
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled27K)
                 {
+                    Disable27K();
                     break;
                 }
 
