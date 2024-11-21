@@ -1,14 +1,12 @@
-﻿using PeteTech; // If both classes are in the same namespace, this is not needed.
-using ProcessManagement;
+﻿using ProcessManagement;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.Authentication.ExtendedProtection;
 
 namespace PeteTech
 {
     internal class Macros : ISuspend
     {
-        
+
 
         public int FpsValue { get; set; }
 
@@ -22,16 +20,12 @@ namespace PeteTech
 
         public bool isBufferOn = false;
 
-        bool buff;
-
-        public int pBoxDelay;
-
         public bool togglePause;
         public bool RulesEnabled3074 { get; set; } = false;
         public bool RulesEnabled27K { get; set; } = false;
 
-        
-        
+
+
 
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
@@ -40,7 +34,7 @@ namespace PeteTech
         // Constants for keybd_event function
         const uint KEYEVENTF_KEYDOWN = 0x0000; // Key down flag
         const uint KEYEVENTF_KEYUP = 0x0002;   // Key up flag
-        
+
 
         // Importing necessary Windows API functions for process manipulation
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -58,7 +52,7 @@ namespace PeteTech
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        
+
 
         // Helper method to simulate key down
         private void KeyDown(byte key)
@@ -85,11 +79,11 @@ namespace PeteTech
             Pmessage = message;
         }
 
-        
+
         public async void txtPboxHotKey()
         {
             // Sequence logic implementation
-            
+
             // Send {Enter down}
             KeyDown(VKC.VK_ENTER);
             await Task.Delay(10);
@@ -112,7 +106,7 @@ namespace PeteTech
             // Send {Enter up}
             KeyUp(VKC.VK_ENTER);
             await Task.Delay(10);
-            
+
             // Send {N down}
             KeyDown(VKC.VK_N);
             await Task.Delay(FpsValue);
@@ -147,7 +141,7 @@ namespace PeteTech
                 {
                     PlaySoundCue(true);
                 }
-               
+
             }
             else
             {
@@ -335,7 +329,27 @@ namespace PeteTech
 
         public void SoloScript()
         {
-            MessageBox.Show("Solo script pressed!");
+            if (RulesEnabled27K)  // Check if the rules are enabled
+            {
+                MessageBox.Show("Solo script Stopped");
+                Disable27K();
+                RulesEnabled27K = false;
+                if (isSoundOn)
+                {
+                    PlaySoundCue(false);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Solo script Started");
+                Enable27K();
+                RulesEnabled27K = true;
+                if (isSoundOn)
+                {
+                    PlaySoundCue(true);
+                }
+            }
+
         }
 
 
@@ -462,7 +476,7 @@ namespace PeteTech
                 // Disable the outgoing firewall rules
                 Console.WriteLine("3074 OUT Status: OFF");
                 Disable3074();
-                
+
 
                 // If the buffer is turned off, stop the loop
                 if (!isBufferOn || !RulesEnabled3074)
@@ -498,7 +512,7 @@ namespace PeteTech
             {
                 // Wait for the random amount of time before enabling the rules
                 await Task.Delay(randUnlimit);  // Delay before enabling
-                
+
                 // Enable the firewall rules (outbound and inbound)
                 Console.WriteLine("27k Status: ON");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
@@ -520,7 +534,7 @@ namespace PeteTech
                 }
 
                 // Optionally, add another random delay before starting the next cycle
-                 // Delay before next cycle
+                // Delay before next cycle
             }
         }
 

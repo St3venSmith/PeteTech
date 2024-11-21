@@ -229,7 +229,7 @@
             // 
             btnSolo.Location = new Point(6, 224);
             btnSolo.Name = "btnSolo";
-            btnSolo.Size = new Size(75, 23);
+            btnSolo.Size = new Size(75, 22);
             btnSolo.TabIndex = 12;
             btnSolo.Text = "Solo Script";
             btnSolo.UseVisualStyleBackColor = true;
@@ -366,7 +366,10 @@
             KeyPreview = true;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
+            Opacity = 0.9D;
             Text = "PeteTech";
+            TopMost = true;
+            TransparencyKey = Color.FromArgb(192, 255, 255);
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();

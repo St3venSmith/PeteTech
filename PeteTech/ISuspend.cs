@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace ProcessManagement
@@ -7,7 +6,7 @@ namespace ProcessManagement
     internal class ISuspend : Form
     {
 
-      
+
 
         // Constants for process access rights
         private const uint PROCESS_ALL_ACCESS = 0x1F0FFF;

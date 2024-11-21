@@ -8,8 +8,7 @@ namespace PeteTech
     {
         // Constants for the keyboard hook
         private const int WH_KEYBOARD_LL = 13; // Low-Level Keyboard Hook
-        private const int WM_KEYDOWN = 0x0100;
-        private const int WM_KEYUP = 0x0101;
+
 
         // Delegate for the hook callback function
         public delegate int HookProc(int nCode, IntPtr wParam, IntPtr lParam);

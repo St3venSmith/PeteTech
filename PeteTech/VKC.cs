@@ -1,12 +1,6 @@
-﻿using PeteTech; // If both classes are in the same namespace, this is not needed.
-using ProcessManagement;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Authentication.ExtendedProtection;
-
-namespace PeteTech
+﻿namespace PeteTech
 {
-    internal static class VKC 
+    internal static class VKC
     {
         // Modifier keys
         public const byte VK_SHIFT = 0x10;
