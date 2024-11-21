@@ -125,6 +125,9 @@
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.Transparent;
+            tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
+            tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.Controls.Add(lbl3074Status);
             tabPage1.Controls.Add(lbl27Status);
             tabPage1.Controls.Add(cbo3074);
@@ -152,7 +155,6 @@
             tabPage1.Size = new Size(692, 310);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
-            tabPage1.UseVisualStyleBackColor = true;
             // 
             // lbl3074Status
             // 
@@ -171,7 +173,6 @@
             lbl27Status.Size = new Size(38, 15);
             lbl27Status.TabIndex = 18;
             lbl27Status.Text = "label5";
-            
             // 
             // cbo3074
             // 
@@ -361,8 +362,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.Disable;
             BackColor = SystemColors.ActiveCaption;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
+            DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new Padding(3, 2, 3, 2);

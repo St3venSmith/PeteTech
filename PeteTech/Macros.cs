@@ -11,7 +11,7 @@ namespace PeteTech
         public int FpsValue { get; set; }
 
         public string Pmessage;
-
+        
         public string kStatus { get; set; }
 
         public string tStatus { get; set; }
