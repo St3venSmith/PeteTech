@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tabPage1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABO4AAAWgCAYAAADpXQwbAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAA/7JJREFUeF7snQWYVVearm8EieDu7u7u7u7u7u7u7u6uhUNB4YVrAgkBYiQkxK2T
+        DwAACw8BkvkDpQAA/7JJREFUeF7snQWYVVearm8EieDu7u7u7u7u7u7u7u6uhUNB4YVrAgkBYiQkxK2T
         9p7vrn/tvU/tc2qVQB0KQr73ed6nZ3rmTui+Mwn1Zf3v/n+EEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh
         hBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh
         hBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh
@@ -12660,7 +12663,7 @@
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABO4AAAWgCAYAAADpXQwbAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAA/7JJREFUeF7snQWYVVearm8EieDu7u7u7u7u7u7u7u6uhUNB4YVrAgkBYiQkxK2T
+        DwAACw8BkvkDpQAA/7JJREFUeF7snQWYVVearm8EieDu7u7u7u7u7u7u7u6uhUNB4YVrAgkBYiQkxK2T
         9p7vrn/tvU/tc2qVQB0KQr73ed6nZ3rmTui+Mwn1Zf3v/n+EEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh
         hBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh
         hBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQggh

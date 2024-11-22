@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             btn27K = new Button();
             btn3074 = new Button();
@@ -56,6 +57,7 @@
             label5 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
+            toolTip1 = new ToolTip(components);
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -71,6 +73,7 @@
             btn27K.Size = new Size(82, 22);
             btn27K.TabIndex = 0;
             btn27K.Text = "27k";
+            toolTip1.SetToolTip(btn27K, "limits ports 27k");
             btn27K.UseVisualStyleBackColor = true;
             btn27K.Click += btn27K_Click;
             // 
@@ -82,6 +85,7 @@
             btn3074.Size = new Size(82, 22);
             btn3074.TabIndex = 1;
             btn3074.Text = "3074";
+            toolTip1.SetToolTip(btn3074, "Limits 3074: Can be used to Unload Doors");
             btn3074.UseVisualStyleBackColor = true;
             btn3074.Click += btn3074_Click;
             // 
@@ -94,6 +98,7 @@
             chkAutoBuffer.Size = new Size(87, 19);
             chkAutoBuffer.TabIndex = 2;
             chkAutoBuffer.Text = "Auto Buffer";
+            toolTip1.SetToolTip(chkAutoBuffer, "Buffers the limit held");
             chkAutoBuffer.UseVisualStyleBackColor = true;
             chkAutoBuffer.CheckedChanged += chkAutoBuffer_CheckedChanged;
             // 
@@ -106,6 +111,7 @@
             chkSounds.Size = new Size(65, 19);
             chkSounds.TabIndex = 3;
             chkSounds.Text = "Sounds";
+            toolTip1.SetToolTip(chkSounds, "Turns sound on to let you know if you are limiting");
             chkSounds.UseVisualStyleBackColor = true;
             chkSounds.CheckedChanged += chkSounds_CheckedChanged;
             // 
@@ -183,6 +189,7 @@
             cbo3074.Name = "cbo3074";
             cbo3074.Size = new Size(63, 23);
             cbo3074.TabIndex = 17;
+            toolTip1.SetToolTip(cbo3074, "Select Option");
             cbo3074.SelectedIndexChanged += cbo3074_SelectedIndexChanged;
             // 
             // cmbo27k
@@ -194,6 +201,7 @@
             cmbo27k.Name = "cmbo27k";
             cmbo27k.Size = new Size(63, 23);
             cmbo27k.TabIndex = 16;
+            toolTip1.SetToolTip(cmbo27k, "Select Option");
             cmbo27k.SelectedIndexChanged += cmbo27k_SelectedIndexChanged;
             // 
             // lblFPS
@@ -224,6 +232,7 @@
             tbFpsBar.Name = "tbFpsBar";
             tbFpsBar.Size = new Size(354, 45);
             tbFpsBar.TabIndex = 13;
+            toolTip1.SetToolTip(tbFpsBar, "Enter your FPS: Allows for Pbox to work");
             tbFpsBar.Value = 60;
             tbFpsBar.Scroll += tbFpsBar_Scroll;
             // 
@@ -234,6 +243,7 @@
             btnSolo.Size = new Size(75, 22);
             btnSolo.TabIndex = 12;
             btnSolo.Text = "Solo Script";
+            toolTip1.SetToolTip(btnSolo, "Click for solo match making while in orbit.");
             btnSolo.UseVisualStyleBackColor = true;
             btnSolo.Click += btnSolo_Click;
             // 
@@ -244,6 +254,7 @@
             txtFBHK.Name = "txtFBHK";
             txtFBHK.Size = new Size(21, 23);
             txtFBHK.TabIndex = 11;
+            toolTip1.SetToolTip(txtFBHK, "Keybind box for Fuision Breach: Equip Fusion Nades");
             // 
             // lblFusion
             // 
@@ -261,6 +272,7 @@
             txt27HK.Name = "txt27HK";
             txt27HK.Size = new Size(23, 23);
             txt27HK.TabIndex = 9;
+            toolTip1.SetToolTip(txt27HK, "Keybind For 27K");
             // 
             // txt3074HK
             // 
@@ -269,6 +281,7 @@
             txt3074HK.Name = "txt3074HK";
             txt3074HK.Size = new Size(23, 23);
             txt3074HK.TabIndex = 8;
+            toolTip1.SetToolTip(txt3074HK, "Keybind for 3074");
             // 
             // txtPauseHotKey
             // 
@@ -277,6 +290,7 @@
             txtPauseHotKey.Name = "txtPauseHotKey";
             txtPauseHotKey.Size = new Size(37, 23);
             txtPauseHotKey.TabIndex = 7;
+            toolTip1.SetToolTip(txtPauseHotKey, "Keybind box for Pause");
             // 
             // label3
             // 
@@ -294,6 +308,7 @@
             txtPboxHotKey.Name = "txtPboxHotKey";
             txtPboxHotKey.Size = new Size(37, 23);
             txtPboxHotKey.TabIndex = 5;
+            toolTip1.SetToolTip(txtPboxHotKey, "Keybind box for Pbox");
             txtPboxHotKey.TextChanged += textBox1_TextChanged;
             // 
             // label2
@@ -415,5 +430,6 @@
         private TabPage tabPage3;
         private Label label5;
         private TextBox txtPboxMessage;
+        private ToolTip toolTip1;
     }
 }
