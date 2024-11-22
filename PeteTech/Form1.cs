@@ -55,10 +55,12 @@ namespace PeteTech
             set => tbFpsBar.Value = value; // Set a new value
         }
 
-        public void UpdateLables(string lblts, string lblt)
+       
+
+        public void UpdateFormLabels(string lbltS, string lbltrs)
         {
-            lbl27Status.Text = lblts;
-            lbl3074Status.Text = lblt;
+            lbl27Status.Text = macros.lbltS;
+            lbl3074Status.Text = macros.lbltrS;
         }
 
 
@@ -70,6 +72,7 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    lbl27Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -79,6 +82,7 @@ namespace PeteTech
                 {
                     macros.Enable27K();
                     macros.RulesEnabled27K = true;
+                    lbl27Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -91,6 +95,7 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    lbl27Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -100,6 +105,7 @@ namespace PeteTech
                 {
                     macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
+                    lbl27Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -113,6 +119,7 @@ namespace PeteTech
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    lbl27Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -122,6 +129,7 @@ namespace PeteTech
                 {
                     macros.Enable27KOUT();
                     macros.RulesEnabled27K = true;
+                    lbl27Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -139,6 +147,7 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    lbl3074Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -148,6 +157,7 @@ namespace PeteTech
                 {
                     macros.Enable3074();
                     macros.RulesEnabled3074 = true;
+                    lbl3074Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -160,6 +170,7 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    lbl3074Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -170,6 +181,7 @@ namespace PeteTech
                 {
                     macros.Enable3074IN();
                     macros.RulesEnabled3074 = true;
+                    lbl3074Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -182,6 +194,7 @@ namespace PeteTech
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    lbl3074Status.Text = "OFF";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -192,6 +205,7 @@ namespace PeteTech
                 {
                     macros.Enable3074OUT();
                     macros.RulesEnabled3074 = true;
+                    lbl3074Status.Text = "ON";
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);

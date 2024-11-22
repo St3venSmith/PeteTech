@@ -76,7 +76,7 @@
             // 
             // btn3074
             // 
-            btn3074.Location = new Point(75, 31);
+            btn3074.Location = new Point(75, 28);
             btn3074.Margin = new Padding(3, 2, 3, 2);
             btn3074.Name = "btn3074";
             btn3074.Size = new Size(82, 22);
@@ -159,20 +159,20 @@
             // lbl3074Status
             // 
             lbl3074Status.AutoSize = true;
-            lbl3074Status.Location = new Point(192, 38);
+            lbl3074Status.Location = new Point(192, 32);
             lbl3074Status.Name = "lbl3074Status";
-            lbl3074Status.Size = new Size(38, 15);
+            lbl3074Status.Size = new Size(28, 15);
             lbl3074Status.TabIndex = 19;
-            lbl3074Status.Text = "label6";
+            lbl3074Status.Text = "OFF";
             // 
             // lbl27Status
             // 
             lbl27Status.AutoSize = true;
-            lbl27Status.Location = new Point(192, 11);
+            lbl27Status.Location = new Point(192, 6);
             lbl27Status.Name = "lbl27Status";
-            lbl27Status.Size = new Size(38, 15);
+            lbl27Status.Size = new Size(28, 15);
             lbl27Status.TabIndex = 18;
-            lbl27Status.Text = "label5";
+            lbl27Status.Text = "OFF";
             // 
             // cbo3074
             // 

@@ -38,6 +38,9 @@ namespace PeteTech
             _targetClass = targetClass ?? throw new ArgumentNullException(nameof(targetClass));
             _hookProc = KeyPressCallback;
             InstallGlobalKeyHook();
+
+            // Attach KeyDown event handler to the TextBox
+            _textBox.KeyDown += TextBox_KeyDown;
         }
 
         private void InstallGlobalKeyHook()
@@ -63,18 +66,18 @@ namespace PeteTech
 
                 if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
                 {
-                    char targetChar = _textBox.Text[0]; // First character of the TextBox text
+                    string targetKey = _textBox.Text; // TextBox text
 
-                    Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetChar}");
+                    Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetKey}");
 
-                    if (pressedKey == targetChar) // Exact match
+                    if (IsFunctionKey(targetKey, vkCode) || pressedKey.ToString().Equals(targetKey, StringComparison.OrdinalIgnoreCase)) // Match function key or regular key
                     {
                         Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
                         InvokeMethodFromClass();
                     }
                     else
                     {
-                        Debug.WriteLine($"Key mismatch: {pressedKey} != {targetChar}");
+                        Debug.WriteLine($"Key mismatch: {pressedKey} != {targetKey}");
                     }
                 }
             }
@@ -133,6 +136,30 @@ namespace PeteTech
             }
         }
 
+        private bool IsFunctionKey(string targetKey, int vkCode)
+        {
+            // Check if the targetKey is a function key (F1-F12) and if the vkCode matches
+            for (int i = 1; i <= 12; i++)
+            {
+                if (targetKey.Equals($"F{i}", StringComparison.OrdinalIgnoreCase) && vkCode == (0x70 + (i - 1))) // 0x70 is the virtual key code for F1
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the pressed key is a function key (F1-F12)
+            if (e.KeyCode >= Keys.F1 && e.KeyCode <= Keys.F12)
+            {
+                // Update the TextBox text with the function key name
+                _textBox.Text = e.KeyCode.ToString();
+                e.Handled = true; // Mark the event as handled
+            }
+        }
+
         public void UnhookKeyboardHook()
         {
             if (_keyboardHookID != IntPtr.Zero)
@@ -143,4 +170,3 @@ namespace PeteTech
         }
     }
 }
-

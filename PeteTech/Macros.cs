@@ -11,7 +11,7 @@ namespace PeteTech
         public int FpsValue { get; set; }
 
         public string Pmessage;
-        
+
         public string kStatus { get; set; }
 
         public string tStatus { get; set; }
@@ -25,8 +25,19 @@ namespace PeteTech
         public bool isBufferOn = false;
 
         public bool togglePause;
-        public bool RulesEnabled3074 { get; set; } = false;
-        public bool RulesEnabled27K { get; set; } = false;
+
+       
+
+     
+
+        public bool RulesEnabled3074;
+
+
+
+        public bool RulesEnabled27K;
+        
+        
+
 
 
 
@@ -631,7 +642,7 @@ namespace PeteTech
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
 
-            
+
 
             lbltS = "ON";
 
@@ -695,5 +706,6 @@ namespace PeteTech
             Console.Beep(isOn ? 523 : 750, 100); // Higher tone for "ON"
             Console.Beep(isOn ? 750 : 523, 100); // Lower tone for "OFF"
         }
+        
     }
 }
