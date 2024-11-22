@@ -26,21 +26,32 @@ namespace PeteTech
 
         public bool togglePause;
 
-       
+        private bool _rulesEnabled3074;
+        private bool _rulesEnabled27K;
 
-     
+        public bool RulesEnabled3074
+        {
+            get => _rulesEnabled3074;
+            set
+            {
+                _rulesEnabled3074 = value;
+                UpdateLabels();
+            }
+        }
 
-        public bool RulesEnabled3074;
+        public bool RulesEnabled27K
+        {
+            get => _rulesEnabled27K;
+            set
+            {
+                _rulesEnabled27K = value;
+                UpdateLabels();
+            }
+        }
 
-
-
-        public bool RulesEnabled27K;
-        
-        
-
-
-
-
+        // Events to notify when labels need to be updated
+        public event Action<string> OnUpdateLbl27Status;
+        public event Action<string> OnUpdateLbl3074Status;
 
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
@@ -706,6 +717,14 @@ namespace PeteTech
             Console.Beep(isOn ? 523 : 750, 100); // Higher tone for "ON"
             Console.Beep(isOn ? 750 : 523, 100); // Lower tone for "OFF"
         }
-        
+
+        private void UpdateLabels()
+        {
+            lbltS = RulesEnabled27K ? "ON" : "OFF";
+            lbltrS = RulesEnabled3074 ? "ON" : "OFF";
+            OnUpdateLbl27Status?.Invoke(lbltS);
+            OnUpdateLbl3074Status?.Invoke(lbltrS);
+        }
+
     }
 }

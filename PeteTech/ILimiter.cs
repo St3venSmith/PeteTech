@@ -3,9 +3,6 @@
 
     interface ILimiter
     {
-
-
-
-
+        // lol dont limit
     }
 }

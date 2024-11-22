@@ -39,6 +39,9 @@ namespace PeteTech
             hotkey4 = new HotkeyHelper(txt3074HK, macros);
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
 
+            macros.OnUpdateLbl27Status += UpdateLbl27Status;
+            macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
+
 
             // Attach Scroll event handler
             tbFpsBar.Scroll += tbFpsBar_Scroll;
@@ -46,6 +49,17 @@ namespace PeteTech
 
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
+        }
+
+
+        private void UpdateLbl27Status(string status)
+        {
+            lbl27Status.Text = status;
+        }
+
+        private void UpdateLbl3074Status(string status)
+        {
+            lbl3074Status.Text = status;
         }
 
         // Expose FPS Bar value as a property
