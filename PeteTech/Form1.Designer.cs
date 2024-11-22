@@ -338,6 +338,7 @@
             txtPboxMessage.Name = "txtPboxMessage";
             txtPboxMessage.Size = new Size(587, 23);
             txtPboxMessage.TabIndex = 1;
+            toolTip1.SetToolTip(txtPboxMessage, "Message that is typed in chat when Pbox is hit: Will cause a delay");
             txtPboxMessage.TextChanged += txtPboxMessage_TextChanged;
             // 
             // label5
