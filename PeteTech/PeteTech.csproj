@@ -10,9 +10,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Petetech.ico</ApplicationIcon>
     <StartupObject>PeteTech.Program</StartupObject>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>PeteTech</Title>
-    <PackAsTool>True</PackAsTool>
+    <PackAsTool>False</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
