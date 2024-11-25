@@ -1,4 +1,4 @@
-namespace PeteTech
+﻿namespace PeteTech
 {
     public partial class Form1 : Form
     {
@@ -297,7 +297,11 @@ namespace PeteTech
         private void tbFpsBar_Scroll(object sender, EventArgs e)
         {
             // Update label or use the value
-            lblFPS.Text = $"Value: {tbFpsBar.Value}";
+            lblFPS.Text = $"{tbFpsBar.Value}";
+            if (tbFpsBar.Value == 255)
+            {
+                lblFPS.Text = "∞";
+            }
             delayPBox = 244 + (int)Math.Floor((tbFpsBar.Value * 50) / 220.0);
             macros.UpdateFps(tbFpsBar.Value);
 

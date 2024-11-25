@@ -109,7 +109,7 @@ namespace PeteTech
         public async void txtPboxHotKey()
         {
             // Sequence logic implementation
-
+            
             // Send {Enter down}
             KeyDown(VKC.VK_ENTER);
             await Task.Delay(10);
@@ -117,13 +117,25 @@ namespace PeteTech
             // Send {Enter up}
             KeyUp(VKC.VK_ENTER);
             await Task.Delay(10);
+            KeyDown(VKC.VK_BACK);
+            KeyUp(VKC.VK_BACK);
 
 
-            SendKeys.Send(Pmessage);
-            KeyDown(VKC.VK_P);
-            await Task.Delay(10);
-            KeyUp(VKC.VK_P);
-            await Task.Delay(10);
+            if (Pmessage != null)
+            {
+                SendKeys.Send(Pmessage);
+                await Task.Delay(20);
+            }
+            else
+            {
+                KeyDown(VKC.VK_RSHIFT);
+                KeyDown(VKC.VK_P);
+                await Task.Delay(10);
+                KeyUp(VKC.VK_P);
+                KeyUp(VKC.VK_RSHIFT);
+                await Task.Delay(10);
+            }
+            
 
             // Send {Enter down}
             KeyDown(VKC.VK_ENTER);
