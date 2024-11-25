@@ -11,6 +11,7 @@ Pbox:
 For Ride Sparrow: N // remember alt keybind
 
 Fusion Breach: //needed for Fusion Breach to Work. This will be fixed later to allow for customization. 
+
 For Grenade: Q // only need for fusion breach, will be fixed to get your grenade keybind later.
 For Dodge Right: Q
 
