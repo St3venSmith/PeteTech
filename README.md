@@ -1,6 +1,6 @@
 # PeteTech
 
-Warning: This Software Contains a macro and a limiter: The usage of the limiter is against TOS. Although there is a low probability of you getting banned, use this at your own risk.
+Warning: This Software Contains a macro and a limiter: The usage of the limiter is against TOS. Although there is a low probability of you getting banned, use this at your own risk. This program was made for educational purposes.
 
 
 This is a faster alternative to an AHK macro for the game Destiny 2.
