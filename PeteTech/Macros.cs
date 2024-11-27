@@ -441,8 +441,7 @@ namespace PeteTech
                     break;
                 }
 
-                // Optionally, add another random delay before starting the next cycle
-                await Task.Delay(randUnlimit);  // Delay before next cycle
+              
             }
         }
 
@@ -494,8 +493,7 @@ namespace PeteTech
                     break;
                 }
 
-                // Optionally, add another random delay before starting the next cycle
-                await Task.Delay(randUnlimit);  // Delay before next cycle
+               
             }
         }
 
@@ -542,8 +540,6 @@ namespace PeteTech
                     break;
                 }
 
-                // Optionally, add another random delay before starting the next cycle
-                await Task.Delay(randUnlimit);  // Delay before next cycle
             }
         }
 
@@ -653,8 +649,6 @@ namespace PeteTech
                     break;
                 }
 
-                // Optionally, add another random delay before starting the next cycle
-                await Task.Delay(randUnlimit);  // Delay before next cycle
             }
         }
 
@@ -701,8 +695,7 @@ namespace PeteTech
                     break;
                 }
 
-                // Optionally, add another random delay before starting the next cycle
-                await Task.Delay(randUnlimit);  // Delay before next cycle
+               
             }
         }
 
