@@ -1,6 +1,7 @@
 ﻿using ProcessManagement;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace PeteTech
 {
@@ -10,7 +11,7 @@ namespace PeteTech
 
         public int FpsValue { get; set; }
 
-        public string Pmessage;
+        public string? Pmessage;
 
         public string kStatus { get; set; }
 
@@ -61,33 +62,14 @@ namespace PeteTech
         const uint KEYEVENTF_KEYDOWN = 0x0000; // Key down flag
         const uint KEYEVENTF_KEYUP = 0x0002;   // Key up flag
 
-
-        // Importing necessary Windows API functions for process manipulation
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SuspendThread(IntPtr hThread);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool ResumeThread(IntPtr hThread);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr OpenThread(int dwDesiredAccess, bool bInheritHandle, int dwThreadId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr hObject);
-
-
-
         // Helper method to simulate key down
-        private void KeyDown(byte key)
+        private static new void KeyDown(byte key)
         {
             keybd_event(key, 0, KEYEVENTF_KEYDOWN, 0);
         }
 
         // Helper method to simulate key up
-        private void KeyUp(byte key)
+        private static new void KeyUp(byte key)
         {
             keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
         }
@@ -102,23 +84,31 @@ namespace PeteTech
         }
         public void UpdatePboxText(string message)
         {
-            try
+            Clipboard.Clear();
+            Console.WriteLine("Pbox Text Cleared");
+            Pmessage = null;
+            if (!string.IsNullOrEmpty(message))
             {
+                Console.WriteLine($"Pbox Text Updated: {message}");
                 Pmessage = message;
                 Clipboard.SetText(Pmessage);
             }
-            catch
+            else
             {
-                MessageBox.Show("Error copying text to clipboard. Noob Like Futa");
+                Console.WriteLine("Pbox Text Cleared");
+                Clipboard.Clear();
             }
-           
+
         }
+
+
 
 
         public async void txtPboxHotKey()
         {
+
             // Sequence logic implementation
-            
+
             // Send {Enter down}
             KeyDown(VKC.VK_ENTER);
             await Task.Delay(10);
@@ -128,15 +118,18 @@ namespace PeteTech
             await Task.Delay(10);
             KeyDown(VKC.VK_BACK);
             KeyUp(VKC.VK_BACK);
+            await Task.Delay(10);
+            
 
 
             if (Pmessage != null)
             {
-                KeyDown(VKC.VK_CONTROL);
-                KeyDown(VKC.VK_V);
-                await Task.Delay(20);
-                KeyUp(VKC.VK_CONTROL);
-                KeyUp(VKC.VK_V);
+                KeyDown(VKC.VK_RSHIFT);
+                KeyDown(VKC.VK_INSERT);
+                await Task.Delay(10);
+                KeyUp(VKC.VK_RSHIFT);
+                KeyUp(VKC.VK_INSERT);
+                await Task.Delay(10);
             }
             else
             {
@@ -147,7 +140,7 @@ namespace PeteTech
                 KeyUp(VKC.VK_RSHIFT);
                 await Task.Delay(10);
             }
-            
+
 
             // Send {Enter down}
             KeyDown(VKC.VK_ENTER);
@@ -453,7 +446,7 @@ namespace PeteTech
                     break;
                 }
 
-              
+
             }
         }
 
@@ -505,7 +498,7 @@ namespace PeteTech
                     break;
                 }
 
-               
+
             }
         }
 
@@ -707,7 +700,7 @@ namespace PeteTech
                     break;
                 }
 
-               
+
             }
         }
 

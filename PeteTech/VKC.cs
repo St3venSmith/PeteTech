@@ -106,5 +106,6 @@
         public const byte VK_RCONTROL = 0xA3;
         public const byte VK_LMENU = 0xA4; // Left Alt
         public const byte VK_RMENU = 0xA5; // Right Alt
+        public const byte VK_INSERT = 0x2D; // Insert
     }
 }
