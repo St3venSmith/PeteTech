@@ -102,7 +102,16 @@ namespace PeteTech
         }
         public void UpdatePboxText(string message)
         {
-            Pmessage = message;
+            try
+            {
+                Pmessage = message;
+                Clipboard.SetText(Pmessage);
+            }
+            catch
+            {
+                MessageBox.Show("Error copying text to clipboard. Noob Like Futa");
+            }
+           
         }
 
 
@@ -123,8 +132,11 @@ namespace PeteTech
 
             if (Pmessage != null)
             {
-                SendKeys.Send(Pmessage);
+                KeyDown(VKC.VK_CONTROL);
+                KeyDown(VKC.VK_V);
                 await Task.Delay(20);
+                KeyUp(VKC.VK_CONTROL);
+                KeyUp(VKC.VK_V);
             }
             else
             {

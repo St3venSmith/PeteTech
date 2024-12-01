@@ -367,9 +367,10 @@
             label1.AutoSize = true;
             label1.Location = new Point(7, 10);
             label1.Name = "label1";
-            label1.Size = new Size(30, 15);
+            label1.Size = new Size(629, 15);
             label1.TabIndex = 0;
-            label1.Text = "Pete";
+            label1.Text = "Pete, Bird. ,Mother, Toasty, GrayLargeBird, hambuger, Zav, TacoBellEnjoyer, Curola, Phantom AKA RT, Pocket Sparrow. ";
+            toolTip1.SetToolTip(label1, "Noob Like Futa");
             label1.Click += label1_Click;
             // 
             // Form1
