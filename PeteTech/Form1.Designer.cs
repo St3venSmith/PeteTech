@@ -36,6 +36,7 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnDC = new Button();
             lbl3074Status = new Label();
             lbl27Status = new Label();
             cbo3074 = new ComboBox();
@@ -67,6 +68,7 @@
             // 
             // btn27K
             // 
+            btn27K.ImageKey = "(none)";
             btn27K.Location = new Point(75, 2);
             btn27K.Margin = new Padding(3, 2, 3, 2);
             btn27K.Name = "btn27K";
@@ -92,7 +94,7 @@
             // chkAutoBuffer
             // 
             chkAutoBuffer.AutoSize = true;
-            chkAutoBuffer.Location = new Point(3, 56);
+            chkAutoBuffer.Location = new Point(6, 56);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
             chkAutoBuffer.Size = new Size(87, 19);
@@ -134,6 +136,7 @@
             tabPage1.BackColor = Color.Transparent;
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
+            tabPage1.Controls.Add(btnDC);
             tabPage1.Controls.Add(lbl3074Status);
             tabPage1.Controls.Add(lbl27Status);
             tabPage1.Controls.Add(cbo3074);
@@ -161,6 +164,17 @@
             tabPage1.Size = new Size(692, 310);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
+            // 
+            // btnDC
+            // 
+            btnDC.Location = new Point(87, 222);
+            btnDC.Name = "btnDC";
+            btnDC.Size = new Size(75, 23);
+            btnDC.TabIndex = 20;
+            btnDC.Text = "DC";
+            toolTip1.SetToolTip(btnDC, "Spawn on Fireteam Leader (Doesnt Work In Patrol)");
+            btnDC.UseVisualStyleBackColor = true;
+            btnDC.Click += btnDC_Click;
             // 
             // lbl3074Status
             // 
@@ -228,7 +242,7 @@
             tbFpsBar.BackColor = SystemColors.AppWorkspace;
             tbFpsBar.Location = new Point(6, 142);
             tbFpsBar.Maximum = 255;
-            tbFpsBar.Minimum = 60;
+            tbFpsBar.Minimum = 30;
             tbFpsBar.Name = "tbFpsBar";
             tbFpsBar.Size = new Size(354, 45);
             tbFpsBar.TabIndex = 13;
@@ -433,5 +447,6 @@
         private Label label5;
         private TextBox txtPboxMessage;
         private ToolTip toolTip1;
+        private Button btnDC;
     }
 }

@@ -21,6 +21,8 @@ namespace PeteTech
 
         public string lbltrS; // lable for 3074
 
+        
+
         public bool isSoundOn = false;
 
         public bool isBufferOn = false;
@@ -29,6 +31,7 @@ namespace PeteTech
 
         private bool _rulesEnabled3074;
         private bool _rulesEnabled27K;
+        private bool _rulesEnabledDC;
 
         public bool RulesEnabled3074
         {
@@ -46,6 +49,16 @@ namespace PeteTech
             set
             {
                 _rulesEnabled27K = value;
+                UpdateLabels();
+            }
+        }
+
+        public bool RulesEnabledDC
+        {
+            get => _rulesEnabledDC;
+            set
+            {
+                _rulesEnabledDC = value;
                 UpdateLabels();
             }
         }
@@ -395,12 +408,41 @@ namespace PeteTech
 
         }
 
+        public async void DCScript()
+        {
+            if (isSoundOn)
+            {
+                PlaySoundCue(true);
+            }
+            EnableDC();
+            await Task.Delay(20);
+            DisableDC();
+            if (isSoundOn)
+            {
+                PlaySoundCue(false);
+            }
+
+        }
 
 
 
 
 
 
+        public void EnableDC()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=30000-30009 protocol=udp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=30000-30009 protocol=udp interfacetype=any");
+        }
+        public void DisableDC()
+        {
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
+            RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
+        }
         public async void Enable3074()
         {
             Random rand = new Random();
@@ -734,6 +776,7 @@ namespace PeteTech
             lbltrS = RulesEnabled3074 ? "ON" : "OFF";
             OnUpdateLbl27Status?.Invoke(lbltS);
             OnUpdateLbl3074Status?.Invoke(lbltrS);
+            
         }
 
     }

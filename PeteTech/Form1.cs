@@ -45,7 +45,7 @@
 
             // Attach Scroll event handler
             tbFpsBar.Scroll += tbFpsBar_Scroll;
-            lblFPS.Text = $"Value: {tbFpsBar.Value}";
+            lblFPS.Text = $"{tbFpsBar.Value}";
 
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
@@ -69,7 +69,7 @@
             set => tbFpsBar.Value = value; // Set a new value
         }
 
-       
+
 
         public void UpdateFormLabels(string lbltS, string lbltrs)
         {
@@ -232,7 +232,7 @@
             macros.SoloScript();
         }
 
-        
+
 
         private void chkAutoBuffer_CheckedChanged(object sender, EventArgs e)
         {
@@ -327,7 +327,12 @@
             macros.tStatus = cbo3074.Text;
         }
 
-        
+        private void btnDC_Click(object sender, EventArgs e)
+        {
+            macros.DCScript();
+        }
+
+
 
 
 
