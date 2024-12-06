@@ -415,7 +415,7 @@ namespace PeteTech
                 PlaySoundCue(true);
             }
             EnableDC();
-            await Task.Delay(20);
+            await Task.Delay(1000);
             DisableDC();
             if (isSoundOn)
             {
