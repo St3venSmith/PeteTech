@@ -67,10 +67,11 @@ namespace PeteTech
             get { return _rulesEnabled27K; }
             set
             {
+                UpdateLabels();
                 if (_rulesEnabled27K != value)
                 {
                     _rulesEnabled27K = value;
-                    UpdateLabels();
+                    
                     if (_rulesEnabled27K)
                     {
                         _stopwatch27K.Start();
