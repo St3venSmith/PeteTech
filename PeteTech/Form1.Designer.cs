@@ -56,6 +56,25 @@
             tabPage3 = new TabPage();
             txtPboxMessage = new TextBox();
             label5 = new Label();
+            tabPage4 = new TabPage();
+            lblSoloTrack = new Label();
+            lblDCtrack = new Label();
+            lblFBTrack = new Label();
+            lblFullPause = new Label();
+            lblPboxTrack = new Label();
+            lbl27kTrack = new Label();
+            label14 = new Label();
+            lbl3074Track = new Label();
+            lblDateTrack = new Label();
+            label13 = new Label();
+            btnStartTracking = new Button();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label6 = new Label();
             tabPage2 = new TabPage();
             label1 = new Label();
             toolTip1 = new ToolTip(components);
@@ -63,6 +82,7 @@
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
             tabPage3.SuspendLayout();
+            tabPage4.SuspendLayout();
             tabPage2.SuspendLayout();
             SuspendLayout();
             // 
@@ -121,6 +141,7 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
@@ -167,7 +188,7 @@
             // 
             // btnDC
             // 
-            btnDC.Location = new Point(87, 222);
+            btnDC.Location = new Point(82, 224);
             btnDC.Name = "btnDC";
             btnDC.Size = new Size(75, 23);
             btnDC.TabIndex = 20;
@@ -239,15 +260,16 @@
             // 
             // tbFpsBar
             // 
-            tbFpsBar.BackColor = SystemColors.AppWorkspace;
+            tbFpsBar.BackColor = SystemColors.MenuBar;
             tbFpsBar.Location = new Point(6, 142);
             tbFpsBar.Maximum = 255;
             tbFpsBar.Minimum = 30;
             tbFpsBar.Name = "tbFpsBar";
             tbFpsBar.Size = new Size(354, 45);
             tbFpsBar.TabIndex = 13;
+            tbFpsBar.TickStyle = TickStyle.Both;
             toolTip1.SetToolTip(tbFpsBar, "Enter your FPS: Allows for Pbox to work");
-            tbFpsBar.Value = 60;
+            tbFpsBar.Value = 30;
             tbFpsBar.Scroll += tbFpsBar_Scroll;
             // 
             // btnSolo
@@ -364,6 +386,195 @@
             label5.TabIndex = 0;
             label5.Text = "Pbox Message";
             // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(lblSoloTrack);
+            tabPage4.Controls.Add(lblDCtrack);
+            tabPage4.Controls.Add(lblFBTrack);
+            tabPage4.Controls.Add(lblFullPause);
+            tabPage4.Controls.Add(lblPboxTrack);
+            tabPage4.Controls.Add(lbl27kTrack);
+            tabPage4.Controls.Add(label14);
+            tabPage4.Controls.Add(lbl3074Track);
+            tabPage4.Controls.Add(lblDateTrack);
+            tabPage4.Controls.Add(label13);
+            tabPage4.Controls.Add(btnStartTracking);
+            tabPage4.Controls.Add(label12);
+            tabPage4.Controls.Add(label11);
+            tabPage4.Controls.Add(label10);
+            tabPage4.Controls.Add(label9);
+            tabPage4.Controls.Add(label8);
+            tabPage4.Controls.Add(label7);
+            tabPage4.Controls.Add(label6);
+            tabPage4.Location = new Point(4, 24);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Size = new Size(692, 310);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "Stats";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lblSoloTrack
+            // 
+            lblSoloTrack.AutoSize = true;
+            lblSoloTrack.Location = new Point(141, 163);
+            lblSoloTrack.Name = "lblSoloTrack";
+            lblSoloTrack.Size = new Size(57, 15);
+            lblSoloTrack.TabIndex = 17;
+            lblSoloTrack.Text = "SoloTrack";
+            // 
+            // lblDCtrack
+            // 
+            lblDCtrack.AutoSize = true;
+            lblDCtrack.Location = new Point(91, 148);
+            lblDCtrack.Name = "lblDCtrack";
+            lblDCtrack.Size = new Size(23, 15);
+            lblDCtrack.TabIndex = 16;
+            lblDCtrack.Text = "DC";
+            // 
+            // lblFBTrack
+            // 
+            lblFBTrack.AutoSize = true;
+            lblFBTrack.Location = new Point(261, 133);
+            lblFBTrack.Name = "lblFBTrack";
+            lblFBTrack.Size = new Size(79, 15);
+            lblFBTrack.TabIndex = 15;
+            lblFBTrack.Text = "fusion breach";
+            // 
+            // lblFullPause
+            // 
+            lblFullPause.AutoSize = true;
+            lblFullPause.Location = new Point(276, 118);
+            lblFullPause.Name = "lblFullPause";
+            lblFullPause.Size = new Size(57, 15);
+            lblFullPause.TabIndex = 14;
+            lblFullPause.Text = "FullPause";
+            // 
+            // lblPboxTrack
+            // 
+            lblPboxTrack.AutoSize = true;
+            lblPboxTrack.Location = new Point(209, 103);
+            lblPboxTrack.Name = "lblPboxTrack";
+            lblPboxTrack.Size = new Size(61, 15);
+            lblPboxTrack.TabIndex = 13;
+            lblPboxTrack.Text = "PboxTrack";
+            // 
+            // lbl27kTrack
+            // 
+            lbl27kTrack.AutoSize = true;
+            lbl27kTrack.Location = new Point(110, 66);
+            lbl27kTrack.Name = "lbl27kTrack";
+            lbl27kTrack.Size = new Size(52, 15);
+            lbl27kTrack.TabIndex = 12;
+            lbl27kTrack.Text = "27kTrack";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(110, 66);
+            label14.Name = "label14";
+            label14.Size = new Size(0, 15);
+            label14.TabIndex = 11;
+            // 
+            // lbl3074Track
+            // 
+            lbl3074Track.AutoSize = true;
+            lbl3074Track.Location = new Point(116, 51);
+            lbl3074Track.Name = "lbl3074Track";
+            lbl3074Track.Size = new Size(58, 15);
+            lbl3074Track.TabIndex = 10;
+            lbl3074Track.Text = "3074Track";
+            // 
+            // lblDateTrack
+            // 
+            lblDateTrack.AutoSize = true;
+            lblDateTrack.Location = new Point(127, 0);
+            lblDateTrack.Name = "lblDateTrack";
+            lblDateTrack.Size = new Size(31, 15);
+            lblDateTrack.TabIndex = 9;
+            lblDateTrack.Text = "Date";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(0, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(121, 15);
+            label13.TabIndex = 8;
+            label13.Text = "Date Started Tracking:";
+            // 
+            // btnStartTracking
+            // 
+            btnStartTracking.Location = new Point(585, 284);
+            btnStartTracking.Name = "btnStartTracking";
+            btnStartTracking.Size = new Size(99, 23);
+            btnStartTracking.TabIndex = 7;
+            btnStartTracking.Text = "Start Tracking";
+            btnStartTracking.UseVisualStyleBackColor = true;
+            btnStartTracking.Click += btnStartTracking_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(3, 163);
+            label12.Name = "label12";
+            label12.Size = new Size(132, 15);
+            label12.TabIndex = 6;
+            label12.Text = "Number of Solo Scripts:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(3, 148);
+            label11.Name = "label11";
+            label11.Size = new Size(87, 15);
+            label11.TabIndex = 5;
+            label11.Text = "Number of DC:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(3, 66);
+            label10.Name = "label10";
+            label10.Size = new Size(101, 15);
+            label10.TabIndex = 4;
+            label10.Text = "Time holding 27k:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(3, 51);
+            label9.Name = "label9";
+            label9.Size = new Size(107, 15);
+            label9.TabIndex = 3;
+            label9.Text = "Time holding 3074:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(3, 133);
+            label8.Name = "label8";
+            label8.Size = new Size(252, 15);
+            label8.TabIndex = 2;
+            label8.Text = "Number of times you have fusioned breached:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(3, 118);
+            label7.Name = "label7";
+            label7.Size = new Size(271, 15);
+            label7.TabIndex = 1;
+            label7.Text = "Number of times you have fully paused the game:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(3, 103);
+            label6.Name = "label6";
+            label6.Size = new Size(200, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Number of times you have P boxed: ";
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(label1);
@@ -412,6 +623,8 @@
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).EndInit();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ResumeLayout(false);
@@ -448,5 +661,24 @@
         private TextBox txtPboxMessage;
         private ToolTip toolTip1;
         private Button btnDC;
+        private TabPage tabPage4;
+        private Label label10;
+        private Label label9;
+        private Label label8;
+        private Label label7;
+        private Label label6;
+        private Label label12;
+        private Label label11;
+        private Button btnStartTracking;
+        private Label lblDCtrack;
+        private Label lblFBTrack;
+        private Label lblFullPause;
+        private Label lblPboxTrack;
+        private Label lbl27kTrack;
+        private Label label14;
+        private Label lbl3074Track;
+        private Label lblDateTrack;
+        private Label label13;
+        private Label lblSoloTrack;
     }
 }

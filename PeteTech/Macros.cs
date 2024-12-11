@@ -8,7 +8,10 @@ namespace PeteTech
     internal class Macros : ISuspend
     {
 
-
+        private Stopwatch _stopwatch27K = new Stopwatch();
+        private Stopwatch _stopwatch3074 = new Stopwatch();
+        public TimeSpan Duration27K { get; private set; }
+        public TimeSpan Duration3074 { get; private set; }
         public int FpsValue { get; set; }
 
         public string? Pmessage;
@@ -33,24 +36,66 @@ namespace PeteTech
         private bool _rulesEnabled27K;
         private bool _rulesEnabledDC;
 
+        
         public bool RulesEnabled3074
         {
-            get => _rulesEnabled3074;
+            get { return _rulesEnabled3074; }
             set
             {
-                _rulesEnabled3074 = value;
                 UpdateLabels();
+                if (_rulesEnabled3074 != value)
+                {
+                    _rulesEnabled3074 = value;
+                    if (_rulesEnabled3074)
+                    {
+                        _stopwatch3074.Start();
+                    }
+                    else
+                    {
+                        _stopwatch3074.Stop();
+                        Duration3074 += _stopwatch3074.Elapsed;
+                        _stopwatch3074.Reset();
+                        OnDuration3074Changed();
+                    }
+                }
             }
         }
 
+
         public bool RulesEnabled27K
         {
-            get => _rulesEnabled27K;
+            get { return _rulesEnabled27K; }
             set
             {
-                _rulesEnabled27K = value;
-                UpdateLabels();
+                if (_rulesEnabled27K != value)
+                {
+                    _rulesEnabled27K = value;
+                    UpdateLabels();
+                    if (_rulesEnabled27K)
+                    {
+                        _stopwatch27K.Start();
+                    }
+                    else
+                    {
+                        _stopwatch27K.Stop();
+                        Duration27K += _stopwatch27K.Elapsed;
+                        _stopwatch27K.Reset();
+                        OnDuration27KChanged();
+                    }
+                }
             }
+        }
+
+        public event EventHandler Duration27KChanged;
+        public event EventHandler Duration3074Changed;
+
+        protected virtual void OnDuration27KChanged()
+        {
+            Duration27KChanged?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDuration3074Changed()
+        {
+            Duration3074Changed?.Invoke(this, EventArgs.Empty);
         }
 
         public bool RulesEnabledDC

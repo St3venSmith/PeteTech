@@ -6,6 +6,7 @@
         public int delayPBox;
         public bool bufferON;
         public bool buffer;
+        private DataPoints dataPoints;
 
 
 
@@ -22,6 +23,44 @@
         public Form1()
         {
             InitializeComponent();
+            
+
+            dataPoints = new DataPoints();
+            string folderPath = @"C:\PeteData";
+            string filePath = Path.Combine(folderPath, "PeteData.txt");
+            if (File.Exists(filePath))
+            {
+                btnStartTracking.Enabled = false;
+            }
+
+
+            if (Directory.Exists(folderPath))
+            {
+                dataPoints.LoadDataPoints();
+                lblDateTrack.Text = File.GetCreationTime(filePath).ToString();
+                lbl27kTrack.Text = dataPoints.Duration27K.ToString();
+                lbl3074Track.Text = dataPoints.Duration3074.ToString();
+                lblDCtrack.Text = dataPoints.DataPoint3.ToString();
+                lblFBTrack.Text = dataPoints.DataPoint4.ToString();
+                lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
+                lblSoloTrack.Text = dataPoints.DataPoint2.ToString();
+                lblFullPause.Text = dataPoints.DataPoint1.ToString();
+            }
+            else if (!Directory.Exists(filePath))
+            {
+                lblDateTrack.Text = "No Data";
+                lbl27kTrack.Text = "No Data";
+                lbl3074Track.Text = "No Data";
+                lblDCtrack.Text = "No Data";
+                lblFBTrack.Text = "No Data";
+                lblPboxTrack.Text = "No Data";
+                lblSoloTrack.Text = "No Data";
+                lblFullPause.Text = "No Data";
+            }
+
+
+
+
             this.KeyPreview = true;
             this.KeyPress += Form_KeyPress;
 
@@ -30,6 +69,8 @@
 
 
             macros = new Macros();
+            macros.Duration27KChanged += Macros_Duration27KChanged;
+            macros.Duration3074Changed += Macros_Duration3074Changed;
 
 
             // Create instances of HotkeyHelper for each TextBox
@@ -62,15 +103,27 @@
             lbl3074Status.Text = status;
         }
 
+        private void Macros_Duration27KChanged(object sender, EventArgs e)
+        {
+            dataPoints.SetDuration27K(macros.Duration27K);
+            lbl27kTrack.Text = macros.Duration27K.ToString();
+            dataPoints.SaveDataPoints();
+        }
+
+        private void Macros_Duration3074Changed(object sender, EventArgs e)
+        {
+            dataPoints.SetDuration3074(macros.Duration3074);
+            lbl3074Track.Text = macros.Duration3074.ToString();
+            dataPoints.SaveDataPoints();
+        }
+
         // Expose FPS Bar value as a property
         public int FpsBarValue
         {
             get => tbFpsBar.Value; // Get the current value
             set => tbFpsBar.Value = value; // Set a new value
         }
-
-
-
+       
         public void UpdateFormLabels(string lbltS, string lbltrs)
         {
             lbl27Status.Text = macros.lbltS;
@@ -226,10 +279,12 @@
                     }
                 }
             }
+
         }
         private void btnSolo_Click(object sender, EventArgs e)
         {
             macros.SoloScript();
+            dataPoints.UpdateDataPoint(2, 1);
         }
 
 
@@ -275,7 +330,7 @@
 
         }
 
-        // H
+
         private void Form_KeyPress(object sender, KeyPressEventArgs e)
         {
 
@@ -332,20 +387,10 @@
             macros.DCScript();
         }
 
-
-
-
-
-
-
-
-
-
-
-        // Code for Other Methods
-        // could make a class for this but i was on lunch
-
-
+        private void btnStartTracking_Click(object sender, EventArgs e)
+        {
+            dataPoints.CreateFolderAndFile();
+        }
 
     }
 }
