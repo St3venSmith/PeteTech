@@ -78,6 +78,8 @@
             tabPage2 = new TabPage();
             label1 = new Label();
             toolTip1 = new ToolTip(components);
+            fontDialog1 = new FontDialog();
+            pageSetupDialog1 = new PageSetupDialog();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -88,8 +90,9 @@
             // 
             // btn27K
             // 
+            btn27K.FlatStyle = FlatStyle.Popup;
             btn27K.ImageKey = "(none)";
-            btn27K.Location = new Point(75, 2);
+            btn27K.Location = new Point(75, 5);
             btn27K.Margin = new Padding(3, 2, 3, 2);
             btn27K.Name = "btn27K";
             btn27K.Size = new Size(82, 22);
@@ -101,7 +104,10 @@
             // 
             // btn3074
             // 
-            btn3074.Location = new Point(75, 28);
+            btn3074.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn3074.FlatStyle = FlatStyle.Popup;
+            btn3074.ForeColor = SystemColors.ActiveCaptionText;
+            btn3074.Location = new Point(75, 31);
             btn3074.Margin = new Padding(3, 2, 3, 2);
             btn3074.Name = "btn3074";
             btn3074.Size = new Size(82, 22);
@@ -113,11 +119,12 @@
             // 
             // chkAutoBuffer
             // 
+            chkAutoBuffer.Appearance = Appearance.Button;
             chkAutoBuffer.AutoSize = true;
             chkAutoBuffer.Location = new Point(6, 56);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
-            chkAutoBuffer.Size = new Size(87, 19);
+            chkAutoBuffer.Size = new Size(78, 26);
             chkAutoBuffer.TabIndex = 2;
             chkAutoBuffer.Text = "Auto Buffer";
             toolTip1.SetToolTip(chkAutoBuffer, "Buffers the limit held");
@@ -126,15 +133,18 @@
             // 
             // chkSounds
             // 
+            chkSounds.Appearance = Appearance.Button;
             chkSounds.AutoSize = true;
-            chkSounds.Location = new Point(96, 56);
+            chkSounds.BackColor = Color.Transparent;
+            chkSounds.FlatAppearance.BorderColor = Color.Red;
+            chkSounds.Location = new Point(90, 56);
             chkSounds.Margin = new Padding(3, 2, 3, 2);
             chkSounds.Name = "chkSounds";
-            chkSounds.Size = new Size(65, 19);
+            chkSounds.Size = new Size(56, 26);
             chkSounds.TabIndex = 3;
             chkSounds.Text = "Sounds";
             toolTip1.SetToolTip(chkSounds, "Turns sound on to let you know if you are limiting");
-            chkSounds.UseVisualStyleBackColor = true;
+            chkSounds.UseVisualStyleBackColor = false;
             chkSounds.CheckedChanged += chkSounds_CheckedChanged;
             // 
             // tabControl1
@@ -157,6 +167,7 @@
             tabPage1.BackColor = Color.Transparent;
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
+            tabPage1.BorderStyle = BorderStyle.FixedSingle;
             tabPage1.Controls.Add(btnDC);
             tabPage1.Controls.Add(lbl3074Status);
             tabPage1.Controls.Add(lbl27Status);
@@ -178,6 +189,9 @@
             tabPage1.Controls.Add(chkSounds);
             tabPage1.Controls.Add(btn27K);
             tabPage1.Controls.Add(chkAutoBuffer);
+            tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabPage1.ForeColor = SystemColors.Desktop;
+            tabPage1.ImageKey = "(none)";
             tabPage1.Location = new Point(4, 24);
             tabPage1.Margin = new Padding(3, 2, 3, 2);
             tabPage1.Name = "tabPage1";
@@ -185,6 +199,7 @@
             tabPage1.Size = new Size(692, 310);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnDC
             // 
@@ -200,18 +215,18 @@
             // lbl3074Status
             // 
             lbl3074Status.AutoSize = true;
-            lbl3074Status.Location = new Point(192, 32);
+            lbl3074Status.Location = new Point(192, 34);
             lbl3074Status.Name = "lbl3074Status";
-            lbl3074Status.Size = new Size(28, 15);
+            lbl3074Status.Size = new Size(28, 16);
             lbl3074Status.TabIndex = 19;
             lbl3074Status.Text = "OFF";
             // 
             // lbl27Status
             // 
             lbl27Status.AutoSize = true;
-            lbl27Status.Location = new Point(192, 6);
+            lbl27Status.Location = new Point(192, 8);
             lbl27Status.Name = "lbl27Status";
-            lbl27Status.Size = new Size(28, 15);
+            lbl27Status.Size = new Size(28, 16);
             lbl27Status.TabIndex = 18;
             lbl27Status.Text = "OFF";
             // 
@@ -222,7 +237,7 @@
             cbo3074.Items.AddRange(new object[] { "in/out", "in", "out" });
             cbo3074.Location = new Point(6, 29);
             cbo3074.Name = "cbo3074";
-            cbo3074.Size = new Size(63, 23);
+            cbo3074.Size = new Size(63, 24);
             cbo3074.TabIndex = 17;
             toolTip1.SetToolTip(cbo3074, "Select Option");
             cbo3074.SelectedIndexChanged += cbo3074_SelectedIndexChanged;
@@ -234,7 +249,7 @@
             cmbo27k.Items.AddRange(new object[] { "in/out", "in", "out" });
             cmbo27k.Location = new Point(6, 3);
             cmbo27k.Name = "cmbo27k";
-            cmbo27k.Size = new Size(63, 23);
+            cmbo27k.Size = new Size(63, 24);
             cmbo27k.TabIndex = 16;
             toolTip1.SetToolTip(cmbo27k, "Select Option");
             cmbo27k.SelectedIndexChanged += cmbo27k_SelectedIndexChanged;
@@ -244,7 +259,7 @@
             lblFPS.AutoSize = true;
             lblFPS.Location = new Point(401, 142);
             lblFPS.Name = "lblFPS";
-            lblFPS.Size = new Size(38, 15);
+            lblFPS.Size = new Size(38, 16);
             lblFPS.TabIndex = 15;
             lblFPS.Text = "label5";
             // 
@@ -253,7 +268,7 @@
             label4.AutoSize = true;
             label4.Location = new Point(366, 142);
             label4.Name = "label4";
-            label4.Size = new Size(29, 15);
+            label4.Size = new Size(29, 16);
             label4.TabIndex = 14;
             label4.Text = "FPS:";
             label4.Click += label4_Click;
@@ -285,10 +300,10 @@
             // 
             // txtFBHK
             // 
-            txtFBHK.Location = new Point(91, 193);
+            txtFBHK.Location = new Point(96, 193);
             txtFBHK.MaxLength = 1;
             txtFBHK.Name = "txtFBHK";
-            txtFBHK.Size = new Size(21, 23);
+            txtFBHK.Size = new Size(21, 22);
             txtFBHK.TabIndex = 11;
             toolTip1.SetToolTip(txtFBHK, "Keybind box for Fuision Breach: Equip Fusion Nades");
             // 
@@ -297,34 +312,34 @@
             lblFusion.AutoSize = true;
             lblFusion.Location = new Point(6, 196);
             lblFusion.Name = "lblFusion";
-            lblFusion.Size = new Size(81, 15);
+            lblFusion.Size = new Size(81, 16);
             lblFusion.TabIndex = 10;
             lblFusion.Text = "Fusion Breach";
             // 
             // txt27HK
             // 
-            txt27HK.Location = new Point(163, 3);
+            txt27HK.Location = new Point(163, 6);
             txt27HK.MaxLength = 1;
             txt27HK.Name = "txt27HK";
-            txt27HK.Size = new Size(23, 23);
+            txt27HK.Size = new Size(23, 22);
             txt27HK.TabIndex = 9;
             toolTip1.SetToolTip(txt27HK, "Keybind For 27K");
             // 
             // txt3074HK
             // 
-            txt3074HK.Location = new Point(163, 29);
+            txt3074HK.Location = new Point(163, 32);
             txt3074HK.MaxLength = 1;
             txt3074HK.Name = "txt3074HK";
-            txt3074HK.Size = new Size(23, 23);
+            txt3074HK.Size = new Size(23, 22);
             txt3074HK.TabIndex = 8;
             toolTip1.SetToolTip(txt3074HK, "Keybind for 3074");
             // 
             // txtPauseHotKey
             // 
-            txtPauseHotKey.Location = new Point(48, 89);
+            txtPauseHotKey.Location = new Point(44, 89);
             txtPauseHotKey.MaxLength = 1;
             txtPauseHotKey.Name = "txtPauseHotKey";
-            txtPauseHotKey.Size = new Size(37, 23);
+            txtPauseHotKey.Size = new Size(25, 22);
             txtPauseHotKey.TabIndex = 7;
             toolTip1.SetToolTip(txtPauseHotKey, "Keybind box for Pause");
             // 
@@ -333,16 +348,19 @@
             label3.AutoSize = true;
             label3.Location = new Point(4, 92);
             label3.Name = "label3";
-            label3.Size = new Size(38, 15);
+            label3.Size = new Size(38, 16);
             label3.TabIndex = 6;
             label3.Text = "Pause";
             // 
             // txtPboxHotKey
             // 
-            txtPboxHotKey.Location = new Point(48, 118);
+            txtPboxHotKey.BackColor = SystemColors.HighlightText;
+            txtPboxHotKey.ForeColor = SystemColors.WindowText;
+            txtPboxHotKey.HideSelection = false;
+            txtPboxHotKey.Location = new Point(44, 118);
             txtPboxHotKey.MaxLength = 1;
             txtPboxHotKey.Name = "txtPboxHotKey";
-            txtPboxHotKey.Size = new Size(37, 23);
+            txtPboxHotKey.Size = new Size(25, 22);
             txtPboxHotKey.TabIndex = 5;
             toolTip1.SetToolTip(txtPboxHotKey, "Keybind box for Pbox");
             txtPboxHotKey.TextChanged += textBox1_TextChanged;
@@ -352,7 +370,7 @@
             label2.AutoSize = true;
             label2.Location = new Point(4, 121);
             label2.Name = "label2";
-            label2.Size = new Size(34, 15);
+            label2.Size = new Size(34, 16);
             label2.TabIndex = 4;
             label2.Text = "Pbox";
             label2.Click += label2_Click;
@@ -598,6 +616,10 @@
             toolTip1.SetToolTip(label1, "Noob Like Futa");
             label1.Click += label1_Click;
             // 
+            // pageSetupDialog1
+            // 
+            pageSetupDialog1.ShowHelp = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -680,5 +702,7 @@
         private Label lblDateTrack;
         private Label label13;
         private Label lblSoloTrack;
+        private FontDialog fontDialog1;
+        private PageSetupDialog pageSetupDialog1;
     }
 }
