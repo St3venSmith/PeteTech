@@ -1,7 +1,6 @@
 ﻿using ProcessManagement;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 namespace PeteTech
 {
@@ -24,7 +23,7 @@ namespace PeteTech
 
         public string lbltrS; // lable for 3074
 
-        
+
 
         public bool isSoundOn = false;
 
@@ -36,7 +35,42 @@ namespace PeteTech
         private bool _rulesEnabled27K;
         private bool _rulesEnabledDC;
 
-        
+
+
+        /// <summary>
+        /// Events for Stat tracking things
+        /// </summary>
+        public event EventHandler DataPoint1Incremented;
+        public event EventHandler DataPoint2Incremented;
+        public event EventHandler DataPoint3Incremented;
+        public event EventHandler DataPoint4Incremented;
+        public event EventHandler DataPoint5Incremented;
+
+
+
+
+        protected virtual void OnDataPoint1Incremented()
+        {
+            DataPoint1Incremented?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDataPoint2Incremented()
+        {
+            DataPoint2Incremented?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDataPoint3Incremented()
+        {
+            DataPoint3Incremented?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDataPoint4Incremented()
+        {
+            DataPoint4Incremented?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDataPoint5Incremented()
+        {
+            DataPoint5Incremented?.Invoke(this, EventArgs.Empty);
+        }
+
+
         public bool RulesEnabled3074
         {
             get { return _rulesEnabled3074; }
@@ -71,7 +105,7 @@ namespace PeteTech
                 if (_rulesEnabled27K != value)
                 {
                     _rulesEnabled27K = value;
-                    
+
                     if (_rulesEnabled27K)
                     {
                         _stopwatch27K.Start();
@@ -178,7 +212,7 @@ namespace PeteTech
             KeyDown(VKC.VK_BACK);
             KeyUp(VKC.VK_BACK);
             await Task.Delay(10);
-            
+
 
 
             if (Pmessage != null)
@@ -226,6 +260,8 @@ namespace PeteTech
 
             // Send {N up}
             KeyUp(VKC.VK_N);
+
+            OnDataPoint5Incremented();
         }
 
         public void txtPauseHotKey()
@@ -233,7 +269,7 @@ namespace PeteTech
             if (togglePause = !togglePause) // Toggle the state
             {
                 // Update the GUI to show "ON" status
-
+                OnDataPoint1Incremented();
 
                 // Suspend the "destiny2.exe" process
                 Process_Suspend("focused");
@@ -403,6 +439,7 @@ namespace PeteTech
 
         public async void txtFBHK()
         {
+
             // Press and hold "Q"
             KeyDown(VKC.VK_Q);
             await Task.Delay(200);
@@ -427,12 +464,15 @@ namespace PeteTech
             KeyUp(VKC.VK_A);
             KeyUp(VKC.VK_Q);
 
+            OnDataPoint4Incremented();
+
         }
 
         public void SoloScript()
         {
             if (RulesEnabled27K)  // Check if the rules are enabled
             {
+
                 MessageBox.Show("Solo script Stopped");
                 Disable27K();
                 RulesEnabled27K = false;
@@ -443,6 +483,7 @@ namespace PeteTech
             }
             else
             {
+
                 MessageBox.Show("Solo script Started");
                 Enable27K();
                 RulesEnabled27K = true;
@@ -450,6 +491,8 @@ namespace PeteTech
                 {
                     PlaySoundCue(true);
                 }
+                OnDataPoint2Incremented();
+
             }
 
         }
@@ -467,6 +510,7 @@ namespace PeteTech
             {
                 PlaySoundCue(false);
             }
+            OnDataPoint3Incremented();
 
         }
 
@@ -822,7 +866,7 @@ namespace PeteTech
             lbltrS = RulesEnabled3074 ? "ON" : "OFF";
             OnUpdateLbl27Status?.Invoke(lbltS);
             OnUpdateLbl3074Status?.Invoke(lbltrS);
-            
+
         }
 
     }

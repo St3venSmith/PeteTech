@@ -9,7 +9,8 @@ namespace PeteTech
     public class DataPoints
     {
         private readonly string folderPath = @"C:\PeteData";
-        private readonly string filePath;
+        private readonly string filePath = Path.Combine(@"C:\PeteData", "PeteData.txt");
+       
 
         public int DataPoint1 { get; set; }
         public int DataPoint2 { get; set; }

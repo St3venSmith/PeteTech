@@ -82,6 +82,11 @@
 
             macros.OnUpdateLbl27Status += UpdateLbl27Status;
             macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
+            macros.DataPoint1Incremented += Macros_DataPoint1Incremented; // full pause
+            macros.DataPoint2Incremented += Macros_DataPoint2Incremented; // solo
+            macros.DataPoint3Incremented += Macros_DataPoint3Incremented; // dc box
+            macros.DataPoint4Incremented += Macros_DataPoint4Incremented; // fb box
+            macros.DataPoint5Incremented += Macros_DataPoint5Incremented; // p box
 
 
             // Attach Scroll event handler
@@ -92,6 +97,37 @@
             cmbo27k.Text = "in/out";
         }
 
+        // Event handler
+        private void Macros_DataPoint1Incremented(object sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(1, 1); // Increment DataPoint1 in DataPoints
+            lblFullPause.Text = dataPoints.DataPoint1.ToString(); // Update the label
+        }
+        private void Macros_DataPoint2Incremented(object sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(2, 1); // Increment DataPoint1 in DataPoints
+            lblSoloTrack.Text = dataPoints.DataPoint2.ToString(); // Update the label
+        }
+        private void Macros_DataPoint3Incremented(object sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(3, 1); // Increment DataPoint1 in DataPoints
+            lblDCtrack.Text = dataPoints.DataPoint3.ToString(); // Update the label
+        }
+        private void Macros_DataPoint4Incremented(object sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(4, 1); // Increment DataPoint1 in DataPoints
+            lblFBTrack.Text = dataPoints.DataPoint4.ToString(); // Update the label
+        }
+        private void Macros_DataPoint5Incremented(object sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(5, 1); // Increment DataPoint1 in DataPoints
+            lblPboxTrack.Text = dataPoints.DataPoint5.ToString(); // Update the label
+        }
 
         private void UpdateLbl27Status(string status)
         {
@@ -106,14 +142,14 @@
         private void Macros_Duration27KChanged(object sender, EventArgs e)
         {
             dataPoints.SetDuration27K(macros.Duration27K);
-            lbl27kTrack.Text = macros.Duration27K.ToString();
+            lbl27kTrack.Text = macros.Duration27K.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SaveDataPoints();
         }
 
         private void Macros_Duration3074Changed(object sender, EventArgs e)
         {
             dataPoints.SetDuration3074(macros.Duration3074);
-            lbl3074Track.Text = macros.Duration3074.ToString();
+            lbl3074Track.Text = macros.Duration3074.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SaveDataPoints();
         }
 
@@ -284,7 +320,6 @@
         private void btnSolo_Click(object sender, EventArgs e)
         {
             macros.SoloScript();
-            dataPoints.UpdateDataPoint(2, 1);
         }
 
 
@@ -390,6 +425,7 @@
         private void btnStartTracking_Click(object sender, EventArgs e)
         {
             dataPoints.CreateFolderAndFile();
+            btnStartTracking.Enabled = false;
         }
 
     }
