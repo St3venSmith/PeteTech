@@ -442,8 +442,9 @@ namespace PeteTech
 
             // Press and hold "Q"
             KeyDown(VKC.VK_Q);
-            await Task.Delay(200);
             KeyUp(VKC.VK_Q);
+            await Task.Delay(200);
+           
 
             // Press "N" and wait
             KeyDown(VKC.VK_N);
@@ -453,28 +454,21 @@ namespace PeteTech
             // Press "A" and wait
             KeyDown(VKC.VK_A);
             await Task.Delay(425);
-
-
-
-
-            // Press "Space" and "A"
-            KeyDown(VKC.VK_Q);
-            await Task.Delay(10);
             KeyDown(VKC.VK_SPACE);
+            KeyUp(VKC.VK_SPACE);
             KeyUp(VKC.VK_A);
-            KeyUp(VKC.VK_Q);
 
             OnDataPoint4Incremented();
-
         }
 
         public void SoloScript()
         {
             if (RulesEnabled27K)  // Check if the rules are enabled
             {
-
                 MessageBox.Show("Solo script Stopped");
                 Disable27K();
+                RulesEnabled27K = false;
+               
                 RulesEnabled27K = false;
                 if (isSoundOn)
                 {
@@ -486,6 +480,7 @@ namespace PeteTech
 
                 MessageBox.Show("Solo script Started");
                 Enable27K();
+                RulesEnabled27K = true;
                 RulesEnabled27K = true;
                 if (isSoundOn)
                 {
