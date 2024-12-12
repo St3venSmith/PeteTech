@@ -442,9 +442,11 @@ namespace PeteTech
 
             // Press and hold "Q"
             KeyDown(VKC.VK_Q);
+            
+            await Task.Delay(190);
             KeyUp(VKC.VK_Q);
-            await Task.Delay(200);
-           
+            await Task.Delay(10);
+
 
             // Press "N" and wait
             KeyDown(VKC.VK_N);
@@ -453,8 +455,9 @@ namespace PeteTech
 
             // Press "A" and wait
             KeyDown(VKC.VK_A);
-            await Task.Delay(425);
+            await Task.Delay(500);
             KeyDown(VKC.VK_SPACE);
+            await Task.Delay(10);
             KeyUp(VKC.VK_SPACE);
             KeyUp(VKC.VK_A);
 
