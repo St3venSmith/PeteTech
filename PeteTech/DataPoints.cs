@@ -177,12 +177,16 @@ namespace PeteTech
 
         public void SetDuration27K(TimeSpan duration)
         {
-            Duration27K = duration;
+            
+            Duration27K += duration;
+            
         }
 
         public void SetDuration3074(TimeSpan duration)
         {
-            Duration3074 = duration;
+           
+            Duration3074 += duration;
+            
         }
 
         public TimeSpan GetDuration27K()

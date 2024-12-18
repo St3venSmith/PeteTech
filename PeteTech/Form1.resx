@@ -12660,9 +12660,6 @@
         AAAAAKbDDTf8F3M2yM6QU+bEAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="cbo3074.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="fontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>114, 17</value>
   </metadata>

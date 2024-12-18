@@ -33,14 +33,17 @@
 
             ColorDialog colorDialog1 = new ColorDialog();
             ColorDialog colorDialog2 = new ColorDialog();
+           
 
 
             dataPoints = new DataPoints();
+            
             string folderPath = @"C:\PeteData";
             string filePath = Path.Combine(folderPath, "PeteData.txt");
             if (File.Exists(filePath))
             {
                 btnStartTracking.Enabled = false;
+                dataPoints.LoadDataPoints();
             }
 
 
@@ -48,8 +51,8 @@
             {
                 dataPoints.LoadDataPoints();
                 lblDateTrack.Text = File.GetCreationTime(filePath).ToString();
-                lbl27kTrack.Text = dataPoints.Duration27K.ToString();
-                lbl3074Track.Text = dataPoints.Duration3074.ToString();
+                lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
+                lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
                 lblDCtrack.Text = dataPoints.DataPoint3.ToString();
                 lblFBTrack.Text = dataPoints.DataPoint4.ToString();
                 lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
@@ -79,6 +82,11 @@
 
 
             macros = new Macros();
+            
+
+
+
+
             macros.Duration27KChanged += Macros_Duration27KChanged;
             macros.Duration3074Changed += Macros_Duration3074Changed;
 
@@ -154,15 +162,17 @@
 
         private void Macros_Duration27KChanged(object sender, EventArgs e)
         {
+            lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SetDuration27K(macros.Duration27K);
-            lbl27kTrack.Text = macros.Duration27K.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SaveDataPoints();
+            
+            
         }
 
         private void Macros_Duration3074Changed(object sender, EventArgs e)
         {
+            lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SetDuration3074(macros.Duration3074);
-            lbl3074Track.Text = macros.Duration3074.ToString(@"dd\.hh\:mm\:ss");
             dataPoints.SaveDataPoints();
         }
 
