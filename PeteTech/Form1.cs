@@ -27,17 +27,17 @@
             InitializeComponent();
 
             Form form = this;
-            
+
 
             FontDialog fontDialog1 = new FontDialog();
 
             ColorDialog colorDialog1 = new ColorDialog();
             ColorDialog colorDialog2 = new ColorDialog();
-           
+
 
 
             dataPoints = new DataPoints();
-            
+
             string folderPath = @"C:\PeteData";
             string filePath = Path.Combine(folderPath, "PeteData.txt");
             if (File.Exists(filePath))
@@ -82,7 +82,7 @@
 
 
             macros = new Macros();
-            
+
 
 
 
@@ -162,18 +162,20 @@
 
         private void Macros_Duration27KChanged(object sender, EventArgs e)
         {
-            lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
+
             dataPoints.SetDuration27K(macros.Duration27K);
             dataPoints.SaveDataPoints();
-            
-            
+            lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
+
+
         }
 
         private void Macros_Duration3074Changed(object sender, EventArgs e)
         {
-            lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
+
             dataPoints.SetDuration3074(macros.Duration3074);
             dataPoints.SaveDataPoints();
+            lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
         }
 
         // Expose FPS Bar value as a property
@@ -577,7 +579,7 @@
                 tabControl1.TabPages[4].BackColor = colorDialog1.Color;
 
             }
-               
+
         }
     }
 }
