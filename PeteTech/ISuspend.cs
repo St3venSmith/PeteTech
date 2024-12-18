@@ -5,9 +5,6 @@ namespace ProcessManagement
 {
     internal class ISuspend : Form
     {
-
-
-
         // Constants for process access rights
         private const uint PROCESS_ALL_ACCESS = 0x1F0FFF;
 
@@ -36,7 +33,19 @@ namespace ProcessManagement
         /// <param name="pidOrName">The PID or process name. Pass "focused" to suspend the focused window.</param>
         public static void Process_Suspend(string pidOrName)
         {
+
+            int currentProcessId = Process.GetCurrentProcess().Id;
+
+            // Check if the process to be suspended is the current process
+            
+
             int pid = pidOrName.ToLower() == "focused" ? GetFocusedWindowPID() : GetProcessId(pidOrName);
+
+            if (pid == currentProcessId)
+            {
+                return;
+            }
+
             if (pid == -1)
             {
                 Console.WriteLine("Process not found.");

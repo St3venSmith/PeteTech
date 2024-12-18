@@ -10,6 +10,8 @@
 
 
 
+
+
         private HotkeyHelper hotkey1; // Helper for Pbox
         private HotkeyHelper hotkey2; // Helper for Pause
         private HotkeyHelper hotkey3; // helper for 27k
@@ -23,7 +25,15 @@
         public Form1()
         {
             InitializeComponent();
+
+            Form form = this;
             
+
+            FontDialog fontDialog1 = new FontDialog();
+
+            ColorDialog colorDialog1 = new ColorDialog();
+            ColorDialog colorDialog2 = new ColorDialog();
+
 
             dataPoints = new DataPoints();
             string folderPath = @"C:\PeteData";
@@ -97,6 +107,9 @@
             cmbo27k.Text = "in/out";
         }
 
+
+
+
         // Event handler
         private void Macros_DataPoint1Incremented(object sender, EventArgs e)
         {
@@ -159,7 +172,7 @@
             get => tbFpsBar.Value; // Get the current value
             set => tbFpsBar.Value = value; // Set a new value
         }
-       
+
         public void UpdateFormLabels(string lbltS, string lbltrs)
         {
             lbl27Status.Text = macros.lbltS;
@@ -376,6 +389,7 @@
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             macros.Disable27K();
             macros.Disable3074();
+            dataPoints.SaveDataPoints();
             base.OnFormClosed(e);
         }
 
@@ -428,5 +442,132 @@
             btnStartTracking.Enabled = false;
         }
 
+
+        // customization shi
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                lblFPS.ForeColor = colorDialog1.Color;
+                lbl27kTrack.ForeColor = colorDialog1.Color;
+                lbl3074Track.ForeColor = colorDialog1.Color;
+                lblDCtrack.ForeColor = colorDialog1.Color;
+                lblFBTrack.ForeColor = colorDialog1.Color;
+                lblPboxTrack.ForeColor = colorDialog1.Color;
+                lblSoloTrack.ForeColor = colorDialog1.Color;
+                lblFullPause.ForeColor = colorDialog1.Color;
+                label1.ForeColor = colorDialog1.Color;
+                label2.ForeColor = colorDialog1.Color;
+                label3.ForeColor = colorDialog1.Color;
+                label4.ForeColor = colorDialog1.Color;
+                label5.ForeColor = colorDialog1.Color;
+                label6.ForeColor = colorDialog1.Color;
+                label7.ForeColor = colorDialog1.Color;
+                label8.ForeColor = colorDialog1.Color;
+                label9.ForeColor = colorDialog1.Color;
+                label10.ForeColor = colorDialog1.Color;
+                label11.ForeColor = colorDialog1.Color;
+                label12.ForeColor = colorDialog1.Color;
+                label13.ForeColor = colorDialog1.Color;
+                label14.ForeColor = colorDialog1.Color;
+                label15.ForeColor = colorDialog1.Color;
+                lbl27Status.ForeColor = colorDialog1.Color;
+                lbl3074Status.ForeColor = colorDialog1.Color;
+                lblFPS.ForeColor = colorDialog1.Color;
+                lblDateTrack.ForeColor = colorDialog1.Color;
+                lblFullPause.ForeColor = colorDialog1.Color;
+                lblFusion.ForeColor = colorDialog1.Color;
+                btnSolo.ForeColor = colorDialog1.Color;
+                btnDC.ForeColor = colorDialog1.Color;
+                chkAutoBuffer.ForeColor = colorDialog1.Color;
+                chkSounds.ForeColor = colorDialog1.Color;
+                btnStartTracking.ForeColor = colorDialog1.Color;
+                btn27K.ForeColor = colorDialog1.Color;
+                btn3074.ForeColor = colorDialog1.Color;
+                cmbo27k.ForeColor = colorDialog1.Color;
+                cbo3074.ForeColor = colorDialog1.Color;
+                btnChangeFont.ForeColor = colorDialog1.Color;
+                btnColor.ForeColor = colorDialog1.Color;
+                btnTheme.ForeColor = colorDialog1.Color;
+            }
+
+        }
+
+        private void trcTrans_Scroll(object sender, EventArgs e)
+        {
+            Form form = this;
+            form.Opacity = (double)trcTrans.Value / 100;
+        }
+
+        private void btnChangeFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+
+            {
+
+                // Apply the selected font to a textbox (named "textBox1" in this example)
+
+
+
+                lblFPS.Font = fontDialog1.Font;
+                lbl27kTrack.Font = fontDialog1.Font;
+                lbl3074Track.Font = fontDialog1.Font;
+                lblDCtrack.Font = fontDialog1.Font;
+                lblFBTrack.Font = fontDialog1.Font;
+                lblPboxTrack.Font = fontDialog1.Font;
+                lblSoloTrack.Font = fontDialog1.Font;
+                lblFullPause.Font = fontDialog1.Font;
+                label1.Font = fontDialog1.Font;
+                label2.Font = fontDialog1.Font;
+                label3.Font = fontDialog1.Font;
+                label4.Font = fontDialog1.Font;
+                label5.Font = fontDialog1.Font;
+                label6.Font = fontDialog1.Font;
+                label7.Font = fontDialog1.Font;
+                label8.Font = fontDialog1.Font;
+                label9.Font = fontDialog1.Font;
+                label10.Font = fontDialog1.Font;
+                label11.Font = fontDialog1.Font;
+                label12.Font = fontDialog1.Font;
+                label13.Font = fontDialog1.Font;
+                label14.Font = fontDialog1.Font;
+                label15.Font = fontDialog1.Font;
+                lbl27Status.Font = fontDialog1.Font;
+                lbl3074Status.Font = fontDialog1.Font;
+                lblDateTrack.Font = fontDialog1.Font;
+                lblFusion.Font = fontDialog1.Font;
+                btnSolo.Font = fontDialog1.Font;
+                btnDC.Font = fontDialog1.Font;
+                chkAutoBuffer.Font = fontDialog1.Font;
+                chkSounds.Font = fontDialog1.Font;
+                btnStartTracking.Font = fontDialog1.Font;
+                btn27K.Font = fontDialog1.Font;
+                btn3074.Font = fontDialog1.Font;
+                cmbo27k.Font = fontDialog1.Font;
+                cbo3074.Font = fontDialog1.Font;
+                btnChangeFont.Font = fontDialog1.Font;
+                btnColor.Font = fontDialog1.Font;
+                tabControl1.Font = fontDialog1.Font;
+                btnTheme.Font = fontDialog1.Font;
+
+
+            }
+        }
+
+        private void btnTheme_Click(object sender, EventArgs e)
+        {
+            Form form = this;
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                tabControl1.TabPages[0].BackColor = colorDialog1.Color;
+                tabControl1.TabPages[1].BackColor = colorDialog1.Color;
+                tabControl1.TabPages[2].BackColor = colorDialog1.Color;
+                tabControl1.TabPages[3].BackColor = colorDialog1.Color;
+                tabControl1.TabPages[4].BackColor = colorDialog1.Color;
+
+            }
+               
+        }
     }
 }
