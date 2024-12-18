@@ -658,7 +658,7 @@
             // 
             // btnTheme
             // 
-            btnTheme.Location = new Point(528, 50);
+            btnTheme.Location = new Point(171, 72);
             btnTheme.Name = "btnTheme";
             btnTheme.Size = new Size(75, 23);
             btnTheme.TabIndex = 4;
@@ -669,7 +669,7 @@
             // 
             // btnColor
             // 
-            btnColor.Location = new Point(609, 21);
+            btnColor.Location = new Point(90, 72);
             btnColor.Name = "btnColor";
             btnColor.Size = new Size(75, 23);
             btnColor.TabIndex = 3;
@@ -680,7 +680,7 @@
             // 
             // btnChangeFont
             // 
-            btnChangeFont.Location = new Point(528, 21);
+            btnChangeFont.Location = new Point(9, 72);
             btnChangeFont.Name = "btnChangeFont";
             btnChangeFont.Size = new Size(75, 23);
             btnChangeFont.TabIndex = 2;
@@ -692,7 +692,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(8, 3);
+            label15.Location = new Point(9, 3);
             label15.Name = "label15";
             label15.Size = new Size(76, 15);
             label15.TabIndex = 1;
