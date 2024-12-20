@@ -13,6 +13,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>PeteTech</Title>
     <PackAsTool>False</PackAsTool>
+    <FileVersion>1.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

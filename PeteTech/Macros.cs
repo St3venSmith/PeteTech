@@ -76,21 +76,26 @@ namespace PeteTech
             get { return _rulesEnabled3074; }
             set
             {
-                UpdateLabels();
+                
                 if (_rulesEnabled3074 != value)
                 {
+                    
                     _rulesEnabled3074 = value;
                     if (_rulesEnabled3074)
                     {
+                        
                         _stopwatch3074.Start();
                     }
                     else
                     {
+                        
                         _stopwatch3074.Stop();
                         Duration3074 += _stopwatch3074.Elapsed;
                         _stopwatch3074.Reset();
                         OnDuration3074Changed();
+                        
                     }
+                    UpdateLabels();
                 }
             }
         }
@@ -101,22 +106,26 @@ namespace PeteTech
             get { return _rulesEnabled27K; }
             set
             {
-                UpdateLabels();
+                
                 if (_rulesEnabled27K != value)
                 {
+                    
                     _rulesEnabled27K = value;
 
                     if (_rulesEnabled27K)
                     {
+                        
                         _stopwatch27K.Start();
                     }
                     else
                     {
+                        
                         _stopwatch27K.Stop();
                         Duration27K += _stopwatch27K.Elapsed;
                         _stopwatch27K.Reset();
                         OnDuration27KChanged();
                     }
+                    UpdateLabels();
                 }
             }
         }
