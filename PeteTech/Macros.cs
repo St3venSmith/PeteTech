@@ -2,10 +2,19 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
+using System;
+using System.Text;
+using System.Threading;
+using System.Reflection.Metadata;
+
+
 namespace PeteTech
 {
     internal class Macros : ISuspend
     {
+
+        public int x;
+        public int y;
 
         private Stopwatch _stopwatch27K = new Stopwatch();
         private Stopwatch _stopwatch3074 = new Stopwatch();
@@ -48,6 +57,30 @@ namespace PeteTech
 
 
 
+      
+
+        private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const uint MOUSEEVENTF_LEFTUP = 0x04;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void SetCursorPos(int x, int y);
+
+        // Method to move the mouse to a specific position
+        
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+
+        public void MouseDown()
+        {
+            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        }
+
+        public void MouseUp()
+        {
+            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+        }
+
 
         protected virtual void OnDataPoint1Incremented()
         {
@@ -69,7 +102,7 @@ namespace PeteTech
         {
             DataPoint5Incremented?.Invoke(this, EventArgs.Empty);
         }
-
+       
 
         public bool RulesEnabled3074
         {
@@ -152,6 +185,9 @@ namespace PeteTech
             }
         }
 
+        
+        
+        
         // Events to notify when labels need to be updated
         public event Action<string> OnUpdateLbl27Status;
         public event Action<string> OnUpdateLbl3074Status;
@@ -203,7 +239,158 @@ namespace PeteTech
 
         }
 
+       
+        
 
+        private const uint MOUSEEVENTF_MOVE = 0x0001;
+        private const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
+
+       
+
+        [DllImport("user32.dll")]
+        static extern int GetSystemMetrics(int nIndex);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct INPUT
+        {
+            public uint type;
+            public InputUnion u;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        struct InputUnion
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT mi;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct MOUSEINPUT
+        {
+            public int dx;
+            public int dy;
+            public uint mouseData;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        const uint INPUT_MOUSE = 0;
+        
+
+        public void MoveMouseTo(int x, int y)
+        {
+            // Get the current screen dimensions
+            int screenWidth = GetSystemMetrics(0);
+            int screenHeight = GetSystemMetrics(1);
+
+            // Define the base resolution (1080p)
+            int baseWidth = 1920;
+            int baseHeight = 1080;
+
+            // Calculate the scaling factors
+            double scaleX = (double)screenWidth / baseWidth;
+            double scaleY = (double)screenHeight / baseHeight;
+
+            // Scale the coordinates
+            int scaledX = (int)(x * scaleX);
+            int scaledY = (int)(y * scaleY);
+
+            // Move the mouse to the scaled coordinates
+            SetCursorPos(scaledX, scaledY);
+
+            INPUT[] inputs = new INPUT[1];
+            inputs[0].type = INPUT_MOUSE;
+            inputs[0].u.mi.dx = scaledX * (65536 / screenWidth); // Screen width
+            inputs[0].u.mi.dy = scaledY * (65536 / screenHeight); // Screen height
+            inputs[0].u.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        public async Task MoveMouseAcrossScreenAsync()
+        {
+            int screenWidth = GetSystemMetrics(0); // 0 is SM_CXSCREEN
+            int screenHeight = GetSystemMetrics(1); // 1 is SM_CYSCREEN
+
+            // Calculate the center of the screen
+            int centerX = screenWidth / 2;
+            int centerY = screenHeight / 2;
+
+            x += 100;
+            y += 100;
+
+            MoveMouseTo(x, y);
+
+        }
+
+        // mouse locations
+        // First slot 500, 370
+        // Second slot 500, 500
+        // Third slot 500, 650
+        // amour slots
+        // arm slot  1400, 370
+        // class slot 1400, 800
+        public async void txtAFK()
+        {
+            await Task.Delay(10);
+            KeyDown(VKC.VK_1);
+            await Task.Delay(200);
+            KeyUp(VKC.VK_1);
+            await Task.Delay(500);
+            MoveMouseTo(1400, 800);
+            await Task.Delay(200);
+            MoveMouseTo(1500, 800);
+            await Task.Delay(300);
+            MouseDown();
+            await Task.Delay(300);
+            MouseUp();
+            await Task.Delay(300);
+            KeyDown(VKC.VK_1);
+            await Task.Delay(200);
+            KeyUp(VKC.VK_1);
+        }
+        public async void txtMulti()
+        {
+
+            
+
+            
+            Enable3074();
+            
+            MouseDown();
+            
+            // 283 is the area code for Ohio
+            // thus i name thee ohio tech
+            await Task.Delay(40);
+            Process_Suspend("focused");
+            await Task.Delay(283);
+            Process_Resume("focused");
+            await Task.Delay(40);
+            Process_Suspend("focused");
+            await Task.Delay(283);
+            Process_Resume("focused");
+            await Task.Delay(40);
+            Process_Suspend("focused");
+            await Task.Delay(283);
+            Process_Resume("focused");
+            await Task.Delay(40);
+            Process_Suspend("focused");
+            await Task.Delay(283);
+            Process_Resume("focused");
+            await Task.Delay(40);
+            Process_Suspend("focused");
+            await Task.Delay(283);
+            Process_Resume("focused");
+            await Task.Delay(40);
+            MouseUp();
+            Disable3074();
+            //Noob likes Futa and Cake Farts
+
+        }
 
 
         public async void txtPboxHotKey()
@@ -520,12 +707,6 @@ namespace PeteTech
             OnDataPoint3Incremented();
 
         }
-
-
-
-
-
-
         public void EnableDC()
         {
             RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
@@ -539,6 +720,11 @@ namespace PeteTech
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
             RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
+        }
+
+        public void Enable27kTCPIN()
+        {
+            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
         }
         public async void Enable3074()
         {

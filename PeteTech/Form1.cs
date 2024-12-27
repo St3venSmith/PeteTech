@@ -1,11 +1,18 @@
-﻿namespace PeteTech
+﻿using System.Runtime.InteropServices;
+using System;
+using System.Windows.Forms;
+
+namespace PeteTech
 {
     public partial class Form1 : Form
     {
+
         public bool soundOn;
         public int delayPBox;
         public bool bufferON;
         public bool buffer;
+
+        public bool isAFK = false;
         private DataPoints dataPoints;
 
 
@@ -17,6 +24,7 @@
         private HotkeyHelper hotkey3; // helper for 27k
         private HotkeyHelper hotkey4; // helper for 3074
         private HotkeyHelper hotkey5; // helper for fusion breachz
+        private HotkeyHelper hotkey6;
         private Macros macros;
         private GlobalKeyListener _keyListener;
 
@@ -27,6 +35,7 @@
             InitializeComponent();
 
             Form form = this;
+
 
 
             FontDialog fontDialog1 = new FontDialog();
@@ -97,6 +106,7 @@
             hotkey3 = new HotkeyHelper(txt27HK, macros);
             hotkey4 = new HotkeyHelper(txt3074HK, macros);
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
+            hotkey6 = new HotkeyHelper(txtMulti, macros);
 
             macros.OnUpdateLbl27Status += UpdateLbl27Status;
             macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
@@ -114,6 +124,7 @@
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
         }
+
 
 
 
@@ -200,7 +211,7 @@
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -210,7 +221,7 @@
                 {
                     macros.Enable27K();
                     macros.RulesEnabled27K = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -223,7 +234,7 @@
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -233,7 +244,7 @@
                 {
                     macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -247,7 +258,7 @@
                 {
                     macros.Disable27K();
                     macros.RulesEnabled27K = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -257,7 +268,7 @@
                 {
                     macros.Enable27KOUT();
                     macros.RulesEnabled27K = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -275,7 +286,7 @@
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -285,7 +296,7 @@
                 {
                     macros.Enable3074();
                     macros.RulesEnabled3074 = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -298,7 +309,7 @@
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -309,7 +320,7 @@
                 {
                     macros.Enable3074IN();
                     macros.RulesEnabled3074 = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -322,7 +333,7 @@
                 {
                     macros.Disable3074();
                     macros.RulesEnabled3074 = false;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(false);
@@ -333,7 +344,7 @@
                 {
                     macros.Enable3074OUT();
                     macros.RulesEnabled3074 = true;
-                    
+
                     if (macros.isSoundOn)
                     {
                         macros.PlaySoundCue(true);
@@ -580,6 +591,11 @@
 
             }
 
+        }
+
+        private void btnAFK_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

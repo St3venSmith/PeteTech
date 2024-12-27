@@ -36,6 +36,7 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnAFK = new Button();
             btnDC = new Button();
             lbl3074Status = new Label();
             lbl27Status = new Label();
@@ -83,6 +84,9 @@
             btnChangeFont = new Button();
             label15 = new Label();
             trcTrans = new TrackBar();
+            tabPage6 = new TabPage();
+            txtMulti = new TextBox();
+            lblMulti = new Label();
             toolTip1 = new ToolTip(components);
             fontDialog1 = new FontDialog();
             pageSetupDialog1 = new PageSetupDialog();
@@ -96,6 +100,7 @@
             tabPage2.SuspendLayout();
             tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trcTrans).BeginInit();
+            tabPage6.SuspendLayout();
             SuspendLayout();
             // 
             // btn27K
@@ -164,6 +169,7 @@
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage5);
+            tabControl1.Controls.Add(tabPage6);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Margin = new Padding(3, 2, 3, 2);
@@ -175,10 +181,11 @@
             // 
             // tabPage1
             // 
-            tabPage1.BackColor = Color.Transparent;
+            tabPage1.BackColor = Color.White;
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
+            tabPage1.Controls.Add(btnAFK);
             tabPage1.Controls.Add(btnDC);
             tabPage1.Controls.Add(lbl3074Status);
             tabPage1.Controls.Add(lbl27Status);
@@ -201,7 +208,7 @@
             tabPage1.Controls.Add(btn27K);
             tabPage1.Controls.Add(chkAutoBuffer);
             tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tabPage1.ForeColor = SystemColors.Desktop;
+            tabPage1.ForeColor = Color.FromArgb(32, 32, 32);
             tabPage1.ImageKey = "(none)";
             tabPage1.Location = new Point(4, 24);
             tabPage1.Margin = new Padding(3, 2, 3, 2);
@@ -210,7 +217,16 @@
             tabPage1.Size = new Size(692, 310);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
-            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnAFK
+            // 
+            btnAFK.Location = new Point(158, 225);
+            btnAFK.Name = "btnAFK";
+            btnAFK.Size = new Size(75, 25);
+            btnAFK.TabIndex = 21;
+            btnAFK.Text = "AFK";
+            btnAFK.UseVisualStyleBackColor = true;
+            btnAFK.Click += btnAFK_Click;
             // 
             // btnDC
             // 
@@ -636,9 +652,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(7, 10);
             label1.Name = "label1";
-            label1.Size = new Size(629, 15);
+            label1.Size = new Size(1993, 15);
             label1.TabIndex = 0;
-            label1.Text = "Pete, Bird. ,Mother, Toasty, GrayLargeBird, hambuger, Zav, TacoBellEnjoyer, Curola, Phantom AKA RT, Pocket Sparrow. ";
+            label1.Text = resources.GetString("label1.Text");
             toolTip1.SetToolTip(label1, "Noob Like Futa");
             label1.Click += label1_Click;
             // 
@@ -710,6 +726,34 @@
             trcTrans.Value = 90;
             trcTrans.Scroll += trcTrans_Scroll;
             // 
+            // tabPage6
+            // 
+            tabPage6.Controls.Add(txtMulti);
+            tabPage6.Controls.Add(lblMulti);
+            tabPage6.Location = new Point(4, 24);
+            tabPage6.Name = "tabPage6";
+            tabPage6.Size = new Size(692, 310);
+            tabPage6.TabIndex = 5;
+            tabPage6.Text = "Scum";
+            tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // txtMulti
+            // 
+            txtMulti.Location = new Point(68, 135);
+            txtMulti.MaxLength = 1;
+            txtMulti.Name = "txtMulti";
+            txtMulti.Size = new Size(25, 23);
+            txtMulti.TabIndex = 1;
+            // 
+            // lblMulti
+            // 
+            lblMulti.AutoSize = true;
+            lblMulti.Location = new Point(3, 138);
+            lblMulti.Name = "lblMulti";
+            lblMulti.Size = new Size(59, 15);
+            lblMulti.TabIndex = 0;
+            lblMulti.Text = "MultiShot";
+            // 
             // pageSetupDialog1
             // 
             pageSetupDialog1.ShowHelp = true;
@@ -719,8 +763,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.Disable;
-            BackColor = Color.White;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackColor = Color.FromArgb(32, 32, 32);
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
@@ -747,6 +790,8 @@
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trcTrans).EndInit();
+            tabPage6.ResumeLayout(false);
+            tabPage6.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -810,5 +855,9 @@
         private ColorDialog colorDialog1;
         private Button btnTheme;
         private ColorDialog colorDialog2;
+        private TabPage tabPage6;
+        private TextBox txtMulti;
+        private Label lblMulti;
+        private Button btnAFK;
     }
 }
