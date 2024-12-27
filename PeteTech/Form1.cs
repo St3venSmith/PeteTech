@@ -203,13 +203,13 @@ namespace PeteTech
         }
 
 
-        private void btn27K_Click(object sender, EventArgs e)
+        private async void btn27K_Click(object sender, EventArgs e)
         {
             if (cmbo27k.Text == "in/out")
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    macros.Disable27K();
+                   await macros.Disable27K();
                     macros.RulesEnabled27K = false;
 
                     if (macros.isSoundOn)
@@ -219,7 +219,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable27K();
+                   await macros.Enable27K();
                     macros.RulesEnabled27K = true;
 
                     if (macros.isSoundOn)
@@ -232,7 +232,7 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    macros.Disable27K();
+                    await macros.Disable27K();
                     macros.RulesEnabled27K = false;
 
                     if (macros.isSoundOn)
@@ -278,13 +278,13 @@ namespace PeteTech
 
         }
 
-        private void btn3074_Click(object sender, EventArgs e)
+        private async void btn3074_Click(object sender, EventArgs e)
         {
             if (cbo3074.Text == "in/out")
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    macros.Disable3074();
+                   await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
 
                     if (macros.isSoundOn)
@@ -407,10 +407,10 @@ namespace PeteTech
 
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        protected override async void OnFormClosed(FormClosedEventArgs e)
         {
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
-            macros.Disable27K();
+            await macros.Disable27K();
             macros.Disable3074();
             dataPoints.SaveDataPoints();
             base.OnFormClosed(e);
