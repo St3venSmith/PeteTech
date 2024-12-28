@@ -28,9 +28,9 @@ namespace PeteTech
 
         public string tStatus { get; set; }
 
-        public string lbltS; // label for 27k
+        public string? lbltS; // label for 27k
 
-        public string lbltrS; // lable for 3074
+        public string? lbltrS; // lable for 3074
 
 
 
@@ -359,7 +359,7 @@ namespace PeteTech
             
 
             
-            Enable3074();
+            await Enable3074();
             
             MouseDown();
             
@@ -387,7 +387,7 @@ namespace PeteTech
             Process_Resume("focused");
             await Task.Delay(40);
             MouseUp();
-            Disable3074();
+            await Disable3074();
             //Noob likes Futa and Cake Farts
 
         }
@@ -462,6 +462,7 @@ namespace PeteTech
 
         public void txtPauseHotKey()
         {
+            
             if (togglePause = !togglePause) // Toggle the state
             {
                 // Update the GUI to show "ON" status
@@ -492,16 +493,17 @@ namespace PeteTech
                 }
             }
         }
+        
 
 
-
-        public void txt27HK()
+        public async void txt27HK()
         {
+            
             if (kStatus == "in/out")
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    Disable27K();
+                    await Disable27K();
                     RulesEnabled27K = false;
                     if (isSoundOn)
                     {
@@ -510,7 +512,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable27K();
+                    await Enable27K();
                     RulesEnabled27K = true;
                     if (isSoundOn)
                     {
@@ -522,7 +524,7 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    Disable27K();
+                    await Disable27K();
                     RulesEnabled27K = false;
                     if (isSoundOn)
                     {
@@ -531,7 +533,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable27KIN();
+                    await Enable27KIN();
                     RulesEnabled27K = true;
                     if (isSoundOn)
                     {
@@ -544,7 +546,7 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    Disable27K();
+                    await Disable27K();
                     RulesEnabled27K = false;
                     if (isSoundOn)
                     {
@@ -553,7 +555,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable27KOUT();
+                    await Enable27KOUT();
                     RulesEnabled27K = true;
                     if (isSoundOn)
                     {
@@ -564,13 +566,13 @@ namespace PeteTech
             }
         }
 
-        public void txt3074HK()
+        public async Task txt3074HK()
         {
             if (tStatus == "in/out")
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    Disable3074();
+                    await Disable3074();
                     RulesEnabled3074 = false;
                     if (isSoundOn)
                     {
@@ -579,7 +581,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable3074();
+                    await Enable3074();
                     RulesEnabled3074 = true;
                     if (isSoundOn)
                     {
@@ -591,7 +593,7 @@ namespace PeteTech
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    Disable3074();
+                    await Disable3074();
                     RulesEnabled3074 = false;
                     if (isSoundOn)
                     {
@@ -601,7 +603,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable3074IN();
+                    await Enable3074IN();
                     RulesEnabled3074 = true;
                     if (isSoundOn)
                     {
@@ -613,7 +615,7 @@ namespace PeteTech
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    Disable3074();
+                    await Disable3074();
                     RulesEnabled3074 = false;
                     if (isSoundOn)
                     {
@@ -623,7 +625,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    Enable3074OUT();
+                    await Enable3074OUT();
                     RulesEnabled3074 = true;
                     if (isSoundOn)
                     {
@@ -747,13 +749,29 @@ namespace PeteTech
         }
         public async Task Enable3074()
         {
-            await Task.Run(async () =>
-            {
+          
                 Random rand = new Random();
                 int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
                 int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
                 lbltrS = "ON";
+
+                    // Add rules to block incoming and outgoing traffic on port 3074
+                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+
+
+                // Start the loop that will enable/disable the rules while isBufferOn is true
+                while (isBufferOn) // Keep looping while buffer is on
+                {
+                    
+
+                    // Enable the firewall rules
+                    lbltrS = "ON";
+                    Console.WriteLine("3074 Status: ON");
+
 
                 // Add rules to block incoming and outgoing traffic on port 3074
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
@@ -761,40 +779,27 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
 
-                // Start the loop that will enable/disable the rules while isBufferOn is true
-                while (isBufferOn)
-                {
-                    // Wait for the random amount of time before enabling the firewall rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
 
-                    // Enable the firewall rules
-                    Console.WriteLine("3074 Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
 
-                    lbltrS = "ON";
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
+                // Wait while the rules are enabled
+                await Task.Delay(randLimit);
 
                     // Disable the firewall rules
                     Console.WriteLine("3074 Status: OFF");
-                    Disable3074();
-
                     lbltrS = "OFF";
+                    await Disable3074(); // Ensure rules are deleted
 
-                    // If the buffer is turned off, stop the loop
+                    // Wait before re-enabling the rules
+                    await Task.Delay(randUnlimit);
+
+                    // Exit condition check
                     if (!isBufferOn || !RulesEnabled3074)
                     {
-                        Disable3074();
+                        await Disable3074(); // Clean up before exiting
                         break;
                     }
-
-
                 }
-            });
+                
            
         }
 
@@ -806,7 +811,10 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
+                
             });
+              
+            
             
         }
 
@@ -845,12 +853,12 @@ namespace PeteTech
                     // Disable the incoming firewall rules
                     Console.WriteLine("3074 IN Status: OFF");
                     lbltrS = "OFF";
-                    Disable3074();
+                    await Disable3074();
 
                     // If the buffer is turned off, stop the loop
                     if (!isBufferOn || !RulesEnabled3074)
                     {
-                        Disable3074();
+                        await Disable3074();
                         break;
                     }
 
@@ -894,7 +902,7 @@ namespace PeteTech
 
                     // Disable the outgoing firewall rules
                     Console.WriteLine("3074 OUT Status: OFF");
-                    Disable3074();
+                    await Disable3074();
 
 
                     // If the buffer is turned off, stop the loop

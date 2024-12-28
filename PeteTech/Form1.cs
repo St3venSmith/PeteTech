@@ -242,7 +242,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable27KIN();
+                    await macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
 
                     if (macros.isSoundOn)
@@ -256,7 +256,7 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    macros.Disable27K();
+                    await macros.Disable27K();
                     macros.RulesEnabled27K = false;
 
                     if (macros.isSoundOn)
@@ -266,7 +266,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable27KOUT();
+                    await macros.Enable27KOUT();
                     macros.RulesEnabled27K = true;
 
                     if (macros.isSoundOn)
@@ -294,7 +294,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable3074();
+                    await macros.Enable3074();
                     macros.RulesEnabled3074 = true;
 
                     if (macros.isSoundOn)
@@ -307,7 +307,7 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    macros.Disable3074();
+                    await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
 
                     if (macros.isSoundOn)
@@ -318,7 +318,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable3074IN();
+                    await macros.Enable3074IN();
                     macros.RulesEnabled3074 = true;
 
                     if (macros.isSoundOn)
@@ -331,7 +331,7 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    macros.Disable3074();
+                    await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
 
                     if (macros.isSoundOn)
@@ -342,7 +342,7 @@ namespace PeteTech
                 }
                 else
                 {
-                    macros.Enable3074OUT();
+                    await macros.Enable3074OUT();
                     macros.RulesEnabled3074 = true;
 
                     if (macros.isSoundOn)
@@ -411,7 +411,7 @@ namespace PeteTech
         {
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             await macros.Disable27K();
-            macros.Disable3074();
+            await macros.Disable3074();
             dataPoints.SaveDataPoints();
             base.OnFormClosed(e);
         }
