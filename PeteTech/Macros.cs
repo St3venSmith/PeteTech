@@ -36,7 +36,7 @@ namespace PeteTech
 
         public bool isSoundOn = false;
 
-        public bool isBufferOn = false;
+        public bool isBufferOn;
 
         public bool togglePause;
 
@@ -57,7 +57,7 @@ namespace PeteTech
 
 
 
-      
+
 
         private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
         private const uint MOUSEEVENTF_LEFTUP = 0x04;
@@ -66,7 +66,7 @@ namespace PeteTech
         public static extern void SetCursorPos(int x, int y);
 
         // Method to move the mouse to a specific position
-        
+
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
@@ -102,31 +102,31 @@ namespace PeteTech
         {
             DataPoint5Incremented?.Invoke(this, EventArgs.Empty);
         }
-       
+
 
         public bool RulesEnabled3074
         {
             get { return _rulesEnabled3074; }
             set
             {
-                
+
                 if (_rulesEnabled3074 != value)
                 {
-                    
+
                     _rulesEnabled3074 = value;
                     if (_rulesEnabled3074)
                     {
-                        
+
                         _stopwatch3074.Start();
                     }
                     else
                     {
-                        
+
                         _stopwatch3074.Stop();
                         Duration3074 += _stopwatch3074.Elapsed;
                         _stopwatch3074.Reset();
                         OnDuration3074Changed();
-                        
+
                     }
                     UpdateLabels();
                 }
@@ -139,20 +139,20 @@ namespace PeteTech
             get { return _rulesEnabled27K; }
             set
             {
-                
+
                 if (_rulesEnabled27K != value)
                 {
-                    
+
                     _rulesEnabled27K = value;
 
                     if (_rulesEnabled27K)
                     {
-                        
+
                         _stopwatch27K.Start();
                     }
                     else
                     {
-                        
+
                         _stopwatch27K.Stop();
                         Duration27K += _stopwatch27K.Elapsed;
                         _stopwatch27K.Reset();
@@ -185,9 +185,9 @@ namespace PeteTech
             }
         }
 
-        
-        
-        
+
+
+
         // Events to notify when labels need to be updated
         public event Action<string> OnUpdateLbl27Status;
         public event Action<string> OnUpdateLbl3074Status;
@@ -239,13 +239,13 @@ namespace PeteTech
 
         }
 
-       
-        
+
+
 
         private const uint MOUSEEVENTF_MOVE = 0x0001;
         private const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
 
-       
+
 
         [DllImport("user32.dll")]
         static extern int GetSystemMetrics(int nIndex);
@@ -279,7 +279,7 @@ namespace PeteTech
         }
 
         const uint INPUT_MOUSE = 0;
-        
+
 
         public void MoveMouseTo(int x, int y)
         {
@@ -356,13 +356,13 @@ namespace PeteTech
         public async void txtMulti()
         {
 
-            
 
-            
+
+
             await Enable3074();
-            
+
             MouseDown();
-            
+
             // 283 is the area code for Ohio
             // thus i name thee ohio tech
             await Task.Delay(40);
@@ -462,7 +462,7 @@ namespace PeteTech
 
         public void txtPauseHotKey()
         {
-            
+
             if (togglePause = !togglePause) // Toggle the state
             {
                 // Update the GUI to show "ON" status
@@ -493,18 +493,19 @@ namespace PeteTech
                 }
             }
         }
-        
+
 
 
         public async void txt27HK()
         {
-            
+
             if (kStatus == "in/out")
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    await Disable27K();
                     RulesEnabled27K = false;
+                    await Disable27K();
+
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -566,14 +567,14 @@ namespace PeteTech
             }
         }
 
-        public async Task txt3074HK()
+        public async void txt3074HK()
         {
             if (tStatus == "in/out")
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    await Disable3074();
                     RulesEnabled3074 = false;
+                    await Disable3074();
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -581,8 +582,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable3074();
                     RulesEnabled3074 = true;
+                    await Enable3074();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -663,7 +665,7 @@ namespace PeteTech
 
                 OnDataPoint4Incremented();
             });
-            
+
         }
 
         public async Task SoloScript()
@@ -698,7 +700,7 @@ namespace PeteTech
                 }
             });
 
-           
+
 
         }
 
@@ -727,7 +729,7 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-30-tcp-out\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-30-udp-out\" profile=any remoteport=30000-30009 protocol=udp interfacetype=any");
             });
-           
+
         }
         public async Task DisableDC()
         {
@@ -740,7 +742,7 @@ namespace PeteTech
             });
 
 
-           
+
         }
 
         public void Enable27kTCPIN()
@@ -749,28 +751,30 @@ namespace PeteTech
         }
         public async Task Enable3074()
         {
-          
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
-                lbltrS = "ON";
-
-                    // Add rules to block incoming and outgoing traffic on port 3074
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
 
-                // Start the loop that will enable/disable the rules while isBufferOn is true
-                while (isBufferOn) // Keep looping while buffer is on
-                {
-                    
 
-                    // Enable the firewall rules
-                    lbltrS = "ON";
-                    Console.WriteLine("3074 Status: ON");
+            if (!isBufferOn)
+            {
+                // Add rules to block incoming and outgoing traffic on port 3074
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
+                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
+            }
+
+
+
+
+            // Start the loop that will enable/disable the rules while isBufferOn is true
+            while (isBufferOn) // Keep looping while buffer is on
+            {
+
+
 
 
                 // Add rules to block incoming and outgoing traffic on port 3074
@@ -784,38 +788,36 @@ namespace PeteTech
                 // Wait while the rules are enabled
                 await Task.Delay(randLimit);
 
-                    // Disable the firewall rules
-                    Console.WriteLine("3074 Status: OFF");
-                    lbltrS = "OFF";
-                    await Disable3074(); // Ensure rules are deleted
+                // Disable the firewall rules
+                Console.WriteLine("3074 Status: OFF");
 
-                    // Wait before re-enabling the rules
-                    await Task.Delay(randUnlimit);
 
-                    // Exit condition check
-                    if (!isBufferOn || !RulesEnabled3074)
-                    {
-                        await Disable3074(); // Clean up before exiting
-                        break;
-                    }
+                await Disable3074(); // Ensure rules are deleted
+
+                // Wait before re-enabling the rules
+                await Task.Delay(randUnlimit);
+
+                // Exit condition check
+                if (!isBufferOn || !RulesEnabled3074)
+                {
+                    await Disable3074(); // Clean up before exiting
+                    return;
                 }
-                
-           
+
+
+
+            }
         }
 
-        public async Task Disable3074()
+      
+
+        public Task Disable3074()
         {
-            await Task.Run(() =>
-            {
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
-                
-            });
-              
-            
-            
+            return Task.CompletedTask;
         }
 
         public async Task Enable3074IN()
