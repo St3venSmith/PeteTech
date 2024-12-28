@@ -195,7 +195,7 @@ namespace PeteTech
             get => tbFpsBar.Value; // Get the current value
             set => tbFpsBar.Value = value; // Set a new value
         }
-
+         
         public void UpdateFormLabels(string lbltS, string lbltrs)
         {
             lbl27Status.Text = macros.lbltS;
