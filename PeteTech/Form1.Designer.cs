@@ -181,7 +181,7 @@
             // 
             // tabPage1
             // 
-            tabPage1.BackColor = Color.White;
+            tabPage1.BackColor = Color.Gray;
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
@@ -407,6 +407,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.BackColor = Color.Gray;
             tabPage3.Controls.Add(txtPboxMessage);
             tabPage3.Controls.Add(label5);
             tabPage3.Location = new Point(4, 24);
@@ -414,7 +415,6 @@
             tabPage3.Size = new Size(692, 310);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Settings";
-            tabPage3.UseVisualStyleBackColor = true;
             // 
             // txtPboxMessage
             // 
@@ -436,6 +436,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.BackColor = Color.Gray;
             tabPage4.Controls.Add(lblSoloTrack);
             tabPage4.Controls.Add(lblDCtrack);
             tabPage4.Controls.Add(lblFBTrack);
@@ -459,7 +460,6 @@
             tabPage4.Size = new Size(692, 310);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Stats";
-            tabPage4.UseVisualStyleBackColor = true;
             // 
             // lblSoloTrack
             // 
@@ -637,6 +637,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.Gray;
             tabPage2.Controls.Add(label1);
             tabPage2.Location = new Point(4, 24);
             tabPage2.Margin = new Padding(3, 2, 3, 2);
@@ -645,7 +646,6 @@
             tabPage2.Size = new Size(692, 310);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Credits";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -660,6 +660,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.BackColor = Color.Gray;
             tabPage5.Controls.Add(btnTheme);
             tabPage5.Controls.Add(btnColor);
             tabPage5.Controls.Add(btnChangeFont);
@@ -670,7 +671,6 @@
             tabPage5.Size = new Size(692, 310);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Looks";
-            tabPage5.UseVisualStyleBackColor = true;
             // 
             // btnTheme
             // 
@@ -728,6 +728,7 @@
             // 
             // tabPage6
             // 
+            tabPage6.BackColor = Color.Gray;
             tabPage6.Controls.Add(txtMulti);
             tabPage6.Controls.Add(lblMulti);
             tabPage6.Location = new Point(4, 24);
@@ -735,7 +736,6 @@
             tabPage6.Size = new Size(692, 310);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Scum";
-            tabPage6.UseVisualStyleBackColor = true;
             // 
             // txtMulti
             // 

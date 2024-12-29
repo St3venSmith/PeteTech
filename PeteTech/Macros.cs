@@ -513,8 +513,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable27K();
                     RulesEnabled27K = true;
+                    await Enable27K();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -525,8 +526,9 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    await Disable27K();
                     RulesEnabled27K = false;
+                    await Disable27K();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -534,8 +536,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable27KIN();
                     RulesEnabled27K = true;
+                    await Enable27KIN();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -547,8 +550,9 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    await Disable27K();
                     RulesEnabled27K = false;
+                    await Disable27K();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -556,8 +560,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable27KOUT();
                     RulesEnabled27K = true;
+                    await Enable27KOUT();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -595,8 +600,9 @@ namespace PeteTech
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    await Disable3074();
                     RulesEnabled3074 = false;
+                    await Disable3074();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -605,8 +611,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable3074IN();
                     RulesEnabled3074 = true;
+                    await Enable3074IN();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -617,8 +624,9 @@ namespace PeteTech
             {
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    await Disable3074();
                     RulesEnabled3074 = false;
+                    await Disable3074();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -627,8 +635,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await Enable3074OUT();
                     RulesEnabled3074 = true;
+                    await Enable3074OUT();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -677,8 +686,6 @@ namespace PeteTech
                     MessageBox.Show("Solo script Stopped");
                     await Disable27K();
                     RulesEnabled27K = false;
-
-                    RulesEnabled27K = false;
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -689,7 +696,6 @@ namespace PeteTech
 
                     MessageBox.Show("Solo script Started");
                     await Enable27K();
-                    RulesEnabled27K = true;
                     RulesEnabled27K = true;
                     if (isSoundOn)
                     {
@@ -740,9 +746,6 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-tcp-out\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-udp-out\"");
             });
-
-
-
         }
 
         public void Enable27kTCPIN()
@@ -751,8 +754,9 @@ namespace PeteTech
         }
         public async Task Enable3074()
         {
-
-            Random rand = new Random();
+            await Task.Run(async () =>
+            {
+                Random rand = new Random();
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
@@ -807,17 +811,22 @@ namespace PeteTech
 
 
             }
+            });
         }
 
       
 
-        public Task Disable3074()
+        public async Task Disable3074()
         {
+            await Task.Run(() =>
+            {
+
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
-            return Task.CompletedTask;
+                return Task.CompletedTask;
+            });
         }
 
         public async Task Enable3074IN()
@@ -981,6 +990,7 @@ namespace PeteTech
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-out\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-tcp-in\"");
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-in\"");
+                return Task.CompletedTask;
             });
             
 

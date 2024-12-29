@@ -513,6 +513,8 @@ namespace PeteTech
                 btnChangeFont.ForeColor = colorDialog1.Color;
                 btnColor.ForeColor = colorDialog1.Color;
                 btnTheme.ForeColor = colorDialog1.Color;
+                lblMulti.ForeColor = colorDialog1.Color;
+
             }
 
         }
@@ -573,6 +575,7 @@ namespace PeteTech
                 btnColor.Font = fontDialog1.Font;
                 tabControl1.Font = fontDialog1.Font;
                 btnTheme.Font = fontDialog1.Font;
+                lblMulti.Font = fontDialog1.Font;
 
 
             }
@@ -588,6 +591,7 @@ namespace PeteTech
                 tabControl1.TabPages[2].BackColor = colorDialog1.Color;
                 tabControl1.TabPages[3].BackColor = colorDialog1.Color;
                 tabControl1.TabPages[4].BackColor = colorDialog1.Color;
+                tabControl1.TabPages[5].BackColor = colorDialog1.Color;
 
             }
 
