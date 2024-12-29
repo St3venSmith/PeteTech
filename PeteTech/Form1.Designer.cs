@@ -774,7 +774,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Opacity = 0.9D;
-            Text = "PeteTech +";
+            Text = "PeteTech";
             TopMost = true;
             TransparencyKey = Color.FromArgb(192, 255, 255);
             tabControl1.ResumeLayout(false);
