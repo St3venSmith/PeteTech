@@ -130,31 +130,31 @@ namespace PeteTech
 
 
         // Event handler
-        private void Macros_DataPoint1Incremented(object sender, EventArgs e)
+        private void Macros_DataPoint1Incremented(object? sender, EventArgs e)
         {
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(1, 1); // Increment DataPoint1 in DataPoints
             lblFullPause.Text = dataPoints.DataPoint1.ToString(); // Update the label
         }
-        private void Macros_DataPoint2Incremented(object sender, EventArgs e)
+        private void Macros_DataPoint2Incremented(object? sender, EventArgs e)
         {
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(2, 1); // Increment DataPoint1 in DataPoints
             lblSoloTrack.Text = dataPoints.DataPoint2.ToString(); // Update the label
         }
-        private void Macros_DataPoint3Incremented(object sender, EventArgs e)
+        private void Macros_DataPoint3Incremented(object? sender, EventArgs e)
         {
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(3, 1); // Increment DataPoint1 in DataPoints
             lblDCtrack.Text = dataPoints.DataPoint3.ToString(); // Update the label
         }
-        private void Macros_DataPoint4Incremented(object sender, EventArgs e)
+        private void Macros_DataPoint4Incremented(object? sender, EventArgs e)
         {
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(4, 1); // Increment DataPoint1 in DataPoints
             lblFBTrack.Text = dataPoints.DataPoint4.ToString(); // Update the label
         }
-        private void Macros_DataPoint5Incremented(object sender, EventArgs e)
+        private void Macros_DataPoint5Incremented(object? sender, EventArgs e)
         {
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(5, 1); // Increment DataPoint1 in DataPoints
@@ -171,19 +171,15 @@ namespace PeteTech
             lbl3074Status.Text = status;
         }
 
-        private void Macros_Duration27KChanged(object sender, EventArgs e)
+        private void Macros_Duration27KChanged(object? sender, EventArgs e)
         {
-
             dataPoints.SetDuration27K(macros.Duration27K);
             dataPoints.SaveDataPoints();
             lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
-
-
         }
 
-        private void Macros_Duration3074Changed(object sender, EventArgs e)
+        private void Macros_Duration3074Changed(object? sender, EventArgs e)
         {
-
             dataPoints.SetDuration3074(macros.Duration3074);
             dataPoints.SaveDataPoints();
             lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
@@ -209,8 +205,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                   await macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    await macros.Disable27K();
+                    ;
 
                     if (macros.isSoundOn)
                     {
@@ -219,8 +216,9 @@ namespace PeteTech
                 }
                 else
                 {
-                   await macros.Enable27K();
                     macros.RulesEnabled27K = true;
+                    await macros.Enable27K();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -232,8 +230,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    await macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    await macros.Disable27K();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -242,8 +241,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await macros.Enable27KIN();
                     macros.RulesEnabled27K = true;
+                    await macros.Enable27KIN();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -256,8 +256,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    await macros.Disable27K();
                     macros.RulesEnabled27K = false;
+                    await macros.Disable27K();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -266,8 +267,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await macros.Enable27KOUT();
                     macros.RulesEnabled27K = true;
+                    await macros.Enable27KOUT();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -284,8 +286,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                   await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    await macros.Disable3074();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -294,8 +297,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await macros.Enable3074();
                     macros.RulesEnabled3074 = true;
+                    await macros.Enable3074();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -307,8 +311,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    await macros.Disable3074();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -318,8 +323,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await macros.Enable3074IN();
                     macros.RulesEnabled3074 = true;
+                    await macros.Enable3074IN();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -331,8 +337,9 @@ namespace PeteTech
             {
                 if (macros.RulesEnabled3074)  // Check if the rules are enabled
                 {
-                    await macros.Disable3074();
                     macros.RulesEnabled3074 = false;
+                    await macros.Disable3074();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -342,8 +349,9 @@ namespace PeteTech
                 }
                 else
                 {
-                    await macros.Enable3074OUT();
                     macros.RulesEnabled3074 = true;
+                    await macros.Enable3074OUT();
+                    
 
                     if (macros.isSoundOn)
                     {
@@ -402,9 +410,9 @@ namespace PeteTech
         }
 
 
-        private void Form_KeyPress(object sender, KeyPressEventArgs e)
+        private void Form_KeyPress(object? sender, KeyPressEventArgs e)
         {
-
+            // Your existing code here
         }
 
         protected override async void OnFormClosed(FormClosedEventArgs e)
@@ -421,7 +429,7 @@ namespace PeteTech
 
         }
 
-        private void tbFpsBar_Scroll(object sender, EventArgs e)
+        private void tbFpsBar_Scroll(object? sender, EventArgs e)
         {
             // Update label or use the value
             lblFPS.Text = $"{tbFpsBar.Value}";
@@ -432,10 +440,7 @@ namespace PeteTech
             delayPBox = 244 + (int)Math.Floor((tbFpsBar.Value * 50) / 220.0);
             macros.UpdateFps(tbFpsBar.Value);
 
-
-
             // Pass the delayPBox to macros
-
         }
 
         private void txtPboxMessage_TextChanged(object sender, EventArgs e)

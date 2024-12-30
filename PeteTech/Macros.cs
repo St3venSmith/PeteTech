@@ -24,9 +24,9 @@ namespace PeteTech
 
         public string? Pmessage;
 
-        public string kStatus { get; set; }
+        public string? kStatus { get; set; }
 
-        public string tStatus { get; set; }
+        public string? tStatus { get; set; }
 
         public string? lbltS; // label for 27k
 
@@ -684,8 +684,9 @@ namespace PeteTech
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
                     MessageBox.Show("Solo script Stopped");
-                    await Disable27K();
                     RulesEnabled27K = false;
+                    await Disable27K();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -695,8 +696,9 @@ namespace PeteTech
                 {
 
                     MessageBox.Show("Solo script Started");
-                    await Enable27K();
                     RulesEnabled27K = true;
+                    await Enable27K();
+                    
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
