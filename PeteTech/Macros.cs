@@ -12,6 +12,7 @@ namespace PeteTech
 {
     internal class Macros : ISuspend
     {
+        public WinDiverts WinDiverts;
 
         public int x;
         public int y;
@@ -579,7 +580,9 @@ namespace PeteTech
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
                     RulesEnabled3074 = false;
-                    await Disable3074();
+                    //await Disable3074();
+                    WinDiverts.Start(RulesEnabled3074);
+
                     if (isSoundOn)
                     {
                         PlaySoundCue(false);
@@ -588,8 +591,9 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled3074 = true;
-                    await Enable3074();
-                    
+                    //await Enable3074();
+                    WinDiverts.Start(RulesEnabled3074);
+
                     if (isSoundOn)
                     {
                         PlaySoundCue(true);
@@ -758,6 +762,51 @@ namespace PeteTech
         {
             await Task.Run(async () =>
             {
+
+            Random rand = new Random();
+            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
+            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
+
+
+
+            if (!isBufferOn)
+            {
+
+                    WinDiverts.Start(RulesEnabled3074);               
+                
+            }
+
+
+
+
+                // Start the loop that will enable/disable the rules while isBufferOn is true
+                while (isBufferOn) // Keep looping while buffer is on
+                {
+
+
+                    RulesEnabled3074 = true;
+
+                    // Wait while the rules are enabled
+                    await Task.Delay(randLimit);
+
+                    // Disable the firewall rules
+                    Console.WriteLine("3074 Status: OFF");
+
+                    RulesEnabled3074 = false;
+                    // Ensure rules are deleted
+
+                    // Wait before re-enabling the rules
+                    await Task.Delay(randUnlimit);
+
+                    // Exit condition check
+                    if (!isBufferOn || !RulesEnabled3074)
+                    {
+                        RulesEnabled3074 = false;
+                        // Clean up before exiting
+                        return;
+                    }
+                }
+                /*
                 Random rand = new Random();
             int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
             int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
@@ -813,8 +862,11 @@ namespace PeteTech
 
 
             }
+                 */
             });
-        }
+               
+            }
+           
 
       
 
