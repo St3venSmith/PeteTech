@@ -63,11 +63,13 @@ namespace PeteTech
                 lblDateTrack.Text = File.GetCreationTime(filePath).ToString();
                 lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
                 lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
+                lbl7500Track.Text = dataPoints.Duration7500.ToString(@"dd\.hh\:mm\:ss");
                 lblDCtrack.Text = dataPoints.DataPoint3.ToString();
                 lblFBTrack.Text = dataPoints.DataPoint4.ToString();
                 lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
                 lblSoloTrack.Text = dataPoints.DataPoint2.ToString();
                 lblFullPause.Text = dataPoints.DataPoint1.ToString();
+                
             }
             else if (!Directory.Exists(filePath))
             {
@@ -99,6 +101,7 @@ namespace PeteTech
 
             macros.Duration27KChanged += Macros_Duration27KChanged;
             macros.Duration3074Changed += Macros_Duration3074Changed;
+            macros.Duration7500Changed += Macros_Duration7500Changed;
 
 
             // Create instances of HotkeyHelper for each TextBox
@@ -113,6 +116,7 @@ namespace PeteTech
 
             macros.OnUpdateLbl27Status += UpdateLbl27Status;
             macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
+            macros.OnUpdateLbl7500Status += UpdateLbl7500Status;
             macros.DataPoint1Incremented += Macros_DataPoint1Incremented; // full pause
             macros.DataPoint2Incremented += Macros_DataPoint2Incremented; // solo
             macros.DataPoint3Incremented += Macros_DataPoint3Incremented; // dc box
@@ -193,6 +197,12 @@ namespace PeteTech
             dataPoints.SaveDataPoints();
             lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
         }
+        private void Macros_Duration7500Changed(object? sender, EventArgs e)
+        {
+            dataPoints.SetDuration7500(macros.Duration7500);
+            dataPoints.SaveDataPoints();
+            lbl7500Track.Text = dataPoints.Duration7500.ToString(@"dd\.hh\:mm\:ss");
+        }
 
         // Expose FPS Bar value as a property
         public int FpsBarValue
@@ -208,6 +218,61 @@ namespace PeteTech
             lbl7500Status.Text = macros.lbltrx;
         }
 
+        private void txt7500HK_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btn7500_Click(object sender, EventArgs e)
+        {
+            if (cbo7500.Text == "in/out")
+            {
+                if (macros.RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled7500 = false;
+                    await macros.Disable7500();
+
+                }
+                else
+                {
+                    macros.RulesEnabled7500 = true;
+                    await macros.Enable7500();
+
+                }
+            }
+            else if (cbo7500.Text == "in")
+            {
+                if (macros.RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled7500 = false;
+                    await macros.Disable7500();
+
+                }
+                else
+                {
+                    macros.RulesEnabled7500 = true;
+                    await macros.Enable7500();
+
+                }
+
+            }
+            else if (cbo7500.Text == "out")
+            {
+                if (macros.RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled7500 = false;
+                    await macros.Disable7500();
+
+                }
+                else
+                {
+                    macros.RulesEnabled7500 = true;
+                    await macros.Enable7500();
+
+                }
+            }
+        }
+
 
         private async void btn27K_Click(object sender, EventArgs e)
         {
@@ -218,22 +283,12 @@ namespace PeteTech
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     macros.RulesEnabled27K = true;
                     await macros.Enable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
             }
             else if (cmbo27k.Text == "in")
@@ -243,22 +298,12 @@ namespace PeteTech
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     macros.RulesEnabled27K = true;
                     await macros.Enable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
 
             }
@@ -269,22 +314,12 @@ namespace PeteTech
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     macros.RulesEnabled27K = true;
                     await macros.Enable27K();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
             }
 
@@ -299,22 +334,12 @@ namespace PeteTech
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     macros.RulesEnabled3074 = true;
                     await macros.Enable3074();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
             }
             else if (cbo3074.Text == "in")
@@ -323,24 +348,12 @@ namespace PeteTech
                 {
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
-
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
-
                 }
                 else
                 {
                     macros.RulesEnabled3074 = true;
                     await macros.Enable3074();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
             }
             else if (cbo3074.Text == "out")
@@ -350,23 +363,12 @@ namespace PeteTech
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(false);
-                    }
-
                 }
                 else
                 {
                     macros.RulesEnabled3074 = true;
                     await macros.Enable3074();
 
-
-                    if (macros.isSoundOn)
-                    {
-                        macros.PlaySoundCue(true);
-                    }
                 }
             }
 
@@ -430,6 +432,7 @@ namespace PeteTech
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             await macros.Disable27K();
             await macros.Disable3074();
+            await macros.Disable7500();
             dataPoints.SaveDataPoints();
             base.OnFormClosed(e);
         }
@@ -467,6 +470,10 @@ namespace PeteTech
         private void cbo3074_SelectedIndexChanged(object sender, EventArgs e)
         {
             macros.tStatus = cbo3074.Text;
+        }
+        private void cbo7500_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            macros.sStatus = cbo7500.Text;
         }
 
         private void btnDC_Click(object sender, EventArgs e)
@@ -617,14 +624,6 @@ namespace PeteTech
 
         }
 
-        private void btn7500_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt7500HK_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

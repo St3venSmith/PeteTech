@@ -36,6 +36,10 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl7500Status = new Label();
+            txt7500HK = new TextBox();
+            btn7500 = new Button();
+            cbo7500 = new ComboBox();
             btnAFK = new Button();
             btnDC = new Button();
             lbl3074Status = new Label();
@@ -92,11 +96,9 @@
             pageSetupDialog1 = new PageSetupDialog();
             colorDialog1 = new ColorDialog();
             colorDialog2 = new ColorDialog();
-            cbo7500 = new ComboBox();
             fontDialog2 = new FontDialog();
-            btn7500 = new Button();
-            txt7500HK = new TextBox();
-            lbl7500Status = new Label();
+            label16 = new Label();
+            lbl7500Track = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -226,6 +228,53 @@
             tabPage1.Size = new Size(692, 310);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
+            // 
+            // lbl7500Status
+            // 
+            lbl7500Status.AutoSize = true;
+            lbl7500Status.Location = new Point(215, 66);
+            lbl7500Status.Name = "lbl7500Status";
+            lbl7500Status.Size = new Size(28, 16);
+            lbl7500Status.TabIndex = 25;
+            lbl7500Status.Text = "OFF";
+            // 
+            // txt7500HK
+            // 
+            txt7500HK.Location = new Point(188, 63);
+            txt7500HK.MaxLength = 1;
+            txt7500HK.Name = "txt7500HK";
+            txt7500HK.Size = new Size(21, 22);
+            txt7500HK.TabIndex = 24;
+            toolTip1.SetToolTip(txt7500HK, "Keybind for 3074");
+            txt7500HK.TextChanged += txt7500HK_TextChanged;
+            // 
+            // btn7500
+            // 
+            btn7500.AutoSize = true;
+            btn7500.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn7500.FlatStyle = FlatStyle.Popup;
+            btn7500.ForeColor = SystemColors.ActiveCaptionText;
+            btn7500.Location = new Point(76, 61);
+            btn7500.Margin = new Padding(3, 2, 3, 2);
+            btn7500.Name = "btn7500";
+            btn7500.Size = new Size(109, 26);
+            btn7500.TabIndex = 23;
+            btn7500.Text = "7500";
+            toolTip1.SetToolTip(btn7500, "Limits 3074: Can be used to Unload Doors");
+            btn7500.UseVisualStyleBackColor = true;
+            btn7500.Click += btn7500_Click;
+            // 
+            // cbo7500
+            // 
+            cbo7500.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo7500.FormattingEnabled = true;
+            cbo7500.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo7500.Location = new Point(3, 62);
+            cbo7500.Name = "cbo7500";
+            cbo7500.Size = new Size(67, 24);
+            cbo7500.TabIndex = 22;
+            toolTip1.SetToolTip(cbo7500, "Select Option");
+            cbo7500.SelectedIndexChanged += cbo7500_SelectedIndexChanged;
             // 
             // btnAFK
             // 
@@ -446,6 +495,8 @@
             // tabPage4
             // 
             tabPage4.BackColor = Color.Gray;
+            tabPage4.Controls.Add(lbl7500Track);
+            tabPage4.Controls.Add(label16);
             tabPage4.Controls.Add(lblSoloTrack);
             tabPage4.Controls.Add(lblDCtrack);
             tabPage4.Controls.Add(lblFBTrack);
@@ -524,7 +575,7 @@
             // 
             lbl27kTrack.AutoEllipsis = true;
             lbl27kTrack.AutoSize = true;
-            lbl27kTrack.Location = new Point(110, 66);
+            lbl27kTrack.Location = new Point(116, 36);
             lbl27kTrack.Name = "lbl27kTrack";
             lbl27kTrack.Size = new Size(52, 15);
             lbl27kTrack.TabIndex = 12;
@@ -598,7 +649,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(3, 66);
+            label10.Location = new Point(3, 37);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 4;
@@ -607,7 +658,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(3, 51);
+            label9.Location = new Point(3, 52);
             label9.Name = "label9";
             label9.Size = new Size(107, 15);
             label9.TabIndex = 3;
@@ -767,51 +818,23 @@
             // 
             pageSetupDialog1.ShowHelp = true;
             // 
-            // cbo7500
+            // label16
             // 
-            cbo7500.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
-            cbo7500.FormattingEnabled = true;
-            cbo7500.Items.AddRange(new object[] { "in/out", "in", "out" });
-            cbo7500.Location = new Point(3, 62);
-            cbo7500.Name = "cbo7500";
-            cbo7500.Size = new Size(67, 24);
-            cbo7500.TabIndex = 22;
-            toolTip1.SetToolTip(cbo7500, "Select Option");
+            label16.AutoSize = true;
+            label16.Location = new Point(3, 67);
+            label16.Name = "label16";
+            label16.Size = new Size(109, 15);
+            label16.TabIndex = 18;
+            label16.Text = "Time Holding 7500:";
             // 
-            // btn7500
+            // lbl7500Track
             // 
-            btn7500.AutoSize = true;
-            btn7500.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            btn7500.FlatStyle = FlatStyle.Popup;
-            btn7500.ForeColor = SystemColors.ActiveCaptionText;
-            btn7500.Location = new Point(76, 61);
-            btn7500.Margin = new Padding(3, 2, 3, 2);
-            btn7500.Name = "btn7500";
-            btn7500.Size = new Size(109, 26);
-            btn7500.TabIndex = 23;
-            btn7500.Text = "7500";
-            toolTip1.SetToolTip(btn7500, "Limits 3074: Can be used to Unload Doors");
-            btn7500.UseVisualStyleBackColor = true;
-            btn7500.Click += btn7500_Click;
-            // 
-            // txt7500HK
-            // 
-            txt7500HK.Location = new Point(188, 63);
-            txt7500HK.MaxLength = 1;
-            txt7500HK.Name = "txt7500HK";
-            txt7500HK.Size = new Size(21, 22);
-            txt7500HK.TabIndex = 24;
-            toolTip1.SetToolTip(txt7500HK, "Keybind for 3074");
-            txt7500HK.TextChanged += txt7500HK_TextChanged;
-            // 
-            // lbl7500Status
-            // 
-            lbl7500Status.AutoSize = true;
-            lbl7500Status.Location = new Point(215, 66);
-            lbl7500Status.Name = "lbl7500Status";
-            lbl7500Status.Size = new Size(28, 16);
-            lbl7500Status.TabIndex = 25;
-            lbl7500Status.Text = "OFF";
+            lbl7500Track.AutoSize = true;
+            lbl7500Track.Location = new Point(116, 66);
+            lbl7500Track.Name = "lbl7500Track";
+            lbl7500Track.Size = new Size(58, 15);
+            lbl7500Track.TabIndex = 19;
+            lbl7500Track.Text = "7500Track";
             // 
             // Form1
             // 
@@ -919,5 +942,7 @@
         private Label lbl7500Status;
         private TextBox txt7500HK;
         private Button btn7500;
+        private Label label16;
+        private Label lbl7500Track;
     }
 }

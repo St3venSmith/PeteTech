@@ -7,17 +7,31 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Petetech.ico</ApplicationIcon>
     <StartupObject>PeteTech.Program</StartupObject>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>PeteTech</Title>
     <PackAsTool>False</PackAsTool>
     <FileVersion>1.1</FileVersion>
+    <ApplicationIcon>Petetech.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\SoundOFFPeteTechCut.wav" />
+    <None Remove="Resources\SoundONPeteTechCut.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Petetech.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SoundOFFPeteTechCut.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SoundONPeteTechCut.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,11 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -38,9 +47,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Macros.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
 

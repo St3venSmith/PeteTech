@@ -1,17 +1,21 @@
 ﻿using ProcessManagement;
 using System.Diagnostics;
+using System.Media;
 using System.Runtime.InteropServices;
 
-using System;
-using System.Text;
-using System.Threading;
-using System.Reflection.Metadata;
 
 
 namespace PeteTech
 {
     internal class Macros : ISuspend
     {
+
+        public SoundPlayer player = new SoundPlayer("C:\\Users\\steve\\Source\\Repos\\PeteTechPlus\\PeteTech\\Resources\\SoundONPeteTechCut.wav");
+        public SoundPlayer player2 = new SoundPlayer("C:\\Users\\steve\\Source\\Repos\\PeteTechPlus\\PeteTech\\Resources\\SoundOFFPeteTechCut.wav");
+
+
+
+
         public WinDiverts WinDiverts;
 
         public int x;
@@ -19,8 +23,11 @@ namespace PeteTech
 
         private Stopwatch _stopwatch27K = new Stopwatch();
         private Stopwatch _stopwatch3074 = new Stopwatch();
+        private Stopwatch _stopwatch7500 = new Stopwatch();
         public TimeSpan Duration27K { get; private set; }
         public TimeSpan Duration3074 { get; private set; }
+
+        public TimeSpan Duration7500 { get; private set; }
         public int FpsValue { get; set; }
 
         public string? Pmessage;
@@ -28,6 +35,8 @@ namespace PeteTech
         public string? kStatus { get; set; }
 
         public string? tStatus { get; set; }
+
+        public string? sStatus { get; set; } // label for 27k
 
         public string? lbltS; // label for 27k
 
@@ -121,17 +130,55 @@ namespace PeteTech
                     _rulesEnabled3074 = value;
                     if (_rulesEnabled3074)
                     {
-
+                        if (isSoundOn)
+                        {
+                            player.Play();
+                        }
                         _stopwatch3074.Start();
                     }
                     else
                     {
-
+                        if (isSoundOn)
+                        {
+                            player2.Play();
+                        }
                         _stopwatch3074.Stop();
                         Duration3074 += _stopwatch3074.Elapsed;
                         _stopwatch3074.Reset();
                         OnDuration3074Changed();
 
+                    }
+                    UpdateLabels();
+                }
+            }
+        }
+
+        public bool RulesEnabled7500
+        {
+            get { return _rulesEnabled7500; }
+            set
+            {
+                if (_rulesEnabled7500 != value)
+                {
+                    _rulesEnabled7500 = value;
+                    if (_rulesEnabled7500)
+                    {
+                        if (isSoundOn)
+                        {
+                            player.Play();
+                        }
+                        _stopwatch7500.Start();
+                    }
+                    else
+                    {
+                        if (isSoundOn)
+                        {
+                            player2.Play();
+                        }
+                        _stopwatch7500.Stop();
+                        Duration7500 += _stopwatch7500.Elapsed;
+                        _stopwatch7500.Reset();
+                        OnDuration7500Changed();
                     }
                     UpdateLabels();
                 }
@@ -152,11 +199,19 @@ namespace PeteTech
 
                     if (_rulesEnabled27K)
                     {
-
+                        if (isSoundOn)
+                        {
+                            player.Play();
+                        }
                         _stopwatch27K.Start();
+
                     }
                     else
                     {
+                        if (isSoundOn)
+                        {
+                            player2.Play();
+                        }
 
                         _stopwatch27K.Stop();
                         Duration27K += _stopwatch27K.Elapsed;
@@ -168,8 +223,9 @@ namespace PeteTech
             }
         }
 
-        public event EventHandler Duration27KChanged;
-        public event EventHandler Duration3074Changed;
+        public event EventHandler? Duration27KChanged;
+        public event EventHandler? Duration3074Changed;
+        public event EventHandler? Duration7500Changed;
 
         protected virtual void OnDuration27KChanged()
         {
@@ -178,6 +234,11 @@ namespace PeteTech
         protected virtual void OnDuration3074Changed()
         {
             Duration3074Changed?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnDuration7500Changed()
+        {
+            Duration7500Changed?.Invoke(this, EventArgs.Empty);
         }
 
         public bool RulesEnabledDC
@@ -196,6 +257,7 @@ namespace PeteTech
         // Events to notify when labels need to be updated
         public event Action<string> OnUpdateLbl27Status;
         public event Action<string> OnUpdateLbl3074Status;
+        public event Action<string> OnUpdateLbl7500Status;
 
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
@@ -361,7 +423,52 @@ namespace PeteTech
 
         public async void txt7500HK()
         {
-            await Task.Delay(10);
+            if (sStatus == "in/out")
+            {
+                if (RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    RulesEnabled7500 = false;
+                    await Disable7500();
+
+                }
+                else
+                {
+                    RulesEnabled7500 = true;
+                    await Enable7500();
+
+                }
+            }
+            else if (sStatus == "in")
+            {
+                if (RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    RulesEnabled7500 = false;
+                    await Disable7500();
+
+                }
+                else
+                {
+                    RulesEnabled7500 = true;
+                    await Enable7500();
+
+                }
+
+            }
+            else if (sStatus == "out")
+            {
+                if (RulesEnabled7500)  // Check if the rules are enabled
+                {
+                    RulesEnabled7500 = false;
+                    await Disable7500();
+
+                }
+                else
+                {
+                    RulesEnabled7500 = true;
+                    await Enable7500();
+
+                }
+            }
         }
         public async void txtMulti()
         {
@@ -470,7 +577,7 @@ namespace PeteTech
             OnDataPoint5Incremented();
         }
 
-        public void txtPauseHotKey()
+        public async void txtPauseHotKey()
         {
 
             if (togglePause = !togglePause) // Toggle the state
@@ -484,7 +591,7 @@ namespace PeteTech
                 // Play the sound cue for activation
                 if (isSoundOn)
                 {
-                    PlaySoundCue(true);
+                    player.Play();
                 }
 
             }
@@ -499,7 +606,7 @@ namespace PeteTech
                 // Play the sound cue for deactivation
                 if (isSoundOn)
                 {
-                    PlaySoundCue(false);
+                    player2.Play();
                 }
             }
         }
@@ -513,23 +620,15 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
+
                     RulesEnabled27K = false;
                     await Disable27K();
-
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     RulesEnabled27K = true;
                     await Enable27K();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
+
                 }
             }
             else if (kStatus == "in")
@@ -538,21 +637,14 @@ namespace PeteTech
                 {
                     RulesEnabled27K = false;
                     await Disable27K();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
+
+
                 }
                 else
                 {
                     RulesEnabled27K = true;
                     await Enable27K();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
+
                 }
 
             }
@@ -562,21 +654,11 @@ namespace PeteTech
                 {
                     RulesEnabled27K = false;
                     await Disable27K();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     RulesEnabled27K = true;
                     await Enable27K();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
                 }
 
             }
@@ -590,23 +672,11 @@ namespace PeteTech
                 {
                     RulesEnabled3074 = false;
                     await Disable3074();
-                    
-
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
                 }
                 else
                 {
                     RulesEnabled3074 = true;
                     await Enable3074();
-                    
-
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
                 }
             }
             else if (tStatus == "in")
@@ -615,22 +685,11 @@ namespace PeteTech
                 {
                     RulesEnabled3074 = false;
                     await Disable3074();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
-
                 }
                 else
                 {
                     RulesEnabled3074 = true;
                     await Enable3074();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
                 }
             }
             else if (tStatus == "out")
@@ -639,22 +698,12 @@ namespace PeteTech
                 {
                     RulesEnabled3074 = false;
                     await Disable3074();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(false);
-                    }
 
                 }
                 else
                 {
                     RulesEnabled3074 = true;
                     await Enable3074();
-                    
-                    if (isSoundOn)
-                    {
-                        PlaySoundCue(true);
-                    }
                 }
             }
         }
@@ -699,10 +748,12 @@ namespace PeteTech
                     MessageBox.Show("Solo script Stopped");
                     RulesEnabled27K = false;
                     await Disable27K();
-                    
+
                     if (isSoundOn)
                     {
-                        PlaySoundCue(false);
+                       
+                     player.Play();
+                      
                     }
                 }
                 else
@@ -711,10 +762,10 @@ namespace PeteTech
                     MessageBox.Show("Solo script Started");
                     RulesEnabled27K = true;
                     await Enable27K();
-                    
+
                     if (isSoundOn)
                     {
-                        PlaySoundCue(true);
+                        player2.Play();
                     }
                     OnDataPoint2Incremented();
 
@@ -729,14 +780,14 @@ namespace PeteTech
         {
             if (isSoundOn)
             {
-                PlaySoundCue(true);
+                player.Play();
             }
             await EnableDC();
             await Task.Delay(1000);
             await DisableDC();
             if (isSoundOn)
             {
-                PlaySoundCue(false);
+                player2.Play();
             }
             OnDataPoint3Incremented();
 
@@ -769,165 +820,68 @@ namespace PeteTech
         }
         public async Task Enable3074()
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
 
-            Random rand = new Random();
-            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
 
-
-
-            if (!isBufferOn)
-            {
-                    
-                   
-                WinDiverts.Start3074(RulesEnabled3074, tStatus);
-                                    
-            }
-
-
-
-
-                // Start the loop that will enable/disable the rules while isBufferOn is true
-                while (isBufferOn) // Keep looping while buffer is on
+                if (!isBufferOn)
                 {
-
-
-                    RulesEnabled3074 = true;
-
-                    WinDiverts.Start3074(RulesEnabled3074, tStatus);
-                    // Wait while the rules are enabled
-                    await Task.Delay(randLimit);
-
-                    RulesEnabled3074 = false;
-
                     WinDiverts.Start3074(RulesEnabled3074, tStatus);
 
-                   
-
-                    
-
-                    
-                   
-
-                  
-                    await Task.Delay(randUnlimit);
-
-                    // Exit condition check
-                    if (!isBufferOn || !RulesEnabled3074)
-                    {
-                        RulesEnabled3074 = false;
-                        await Disable3074();
-                        // Clean up before exiting
-                        return;
-                    }
                 }
-                /*
-                Random rand = new Random();
-            int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-            int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
-
-
-
-            if (!isBufferOn)
-            {
-                // Add rules to block incoming and outgoing traffic on port 3074
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-            }
-
-
-
-
-            // Start the loop that will enable/disable the rules while isBufferOn is true
-            while (isBufferOn) // Keep looping while buffer is on
-            {
-
-
-
-
-                // Add rules to block incoming and outgoing traffic on port 3074
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-
-
-
-                // Wait while the rules are enabled
-                await Task.Delay(randLimit);
-
-                // Disable the firewall rules
-                Console.WriteLine("3074 Status: OFF");
-
-
-                await Disable3074(); // Ensure rules are deleted
-
-                // Wait before re-enabling the rules
-                await Task.Delay(randUnlimit);
-
-                // Exit condition check
-                if (!isBufferOn || !RulesEnabled3074)
-                {
-                    await Disable3074(); // Clean up before exiting
-                    return;
-                }
-
-
-
-            }
-                 */
             });
-               
-            }
-           
 
-      
+        }
+        public async Task Enable7500()
+        {
+            await Task.Run(() =>
+            {
+                if (!isBufferOn)
+                {
+                    WinDiverts.Start7500(RulesEnabled7500, sStatus);
+                }
+            });
+        }
 
+        public async Task Disable7500()
+        {
+            await Task.Run(() =>
+            {
+                WinDiverts.Start7500(RulesEnabled7500, sStatus);
+                return Task.CompletedTask;
+            });
+        }
         public async Task Disable3074()
         {
             await Task.Run(() =>
             {
-
                 WinDiverts.Start3074(RulesEnabled3074, tStatus);
-                //RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
-                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
-                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
-                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
                 return Task.CompletedTask;
             });
         }
 
-      
-
-
-      
-      
         public async Task Enable27K()
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
-                
+
                 if (!isBufferOn)
                 {
                     WinDiverts.Start27K(RulesEnabled27K, kStatus);
                 }
-               
+
             });
         }
 
         // Method to disable firewall rules for 27k
         public async Task Disable27K()
         {
-            await Task.Run(async() =>
+            await Task.Run(() =>
             {
                 WinDiverts.Start27K(RulesEnabled27K, kStatus);
                 return Task.CompletedTask;
             });
-            
+
 
         }
         private void RunCommand(string command)
@@ -950,16 +904,20 @@ namespace PeteTech
         // Method to play the sound cues
         public void PlaySoundCue(bool isOn)
         {
+
             Console.Beep(isOn ? 523 : 750, 100); // Higher tone for "ON"
             Console.Beep(isOn ? 750 : 523, 100); // Lower tone for "OFF"
+
         }
 
         private void UpdateLabels()
         {
             lbltS = RulesEnabled27K ? "ON" : "OFF";
             lbltrS = RulesEnabled3074 ? "ON" : "OFF";
+            lbltrx = RulesEnabled7500 ? "ON" : "OFF";
             OnUpdateLbl27Status?.Invoke(lbltS);
             OnUpdateLbl3074Status?.Invoke(lbltrS);
+            OnUpdateLbl7500Status?.Invoke(lbltrx);
 
         }
 

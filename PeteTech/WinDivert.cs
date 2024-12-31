@@ -12,8 +12,11 @@ namespace PeteTech
 {
     internal class WinDiverts : Macros
     {
+        
+
         private static WinDivert? l3074;
         private static WinDivert? l27k;
+        private static WinDivert? l7500;
 
         /// <summary>
         /// Filters for download (in) and upload (out)
@@ -30,9 +33,9 @@ namespace PeteTech
         public static string filter27kOUT = "udp.DstPort >= 27015 and udp.DstPort <= 27200"; // Upload (out)
 
         // 7500 Filters
-        public static string filter7500 = "udp.SrcPort >= 7500 and udp.SrcPort <= 7509 or udp.DstPort >= 7500 and udp.DstPort <= 7509"; // Combined for both directions
-        public static string filter7500IN = "udp.SrcPort >= 7500 and udp.SrcPort <= 7509"; // Download (in)
-        public static string filter7500OUT = "udp.DstPort >= 7500 and udp.DstPort <= 7509"; // Upload (out)
+        public static string filter7500 = "tcp.SrcPort >= 7500 and tcp.SrcPort <= 7509 or tcp.DstPort >= 7500 and tcp.DstPort <= 7509"; // Combined for both directions
+        public static string filter7500IN = "tcp.SrcPort >= 7500 and tcp.SrcPort <= 7509"; // Download (in)
+        public static string filter7500OUT = "tcp.DstPort >= 7500 and tcp.DstPort <= 7509"; // Upload (out)
 
         public bool unlimit = true;
 
@@ -47,6 +50,7 @@ namespace PeteTech
                         if (Status == "in/out")
                         {
                             l3074 = new WinDivert(filter3074, WinDivertLayer.Network);
+                            
                         }
                         else if (Status == "in")
                         {
@@ -65,6 +69,7 @@ namespace PeteTech
                     Console.WriteLine($"Packet received: Length {packetLen} bytes");
 
                     l3074.Send(packet, addr, new CancellationToken());
+                   
                 }
                 else
                 {
@@ -72,6 +77,51 @@ namespace PeteTech
                     {
                         l3074.Dispose();
                         l3074 = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        public static void Start7500(bool Enabled, string Status)
+        {
+            try
+            {
+                if (Enabled)
+                {
+                    if (l7500 == null)
+                    {
+                        if (Status == "in/out")
+                        {
+                            l7500 = new WinDivert(filter7500, WinDivertLayer.Network);
+                        }
+                        else if (Status == "in")
+                        {
+                            l7500 = new WinDivert(filter7500IN, WinDivertLayer.Network);
+                        }
+                        else if (Status == "out")
+                        {
+                            l7500 = new WinDivert(filter7500OUT, WinDivertLayer.Network);
+                        }
+                    }
+                    
+                    WinDivertPacket packet = new WinDivertPacket(65535);
+                    WinDivertAddress addr = new WinDivertAddress();
+
+                    int packetLen = l7500.Recv(packet, addr);
+                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
+
+                    l7500.Send(packet, addr, new CancellationToken());
+                }
+                else
+                {
+                    if (l7500 != null)
+                    {
+                        l7500.Dispose(); 
+                        l7500 = null;
                     }
                 }
             }
