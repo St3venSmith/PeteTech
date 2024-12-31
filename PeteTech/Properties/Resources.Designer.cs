@@ -59,5 +59,25 @@ namespace PeteTech.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SoundOFFPeteTechCut {
+            get {
+                object obj = ResourceManager.GetObject("SoundOFFPeteTechCut", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SoundONPeteTechCut {
+            get {
+                object obj = ResourceManager.GetObject("SoundONPeteTechCut", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

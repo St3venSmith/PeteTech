@@ -10,8 +10,8 @@ namespace PeteTech
     internal class Macros : ISuspend
     {
 
-        public SoundPlayer player = new SoundPlayer("C:\\Users\\steve\\Source\\Repos\\PeteTechPlus\\PeteTech\\Resources\\SoundONPeteTechCut.wav");
-        public SoundPlayer player2 = new SoundPlayer("C:\\Users\\steve\\Source\\Repos\\PeteTechPlus\\PeteTech\\Resources\\SoundOFFPeteTechCut.wav");
+        public SoundPlayer player = new SoundPlayer(new MemoryStream(Properties.Resources.SoundONPeteTechCut));
+        public SoundPlayer player2 = new SoundPlayer(new MemoryStream(Properties.Resources.SoundOFFPeteTechCut));
 
 
 

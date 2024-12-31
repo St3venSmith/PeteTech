@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System;
 using System.Windows.Forms;
+using System.Media;
+using Microsoft.VisualBasic.Devices;
 
 namespace PeteTech
 {
@@ -16,7 +18,7 @@ namespace PeteTech
         private DataPoints dataPoints;
 
 
-
+        public SoundPlayer player = new SoundPlayer();
 
 
         private HotkeyHelper hotkey1; // Helper for Pbox
