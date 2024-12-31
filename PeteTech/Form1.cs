@@ -24,7 +24,8 @@ namespace PeteTech
         private HotkeyHelper hotkey3; // helper for 27k
         private HotkeyHelper hotkey4; // helper for 3074
         private HotkeyHelper hotkey5; // helper for fusion breachz
-        private HotkeyHelper hotkey6;
+        private HotkeyHelper hotkey6; // helper for multi
+        private HotkeyHelper hotkey7; // helper for 7500
         private Macros macros;
         private GlobalKeyListener _keyListener;
 
@@ -107,6 +108,8 @@ namespace PeteTech
             hotkey4 = new HotkeyHelper(txt3074HK, macros);
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
             hotkey6 = new HotkeyHelper(txtMulti, macros);
+            hotkey7 = new HotkeyHelper(txt7500HK, macros);
+
 
             macros.OnUpdateLbl27Status += UpdateLbl27Status;
             macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
@@ -123,6 +126,7 @@ namespace PeteTech
 
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
+            cbo7500.Text = "in/out";
         }
 
 
@@ -171,6 +175,11 @@ namespace PeteTech
             lbl3074Status.Text = status;
         }
 
+        private void UpdateLbl7500Status(string status)
+        {
+            lbl7500Status.Text = status;
+        }
+
         private void Macros_Duration27KChanged(object? sender, EventArgs e)
         {
             dataPoints.SetDuration27K(macros.Duration27K);
@@ -191,11 +200,12 @@ namespace PeteTech
             get => tbFpsBar.Value; // Get the current value
             set => tbFpsBar.Value = value; // Set a new value
         }
-         
-        public void UpdateFormLabels(string lbltS, string lbltrs)
+
+        public void UpdateFormLabels(string lbltS, string lbltrs, string lbltrx)
         {
             lbl27Status.Text = macros.lbltS;
             lbl3074Status.Text = macros.lbltrS;
+            lbl7500Status.Text = macros.lbltrx;
         }
 
 
@@ -207,7 +217,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
-                    ;
+
 
                     if (macros.isSoundOn)
                     {
@@ -218,7 +228,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled27K = true;
                     await macros.Enable27K();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -232,7 +242,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -242,8 +252,8 @@ namespace PeteTech
                 else
                 {
                     macros.RulesEnabled27K = true;
-                    await macros.Enable27KIN();
-                    
+                    await macros.Enable27K();
+
 
                     if (macros.isSoundOn)
                     {
@@ -258,7 +268,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled27K = false;
                     await macros.Disable27K();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -268,8 +278,8 @@ namespace PeteTech
                 else
                 {
                     macros.RulesEnabled27K = true;
-                    await macros.Enable27KOUT();
-                    
+                    await macros.Enable27K();
+
 
                     if (macros.isSoundOn)
                     {
@@ -288,7 +298,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -299,7 +309,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled3074 = true;
                     await macros.Enable3074();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -313,7 +323,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -324,8 +334,8 @@ namespace PeteTech
                 else
                 {
                     macros.RulesEnabled3074 = true;
-                    await macros.Enable3074IN();
-                    
+                    await macros.Enable3074();
+
 
                     if (macros.isSoundOn)
                     {
@@ -339,7 +349,7 @@ namespace PeteTech
                 {
                     macros.RulesEnabled3074 = false;
                     await macros.Disable3074();
-                    
+
 
                     if (macros.isSoundOn)
                     {
@@ -350,8 +360,8 @@ namespace PeteTech
                 else
                 {
                     macros.RulesEnabled3074 = true;
-                    await macros.Enable3074OUT();
-                    
+                    await macros.Enable3074();
+
 
                     if (macros.isSoundOn)
                     {
@@ -604,7 +614,17 @@ namespace PeteTech
 
         private void btnAFK_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void btn7500_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt7500HK_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

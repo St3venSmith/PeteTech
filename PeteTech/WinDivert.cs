@@ -2,69 +2,78 @@
 using ProcessManagement;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
-
 using System.Text;
 using System.Threading;
-using System.Reflection.Metadata;
 using WindivertDotnet;
+using System.Net.Sockets;
+using System.Configuration;
 
 namespace PeteTech
 {
     internal class WinDiverts : Macros
     {
-        private static WinDivert? divert;
+        private static WinDivert? l3074;
+        private static WinDivert? l27k;
 
-        public static string filter = "ip"; // Define your packet filter (adjust as needed)
+        /// <summary>
+        /// Filters for download (in) and upload (out)
+        /// </summary>
 
+        // 3074 Filters
+        public static string filter3074 = "udp.SrcPort == 3074 or udp.DstPort == 3074"; // Combined for both directions
+        public static string filter3074IN = "udp.SrcPort == 3074"; // Download (in)
+        public static string filter3074OUT = "udp.DstPort == 3074"; // Upload (out)
 
+        // 27k Filters
+        public static string filter27k = "udp.SrcPort >= 27015 and udp.SrcPort <= 27200 or udp.DstPort >= 27015 and udp.DstPort <= 27200";
+        public static string filter27kIN = "udp.SrcPort >= 27015 and udp.SrcPort <= 27200"; // Download (in)
+        public static string filter27kOUT = "udp.DstPort >= 27015 and udp.DstPort <= 27200"; // Upload (out)
 
-      
+        // 7500 Filters
+        public static string filter7500 = "udp.SrcPort >= 7500 and udp.SrcPort <= 7509 or udp.DstPort >= 7500 and udp.DstPort <= 7509"; // Combined for both directions
+        public static string filter7500IN = "udp.SrcPort >= 7500 and udp.SrcPort <= 7509"; // Download (in)
+        public static string filter7500OUT = "udp.DstPort >= 7500 and udp.DstPort <= 7509"; // Upload (out)
 
+        public bool unlimit = true;
 
-        public static void Start(bool Enabled)
+        public static void Start3074(bool Enabled, string Status)
         {
             try
             {
-
-                divert = new WinDivert(Filter.True.And(x => x.IsUdp && x.Network.RemotePort == 3074), WinDivertLayer.Network);
-                
                 if (Enabled)
                 {
-                    divert = new WinDivert(Filter.True.And(x => x.IsUdp && x.Network.RemotePort == 3074), WinDivertLayer.Network);
+                    if (l3074 == null)
+                    {
+                        if (Status == "in/out")
+                        {
+                            l3074 = new WinDivert(filter3074, WinDivertLayer.Network);
+                        }
+                        else if (Status == "in")
+                        {
+                            l3074 = new WinDivert(filter3074IN, WinDivertLayer.Network);
+                        }
+                        else if (Status == "out")
+                        {
+                            l3074 = new WinDivert(filter3074OUT, WinDivertLayer.Network);
+                        }
+                    }
+
+                    WinDivertPacket packet = new WinDivertPacket(65535);
+                    WinDivertAddress addr = new WinDivertAddress();
+
+                    int packetLen = l3074.Recv(packet, addr);
+                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
+
+                    l3074.Send(packet, addr, new CancellationToken());
                 }
                 else
                 {
-                    divert.Shutdown();
-                }
-                WinDivertPacket packet = new WinDivertPacket(65535); // Create a WinDivertPacket instance
-                WinDivertAddress addr = new WinDivertAddress(); // Create a WinDivertAddress instance
-
-                while (Enabled)
-                {
-                    MessageBox.Show("Enabled");
-                    int packetLen = divert.Recv(packet, addr); // Receive packet
-
-                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
-
-
-                    if (!Enabled)
+                    if (l3074 != null)
                     {
-                        MessageBox.Show("Disabled");
-                        DropPacket(packet, addr);
-
-                    }
-                    else
-                    {
-                        SendPacket(packet, addr, packetLen);
+                        l3074.Dispose();
+                        l3074 = null;
                     }
                 }
-                if (!Enabled)
-                {
-                    DropPacket(packet, addr);
-
-                }
-
             }
             catch (Exception ex)
             {
@@ -72,17 +81,49 @@ namespace PeteTech
             }
         }
 
-        private static void SendPacket(WinDivertPacket packet, WinDivertAddress addr, int packetLen)
+        public static void Start27K(bool Enabled, string Status)
         {
-            divert.Send(packet, addr, new CancellationToken()); // Pass a CancellationToken instead of int
-            MessageBox.Show($"Sent");
-        }
+            try
+            {
+                if (Enabled)
+                {
+                    if (l27k == null)
+                    {
+                        if (Status == "in/out")
+                        {
+                            l27k = new WinDivert(filter27k, WinDivertLayer.Network);
+                        }
+                        else if (Status == "in")
+                        {
+                            l27k = new WinDivert(filter27kIN, WinDivertLayer.Network);
+                        }
+                        else if (Status == "out")
+                        {
+                            l27k = new WinDivert(filter27kOUT, WinDivertLayer.Network);
+                        }
+                    }
 
-        private static void DropPacket(WinDivertPacket packet, WinDivertAddress addr)
-        {
-            divert.Shutdown(); // Close the WinDivert handle
-            // Packets are dropped by not sending them
-            Console.WriteLine("Packet dropped.");
+                    WinDivertPacket packet = new WinDivertPacket(65535);
+                    WinDivertAddress addr = new WinDivertAddress();
+
+                    int packetLen = l27k.Recv(packet, addr);
+                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
+
+                    l27k.Send(packet, addr, new CancellationToken());
+                }
+                else
+                {
+                    if (l27k != null)
+                    {
+                        l27k.Dispose();
+                        l27k = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ namespace PeteTech
 
         public string? lbltrS; // lable for 3074
 
+        public string? lbltrx; // label for 7500
+
 
 
         public bool isSoundOn = false;
@@ -44,6 +46,8 @@ namespace PeteTech
         private bool _rulesEnabled3074;
         private bool _rulesEnabled27K;
         private bool _rulesEnabledDC;
+
+        private bool _rulesEnabled7500;
 
 
 
@@ -354,6 +358,11 @@ namespace PeteTech
             await Task.Delay(200);
             KeyUp(VKC.VK_1);
         }
+
+        public async void txt7500HK()
+        {
+            await Task.Delay(10);
+        }
         public async void txtMulti()
         {
 
@@ -538,7 +547,7 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled27K = true;
-                    await Enable27KIN();
+                    await Enable27K();
                     
                     if (isSoundOn)
                     {
@@ -562,7 +571,7 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled27K = true;
-                    await Enable27KOUT();
+                    await Enable27K();
                     
                     if (isSoundOn)
                     {
@@ -580,8 +589,8 @@ namespace PeteTech
                 if (RulesEnabled3074)  // Check if the rules are enabled
                 {
                     RulesEnabled3074 = false;
-                    //await Disable3074();
-                    WinDiverts.Start(RulesEnabled3074);
+                    await Disable3074();
+                    
 
                     if (isSoundOn)
                     {
@@ -591,8 +600,8 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled3074 = true;
-                    //await Enable3074();
-                    WinDiverts.Start(RulesEnabled3074);
+                    await Enable3074();
+                    
 
                     if (isSoundOn)
                     {
@@ -616,7 +625,7 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled3074 = true;
-                    await Enable3074IN();
+                    await Enable3074();
                     
                     if (isSoundOn)
                     {
@@ -640,7 +649,7 @@ namespace PeteTech
                 else
                 {
                     RulesEnabled3074 = true;
-                    await Enable3074OUT();
+                    await Enable3074();
                     
                     if (isSoundOn)
                     {
@@ -771,9 +780,10 @@ namespace PeteTech
 
             if (!isBufferOn)
             {
-
-                    WinDiverts.Start(RulesEnabled3074);               
-                
+                    
+                   
+                WinDiverts.Start3074(RulesEnabled3074, tStatus);
+                                    
             }
 
 
@@ -786,22 +796,29 @@ namespace PeteTech
 
                     RulesEnabled3074 = true;
 
+                    WinDiverts.Start3074(RulesEnabled3074, tStatus);
                     // Wait while the rules are enabled
                     await Task.Delay(randLimit);
 
-                    // Disable the firewall rules
-                    Console.WriteLine("3074 Status: OFF");
-
                     RulesEnabled3074 = false;
-                    // Ensure rules are deleted
 
-                    // Wait before re-enabling the rules
+                    WinDiverts.Start3074(RulesEnabled3074, tStatus);
+
+                   
+
+                    
+
+                    
+                   
+
+                  
                     await Task.Delay(randUnlimit);
 
                     // Exit condition check
                     if (!isBufferOn || !RulesEnabled3074)
                     {
                         RulesEnabled3074 = false;
+                        await Disable3074();
                         // Clean up before exiting
                         return;
                     }
@@ -875,280 +892,44 @@ namespace PeteTech
             await Task.Run(() =>
             {
 
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
+                WinDiverts.Start3074(RulesEnabled3074, tStatus);
+                //RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-in\"");
+                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-in\"");
+                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-tcp-out\"");
+                // RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-3074-udp-out\"");
                 return Task.CompletedTask;
             });
         }
 
-        public async Task Enable3074IN()
-        {
+      
 
 
-            await Task.Run(async () =>
-            {
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
-
-                lbltrS = "ON";
-
-                // Add rules to block incoming traffic on port 3074
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-
-                // Start the loop that will enable the rules while isBufferOn is true
-                while (isBufferOn)
-                {
-                    // Wait for the random amount of time before enabling the rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
-
-                    // Enable the incoming firewall rules
-                    Console.WriteLine("3074 IN Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-tcp-in\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-3074-udp-in\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-
-                    lbltrS = "ON";
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
-
-                    // Disable the incoming firewall rules
-                    Console.WriteLine("3074 IN Status: OFF");
-                    lbltrS = "OFF";
-                    await Disable3074();
-
-                    // If the buffer is turned off, stop the loop
-                    if (!isBufferOn || !RulesEnabled3074)
-                    {
-                        await Disable3074();
-                        break;
-                    }
-
-
-                }
-            });
-        }
-
-
-        public async Task Enable3074OUT()
-        {
-            await Task.Run(async () =>
-            {
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
-
-
-                lbltrS = "ON";
-                // Add rules to block outgoing traffic on port 3074
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-
-                // Start the loop that will enable the rules while isBufferOn is true
-                while (isBufferOn)
-                {
-                    // Wait for the random amount of time before enabling the rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
-
-                    lbltrS = "ON";
-
-                    // Enable the outgoing firewall rules
-                    Console.WriteLine("3074 OUT Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-tcp-out\" profile=any remoteport=3074 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-3074-udp-out\" profile=any remoteport=3074 protocol=udp interfacetype=any");
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
-
-                    lbltrS = "OFF";
-
-                    // Disable the outgoing firewall rules
-                    Console.WriteLine("3074 OUT Status: OFF");
-                    await Disable3074();
-
-
-                    // If the buffer is turned off, stop the loop
-                    if (!isBufferOn || !RulesEnabled3074)
-                    {
-                        await Disable3074();
-                        break;
-                    }
-
-                }
-            });
-
-           
-        }
+      
+      
         public async Task Enable27K()
         {
             await Task.Run(async () =>
             {
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
-
-                lbltS = "ON";
-
-                // Add rules to block incoming and outgoing traffic on port range 27015-27200
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                // Start the loop that will enable the rules while isBufferOn is true
-                while (isBufferOn)
+                
+                if (!isBufferOn)
                 {
-                    // Wait for the random amount of time before enabling the rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
-
-                    lbltS = "ON";
-
-                    // Enable the firewall rules (outbound and inbound)
-                    Console.WriteLine("27k Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
-
-                    lbltS = "OFF";
-
-                    // Disable the firewall rules (outbound and inbound)
-                    Console.WriteLine("27k Status: OFF");
-                   await Disable27K();
-
-                    // If the buffer is turned off, stop the loop
-                    if (!isBufferOn || !RulesEnabled27K)
-                    {
-                        await Disable27K();
-                        break;
-                    }
-
-                    // Optionally, add another random delay before starting the next cycle
-                    // Delay before next cycle
+                    WinDiverts.Start27K(RulesEnabled27K, kStatus);
                 }
+               
             });
         }
 
         // Method to disable firewall rules for 27k
         public async Task Disable27K()
         {
-            await Task.Run(() =>
+            await Task.Run(async() =>
             {
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-tcp-out\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-out\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-tcp-in\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-27k-udp-in\"");
+                WinDiverts.Start27K(RulesEnabled27K, kStatus);
                 return Task.CompletedTask;
             });
             
 
         }
-
-        public async Task Enable27KIN()
-        {
-            await Task.Run(async () =>
-            {
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(5000, 7000);  // Random delay for how long the rules are enabled
-
-                lbltS = "ON";
-
-                // Add rules to block incoming traffic on port range 27015-27200
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                // Start the loop that will enable the rules while isBufferOn is true
-                while (isBufferOn)
-                {
-                    // Wait for the random amount of time before enabling the rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
-
-                    lbltS = "ON";
-
-                    // Enable the incoming traffic firewall rules
-                    Console.WriteLine("27k IN Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-tcp-in\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-27k-udp-in\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
-
-                    lbltS = "OFF";
-
-                    // Disable the incoming traffic firewall rules
-                    Console.WriteLine("27k IN Status: OFF");
-                    await Disable27K();
-
-                    // If the buffer is turned off, stop the loop
-                    if (!isBufferOn || !RulesEnabled27K)
-                    {
-                        await Disable27K();
-                        break;
-                    }
-
-                }
-            });
-            
-        }
-
-
-        public async Task Enable27KOUT()
-        {
-            await Task.Run(async () =>
-            {
-                Random rand = new Random();
-                int randUnlimit = rand.Next(300, 501);  // Random delay before enabling the rules
-                int randLimit = rand.Next(3000, 4000);  // Random delay for how long the rules are enabled
-
-
-
-                lbltS = "ON";
-
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                // Start the loop that will enable the rules while isBufferOn is true
-                while (isBufferOn)
-                {
-                    // Wait for the random amount of time before enabling the rules
-                    await Task.Delay(randUnlimit);  // Delay before enabling
-
-                    lbltS = "ON";
-
-                    // Add rules to block outgoing traffic on port range 27015-27200
-                    Console.WriteLine("27k OUT Status: ON");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-                    RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-udp-out\" profile=any remoteport=27015-27200 protocol=udp interfacetype=any");
-
-                    // Wait for the random duration before disabling the firewall rules
-                    await Task.Delay(randLimit);  // Delay before disabling
-
-                    lbltS = "OFF";
-
-                    // Disable the outgoing traffic firewall rules
-                    Console.WriteLine("27k OUT Status: OFF");
-                    await Disable27K();
-
-                    // If the buffer is turned off, stop the loop
-                    if (!isBufferOn || !RulesEnabled27K)
-                    {
-                        await Disable27K();
-                        break;
-                    }
-
-
-                }
-            });
-            
-        }
-
         private void RunCommand(string command)
         {
             try
