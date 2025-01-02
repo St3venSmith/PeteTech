@@ -36,6 +36,10 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl7500Status = new Label();
+            txt7500HK = new TextBox();
+            btn7500 = new Button();
+            cbo7500 = new ComboBox();
             btnAFK = new Button();
             btnDC = new Button();
             lbl3074Status = new Label();
@@ -92,6 +96,9 @@
             pageSetupDialog1 = new PageSetupDialog();
             colorDialog1 = new ColorDialog();
             colorDialog2 = new ColorDialog();
+            fontDialog2 = new FontDialog();
+            label16 = new Label();
+            lbl7500Track = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -137,7 +144,7 @@
             // 
             chkAutoBuffer.Appearance = Appearance.Button;
             chkAutoBuffer.AutoSize = true;
-            chkAutoBuffer.Location = new Point(3, 60);
+            chkAutoBuffer.Location = new Point(2, 91);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
             chkAutoBuffer.Size = new Size(78, 26);
@@ -152,7 +159,7 @@
             chkSounds.Appearance = Appearance.Button;
             chkSounds.BackColor = Color.Transparent;
             chkSounds.FlatAppearance.BorderColor = Color.Red;
-            chkSounds.Location = new Point(87, 60);
+            chkSounds.Location = new Point(86, 91);
             chkSounds.Margin = new Padding(3, 2, 3, 2);
             chkSounds.Name = "chkSounds";
             chkSounds.Size = new Size(55, 26);
@@ -181,10 +188,14 @@
             // 
             // tabPage1
             // 
-            tabPage1.BackColor = Color.White;
+            tabPage1.BackColor = Color.Gray;
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
+            tabPage1.Controls.Add(lbl7500Status);
+            tabPage1.Controls.Add(txt7500HK);
+            tabPage1.Controls.Add(btn7500);
+            tabPage1.Controls.Add(cbo7500);
             tabPage1.Controls.Add(btnAFK);
             tabPage1.Controls.Add(btnDC);
             tabPage1.Controls.Add(lbl3074Status);
@@ -207,7 +218,7 @@
             tabPage1.Controls.Add(chkSounds);
             tabPage1.Controls.Add(btn27K);
             tabPage1.Controls.Add(chkAutoBuffer);
-            tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             tabPage1.ForeColor = Color.FromArgb(32, 32, 32);
             tabPage1.ImageKey = "(none)";
             tabPage1.Location = new Point(4, 24);
@@ -218,9 +229,56 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
             // 
+            // lbl7500Status
+            // 
+            lbl7500Status.AutoSize = true;
+            lbl7500Status.Location = new Point(215, 66);
+            lbl7500Status.Name = "lbl7500Status";
+            lbl7500Status.Size = new Size(28, 16);
+            lbl7500Status.TabIndex = 25;
+            lbl7500Status.Text = "OFF";
+            // 
+            // txt7500HK
+            // 
+            txt7500HK.Location = new Point(188, 63);
+            txt7500HK.MaxLength = 1;
+            txt7500HK.Name = "txt7500HK";
+            txt7500HK.Size = new Size(21, 22);
+            txt7500HK.TabIndex = 24;
+            toolTip1.SetToolTip(txt7500HK, "Keybind for 3074");
+            txt7500HK.TextChanged += txt7500HK_TextChanged;
+            // 
+            // btn7500
+            // 
+            btn7500.AutoSize = true;
+            btn7500.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn7500.FlatStyle = FlatStyle.Popup;
+            btn7500.ForeColor = SystemColors.ActiveCaptionText;
+            btn7500.Location = new Point(76, 61);
+            btn7500.Margin = new Padding(3, 2, 3, 2);
+            btn7500.Name = "btn7500";
+            btn7500.Size = new Size(109, 26);
+            btn7500.TabIndex = 23;
+            btn7500.Text = "7500";
+            toolTip1.SetToolTip(btn7500, "Limits 3074: Can be used to Unload Doors");
+            btn7500.UseVisualStyleBackColor = true;
+            btn7500.Click += btn7500_Click;
+            // 
+            // cbo7500
+            // 
+            cbo7500.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo7500.FormattingEnabled = true;
+            cbo7500.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo7500.Location = new Point(3, 62);
+            cbo7500.Name = "cbo7500";
+            cbo7500.Size = new Size(67, 24);
+            cbo7500.TabIndex = 22;
+            toolTip1.SetToolTip(cbo7500, "Select Option");
+            cbo7500.SelectedIndexChanged += cbo7500_SelectedIndexChanged;
+            // 
             // btnAFK
             // 
-            btnAFK.Location = new Point(158, 225);
+            btnAFK.Location = new Point(157, 256);
             btnAFK.Name = "btnAFK";
             btnAFK.Size = new Size(75, 25);
             btnAFK.TabIndex = 21;
@@ -231,7 +289,7 @@
             // btnDC
             // 
             btnDC.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnDC.Location = new Point(82, 225);
+            btnDC.Location = new Point(81, 256);
             btnDC.Name = "btnDC";
             btnDC.Size = new Size(70, 26);
             btnDC.TabIndex = 20;
@@ -285,7 +343,7 @@
             // lblFPS
             // 
             lblFPS.AutoSize = true;
-            lblFPS.Location = new Point(397, 152);
+            lblFPS.Location = new Point(396, 183);
             lblFPS.Name = "lblFPS";
             lblFPS.Size = new Size(38, 16);
             lblFPS.TabIndex = 15;
@@ -294,7 +352,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(362, 152);
+            label4.Location = new Point(361, 183);
             label4.Name = "label4";
             label4.Size = new Size(29, 16);
             label4.TabIndex = 14;
@@ -305,7 +363,7 @@
             // 
             tbFpsBar.AutoSize = false;
             tbFpsBar.BackColor = SystemColors.MenuBar;
-            tbFpsBar.Location = new Point(3, 143);
+            tbFpsBar.Location = new Point(2, 174);
             tbFpsBar.Maximum = 255;
             tbFpsBar.Minimum = 30;
             tbFpsBar.Name = "tbFpsBar";
@@ -319,7 +377,7 @@
             // btnSolo
             // 
             btnSolo.AutoSize = true;
-            btnSolo.Location = new Point(3, 225);
+            btnSolo.Location = new Point(2, 256);
             btnSolo.Name = "btnSolo";
             btnSolo.Size = new Size(73, 26);
             btnSolo.TabIndex = 12;
@@ -330,7 +388,7 @@
             // 
             // txtFBHK
             // 
-            txtFBHK.Location = new Point(90, 194);
+            txtFBHK.Location = new Point(89, 225);
             txtFBHK.MaxLength = 1;
             txtFBHK.Name = "txtFBHK";
             txtFBHK.Size = new Size(29, 22);
@@ -340,7 +398,7 @@
             // lblFusion
             // 
             lblFusion.AutoSize = true;
-            lblFusion.Location = new Point(3, 197);
+            lblFusion.Location = new Point(2, 228);
             lblFusion.Name = "lblFusion";
             lblFusion.Size = new Size(81, 16);
             lblFusion.TabIndex = 10;
@@ -366,7 +424,7 @@
             // 
             // txtPauseHotKey
             // 
-            txtPauseHotKey.Location = new Point(41, 87);
+            txtPauseHotKey.Location = new Point(40, 118);
             txtPauseHotKey.MaxLength = 1;
             txtPauseHotKey.Name = "txtPauseHotKey";
             txtPauseHotKey.Size = new Size(29, 22);
@@ -376,7 +434,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(3, 90);
+            label3.Location = new Point(2, 121);
             label3.Name = "label3";
             label3.Size = new Size(38, 16);
             label3.TabIndex = 6;
@@ -387,7 +445,7 @@
             txtPboxHotKey.BackColor = SystemColors.HighlightText;
             txtPboxHotKey.ForeColor = SystemColors.WindowText;
             txtPboxHotKey.HideSelection = false;
-            txtPboxHotKey.Location = new Point(41, 115);
+            txtPboxHotKey.Location = new Point(40, 146);
             txtPboxHotKey.MaxLength = 1;
             txtPboxHotKey.Name = "txtPboxHotKey";
             txtPboxHotKey.Size = new Size(29, 22);
@@ -398,7 +456,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(3, 118);
+            label2.Location = new Point(2, 149);
             label2.Name = "label2";
             label2.Size = new Size(34, 16);
             label2.TabIndex = 4;
@@ -407,6 +465,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.BackColor = Color.Gray;
             tabPage3.Controls.Add(txtPboxMessage);
             tabPage3.Controls.Add(label5);
             tabPage3.Location = new Point(4, 24);
@@ -414,7 +473,6 @@
             tabPage3.Size = new Size(692, 310);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Settings";
-            tabPage3.UseVisualStyleBackColor = true;
             // 
             // txtPboxMessage
             // 
@@ -436,6 +494,9 @@
             // 
             // tabPage4
             // 
+            tabPage4.BackColor = Color.Gray;
+            tabPage4.Controls.Add(lbl7500Track);
+            tabPage4.Controls.Add(label16);
             tabPage4.Controls.Add(lblSoloTrack);
             tabPage4.Controls.Add(lblDCtrack);
             tabPage4.Controls.Add(lblFBTrack);
@@ -459,7 +520,6 @@
             tabPage4.Size = new Size(692, 310);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Stats";
-            tabPage4.UseVisualStyleBackColor = true;
             // 
             // lblSoloTrack
             // 
@@ -515,7 +575,7 @@
             // 
             lbl27kTrack.AutoEllipsis = true;
             lbl27kTrack.AutoSize = true;
-            lbl27kTrack.Location = new Point(110, 66);
+            lbl27kTrack.Location = new Point(116, 36);
             lbl27kTrack.Name = "lbl27kTrack";
             lbl27kTrack.Size = new Size(52, 15);
             lbl27kTrack.TabIndex = 12;
@@ -589,7 +649,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(3, 66);
+            label10.Location = new Point(3, 37);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 4;
@@ -598,7 +658,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(3, 51);
+            label9.Location = new Point(3, 52);
             label9.Name = "label9";
             label9.Size = new Size(107, 15);
             label9.TabIndex = 3;
@@ -637,6 +697,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.Gray;
             tabPage2.Controls.Add(label1);
             tabPage2.Location = new Point(4, 24);
             tabPage2.Margin = new Padding(3, 2, 3, 2);
@@ -645,7 +706,6 @@
             tabPage2.Size = new Size(692, 310);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Credits";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -660,6 +720,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.BackColor = Color.Gray;
             tabPage5.Controls.Add(btnTheme);
             tabPage5.Controls.Add(btnColor);
             tabPage5.Controls.Add(btnChangeFont);
@@ -670,7 +731,6 @@
             tabPage5.Size = new Size(692, 310);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Looks";
-            tabPage5.UseVisualStyleBackColor = true;
             // 
             // btnTheme
             // 
@@ -728,6 +788,7 @@
             // 
             // tabPage6
             // 
+            tabPage6.BackColor = Color.Gray;
             tabPage6.Controls.Add(txtMulti);
             tabPage6.Controls.Add(lblMulti);
             tabPage6.Location = new Point(4, 24);
@@ -735,7 +796,6 @@
             tabPage6.Size = new Size(692, 310);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Scum";
-            tabPage6.UseVisualStyleBackColor = true;
             // 
             // txtMulti
             // 
@@ -758,6 +818,24 @@
             // 
             pageSetupDialog1.ShowHelp = true;
             // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(3, 67);
+            label16.Name = "label16";
+            label16.Size = new Size(109, 15);
+            label16.TabIndex = 18;
+            label16.Text = "Time Holding 7500:";
+            // 
+            // lbl7500Track
+            // 
+            lbl7500Track.AutoSize = true;
+            lbl7500Track.Location = new Point(116, 66);
+            lbl7500Track.Name = "lbl7500Track";
+            lbl7500Track.Size = new Size(58, 15);
+            lbl7500Track.TabIndex = 19;
+            lbl7500Track.Text = "7500Track";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -774,7 +852,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Opacity = 0.9D;
-            Text = "PeteTech";
+            Text = "PeteTech +";
             TopMost = true;
             TransparencyKey = Color.FromArgb(192, 255, 255);
             tabControl1.ResumeLayout(false);
@@ -859,5 +937,12 @@
         private TextBox txtMulti;
         private Label lblMulti;
         private Button btnAFK;
+        private ComboBox cbo7500;
+        private FontDialog fontDialog2;
+        private Label lbl7500Status;
+        private TextBox txt7500HK;
+        private Button btn7500;
+        private Label label16;
+        private Label lbl7500Track;
     }
 }

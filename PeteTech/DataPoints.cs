@@ -19,8 +19,8 @@ namespace PeteTech
         public int DataPoint5 { get; set; }
         public TimeSpan Duration27K { get; set; }
         public TimeSpan Duration3074 { get; set; }
+        public TimeSpan Duration7500 { get; set; }
 
-           
 
         public DataPoints()
         {
@@ -44,6 +44,7 @@ namespace PeteTech
                         DataPoint5 = int.Parse(lines[4]);
                         Duration27K = TimeSpan.Parse(lines[5]);
                         Duration3074 = TimeSpan.Parse(lines[6]);
+                        Duration7500 = TimeSpan.Parse(lines[7]);
                     }
                     Console.WriteLine("Data points loaded successfully.");
                 }
@@ -71,6 +72,7 @@ namespace PeteTech
                     writer.WriteLine(DataPoint5);
                     writer.WriteLine(Duration27K);
                     writer.WriteLine(Duration3074);
+                    writer.WriteLine(Duration7500);
                 }
                 Console.WriteLine("Data points saved successfully.");
             }
@@ -104,6 +106,7 @@ namespace PeteTech
                         DataPoint5 = 0;
                         Duration27K = TimeSpan.Zero;
                         Duration3074 = TimeSpan.Zero;
+                        Duration7500 = TimeSpan.Zero;
 
                         // Save the initialized data points to the file
                         SaveDataPoints();
@@ -189,14 +192,11 @@ namespace PeteTech
             
         }
 
-        public TimeSpan GetDuration27K()
+        public void SetDuration7500(TimeSpan duration)
         {
-            return Duration27K;
-        }
 
-        public TimeSpan GetDuration3074()
-        {
-            return Duration3074;
+            Duration7500 += duration;
+
         }
     }
 }
