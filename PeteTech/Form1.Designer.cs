@@ -36,6 +36,12 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl3074Up = new Label();
+            lbl3074down = new Label();
+            lbl30kStatus = new Label();
+            txt30kHK = new TextBox();
+            btn30k = new Button();
+            cbo30k = new ComboBox();
             lbl7500Status = new Label();
             txt7500HK = new TextBox();
             btn7500 = new Button();
@@ -62,6 +68,10 @@
             txtPboxMessage = new TextBox();
             label5 = new Label();
             tabPage4 = new TabPage();
+            lbl30kTrack = new Label();
+            label17 = new Label();
+            lbl7500Track = new Label();
+            label16 = new Label();
             lblSoloTrack = new Label();
             lblDCtrack = new Label();
             lblFBTrack = new Label();
@@ -97,8 +107,12 @@
             colorDialog1 = new ColorDialog();
             colorDialog2 = new ColorDialog();
             fontDialog2 = new FontDialog();
-            label16 = new Label();
-            lbl7500Track = new Label();
+            lbl27kdown = new Label();
+            lbl27kUp = new Label();
+            lbl7500Down = new Label();
+            lbl30KDown = new Label();
+            lbl7500Up = new Label();
+            lbl30KUP = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -144,7 +158,7 @@
             // 
             chkAutoBuffer.Appearance = Appearance.Button;
             chkAutoBuffer.AutoSize = true;
-            chkAutoBuffer.Location = new Point(2, 91);
+            chkAutoBuffer.Location = new Point(3, 128);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
             chkAutoBuffer.Size = new Size(78, 26);
@@ -159,7 +173,7 @@
             chkSounds.Appearance = Appearance.Button;
             chkSounds.BackColor = Color.Transparent;
             chkSounds.FlatAppearance.BorderColor = Color.Red;
-            chkSounds.Location = new Point(86, 91);
+            chkSounds.Location = new Point(87, 128);
             chkSounds.Margin = new Padding(3, 2, 3, 2);
             chkSounds.Name = "chkSounds";
             chkSounds.Size = new Size(55, 26);
@@ -182,7 +196,7 @@
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(700, 338);
+            tabControl1.Size = new Size(700, 366);
             tabControl1.SizeMode = TabSizeMode.FillToRight;
             tabControl1.TabIndex = 4;
             // 
@@ -192,6 +206,18 @@
             tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
+            tabPage1.Controls.Add(lbl30KUP);
+            tabPage1.Controls.Add(lbl7500Up);
+            tabPage1.Controls.Add(lbl30KDown);
+            tabPage1.Controls.Add(lbl7500Down);
+            tabPage1.Controls.Add(lbl27kUp);
+            tabPage1.Controls.Add(lbl27kdown);
+            tabPage1.Controls.Add(lbl3074Up);
+            tabPage1.Controls.Add(lbl3074down);
+            tabPage1.Controls.Add(lbl30kStatus);
+            tabPage1.Controls.Add(txt30kHK);
+            tabPage1.Controls.Add(btn30k);
+            tabPage1.Controls.Add(cbo30k);
             tabPage1.Controls.Add(lbl7500Status);
             tabPage1.Controls.Add(txt7500HK);
             tabPage1.Controls.Add(btn7500);
@@ -225,9 +251,74 @@
             tabPage1.Margin = new Padding(3, 2, 3, 2);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3, 2, 3, 2);
-            tabPage1.Size = new Size(692, 310);
+            tabPage1.Size = new Size(692, 338);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
+            // 
+            // lbl3074Up
+            // 
+            lbl3074Up.AutoSize = true;
+            lbl3074Up.Location = new Point(337, 35);
+            lbl3074Up.Name = "lbl3074Up";
+            lbl3074Up.Size = new Size(19, 16);
+            lbl3074Up.TabIndex = 31;
+            lbl3074Up.Text = "00";
+            // 
+            // lbl3074down
+            // 
+            lbl3074down.AutoSize = true;
+            lbl3074down.Location = new Point(262, 35);
+            lbl3074down.Name = "lbl3074down";
+            lbl3074down.Size = new Size(19, 16);
+            lbl3074down.TabIndex = 30;
+            lbl3074down.Text = "00";
+            // 
+            // lbl30kStatus
+            // 
+            lbl30kStatus.AutoSize = true;
+            lbl30kStatus.Location = new Point(215, 95);
+            lbl30kStatus.Name = "lbl30kStatus";
+            lbl30kStatus.Size = new Size(28, 16);
+            lbl30kStatus.TabIndex = 29;
+            lbl30kStatus.Text = "OFF";
+            // 
+            // txt30kHK
+            // 
+            txt30kHK.Location = new Point(188, 92);
+            txt30kHK.MaxLength = 1;
+            txt30kHK.Name = "txt30kHK";
+            txt30kHK.Size = new Size(21, 22);
+            txt30kHK.TabIndex = 28;
+            toolTip1.SetToolTip(txt30kHK, "Keybind for 3074");
+            txt30kHK.TextChanged += txt30kHK_TextChanged;
+            // 
+            // btn30k
+            // 
+            btn30k.AutoSize = true;
+            btn30k.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn30k.FlatStyle = FlatStyle.Popup;
+            btn30k.ForeColor = SystemColors.ActiveCaptionText;
+            btn30k.Location = new Point(76, 90);
+            btn30k.Margin = new Padding(3, 2, 3, 2);
+            btn30k.Name = "btn30k";
+            btn30k.Size = new Size(109, 26);
+            btn30k.TabIndex = 27;
+            btn30k.Text = "30k";
+            toolTip1.SetToolTip(btn30k, "Limits 3074: Can be used to Unload Doors");
+            btn30k.UseVisualStyleBackColor = true;
+            btn30k.Click += btn30k_Click;
+            // 
+            // cbo30k
+            // 
+            cbo30k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo30k.FormattingEnabled = true;
+            cbo30k.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo30k.Location = new Point(3, 92);
+            cbo30k.Name = "cbo30k";
+            cbo30k.Size = new Size(67, 24);
+            cbo30k.TabIndex = 26;
+            toolTip1.SetToolTip(cbo30k, "Select Option");
+            cbo30k.SelectedIndexChanged += cbo30k_SelectedIndexChanged;
             // 
             // lbl7500Status
             // 
@@ -278,7 +369,7 @@
             // 
             // btnAFK
             // 
-            btnAFK.Location = new Point(157, 256);
+            btnAFK.Location = new Point(158, 293);
             btnAFK.Name = "btnAFK";
             btnAFK.Size = new Size(75, 25);
             btnAFK.TabIndex = 21;
@@ -289,7 +380,7 @@
             // btnDC
             // 
             btnDC.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnDC.Location = new Point(81, 256);
+            btnDC.Location = new Point(82, 293);
             btnDC.Name = "btnDC";
             btnDC.Size = new Size(70, 26);
             btnDC.TabIndex = 20;
@@ -343,7 +434,7 @@
             // lblFPS
             // 
             lblFPS.AutoSize = true;
-            lblFPS.Location = new Point(396, 183);
+            lblFPS.Location = new Point(397, 220);
             lblFPS.Name = "lblFPS";
             lblFPS.Size = new Size(38, 16);
             lblFPS.TabIndex = 15;
@@ -352,7 +443,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(361, 183);
+            label4.Location = new Point(362, 220);
             label4.Name = "label4";
             label4.Size = new Size(29, 16);
             label4.TabIndex = 14;
@@ -363,7 +454,7 @@
             // 
             tbFpsBar.AutoSize = false;
             tbFpsBar.BackColor = SystemColors.MenuBar;
-            tbFpsBar.Location = new Point(2, 174);
+            tbFpsBar.Location = new Point(3, 211);
             tbFpsBar.Maximum = 255;
             tbFpsBar.Minimum = 30;
             tbFpsBar.Name = "tbFpsBar";
@@ -377,7 +468,7 @@
             // btnSolo
             // 
             btnSolo.AutoSize = true;
-            btnSolo.Location = new Point(2, 256);
+            btnSolo.Location = new Point(3, 293);
             btnSolo.Name = "btnSolo";
             btnSolo.Size = new Size(73, 26);
             btnSolo.TabIndex = 12;
@@ -388,7 +479,7 @@
             // 
             // txtFBHK
             // 
-            txtFBHK.Location = new Point(89, 225);
+            txtFBHK.Location = new Point(90, 262);
             txtFBHK.MaxLength = 1;
             txtFBHK.Name = "txtFBHK";
             txtFBHK.Size = new Size(29, 22);
@@ -398,7 +489,7 @@
             // lblFusion
             // 
             lblFusion.AutoSize = true;
-            lblFusion.Location = new Point(2, 228);
+            lblFusion.Location = new Point(3, 265);
             lblFusion.Name = "lblFusion";
             lblFusion.Size = new Size(81, 16);
             lblFusion.TabIndex = 10;
@@ -424,7 +515,7 @@
             // 
             // txtPauseHotKey
             // 
-            txtPauseHotKey.Location = new Point(40, 118);
+            txtPauseHotKey.Location = new Point(41, 155);
             txtPauseHotKey.MaxLength = 1;
             txtPauseHotKey.Name = "txtPauseHotKey";
             txtPauseHotKey.Size = new Size(29, 22);
@@ -434,7 +525,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(2, 121);
+            label3.Location = new Point(3, 158);
             label3.Name = "label3";
             label3.Size = new Size(38, 16);
             label3.TabIndex = 6;
@@ -445,7 +536,7 @@
             txtPboxHotKey.BackColor = SystemColors.HighlightText;
             txtPboxHotKey.ForeColor = SystemColors.WindowText;
             txtPboxHotKey.HideSelection = false;
-            txtPboxHotKey.Location = new Point(40, 146);
+            txtPboxHotKey.Location = new Point(41, 183);
             txtPboxHotKey.MaxLength = 1;
             txtPboxHotKey.Name = "txtPboxHotKey";
             txtPboxHotKey.Size = new Size(29, 22);
@@ -456,7 +547,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(2, 149);
+            label2.Location = new Point(3, 186);
             label2.Name = "label2";
             label2.Size = new Size(34, 16);
             label2.TabIndex = 4;
@@ -470,7 +561,7 @@
             tabPage3.Controls.Add(label5);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(692, 310);
+            tabPage3.Size = new Size(692, 338);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Settings";
             // 
@@ -495,6 +586,8 @@
             // tabPage4
             // 
             tabPage4.BackColor = Color.Gray;
+            tabPage4.Controls.Add(lbl30kTrack);
+            tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(lbl7500Track);
             tabPage4.Controls.Add(label16);
             tabPage4.Controls.Add(lblSoloTrack);
@@ -517,9 +610,45 @@
             tabPage4.Controls.Add(label6);
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(692, 310);
+            tabPage4.Size = new Size(692, 338);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Stats";
+            // 
+            // lbl30kTrack
+            // 
+            lbl30kTrack.AutoSize = true;
+            lbl30kTrack.Location = new Point(118, 81);
+            lbl30kTrack.Name = "lbl30kTrack";
+            lbl30kTrack.Size = new Size(65, 15);
+            lbl30kTrack.TabIndex = 21;
+            lbl30kTrack.Text = "lbl30kTrack";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(3, 82);
+            label17.Name = "label17";
+            label17.Size = new Size(103, 15);
+            label17.TabIndex = 20;
+            label17.Text = "Time Holding 30k:";
+            // 
+            // lbl7500Track
+            // 
+            lbl7500Track.AutoSize = true;
+            lbl7500Track.Location = new Point(116, 66);
+            lbl7500Track.Name = "lbl7500Track";
+            lbl7500Track.Size = new Size(58, 15);
+            lbl7500Track.TabIndex = 19;
+            lbl7500Track.Text = "7500Track";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(3, 67);
+            label16.Name = "label16";
+            label16.Size = new Size(109, 15);
+            label16.TabIndex = 18;
+            label16.Text = "Time Holding 7500:";
             // 
             // lblSoloTrack
             // 
@@ -703,7 +832,7 @@
             tabPage2.Margin = new Padding(3, 2, 3, 2);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 2, 3, 2);
-            tabPage2.Size = new Size(692, 310);
+            tabPage2.Size = new Size(692, 338);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Credits";
             // 
@@ -728,7 +857,7 @@
             tabPage5.Controls.Add(trcTrans);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(692, 310);
+            tabPage5.Size = new Size(692, 338);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Looks";
             // 
@@ -793,7 +922,7 @@
             tabPage6.Controls.Add(lblMulti);
             tabPage6.Location = new Point(4, 24);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new Size(692, 310);
+            tabPage6.Size = new Size(692, 338);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Scum";
             // 
@@ -818,23 +947,59 @@
             // 
             pageSetupDialog1.ShowHelp = true;
             // 
-            // label16
+            // lbl27kdown
             // 
-            label16.AutoSize = true;
-            label16.Location = new Point(3, 67);
-            label16.Name = "label16";
-            label16.Size = new Size(109, 15);
-            label16.TabIndex = 18;
-            label16.Text = "Time Holding 7500:";
+            lbl27kdown.AutoSize = true;
+            lbl27kdown.Location = new Point(262, 6);
+            lbl27kdown.Name = "lbl27kdown";
+            lbl27kdown.Size = new Size(19, 16);
+            lbl27kdown.TabIndex = 32;
+            lbl27kdown.Text = "00";
             // 
-            // lbl7500Track
+            // lbl27kUp
             // 
-            lbl7500Track.AutoSize = true;
-            lbl7500Track.Location = new Point(116, 66);
-            lbl7500Track.Name = "lbl7500Track";
-            lbl7500Track.Size = new Size(58, 15);
-            lbl7500Track.TabIndex = 19;
-            lbl7500Track.Text = "7500Track";
+            lbl27kUp.AutoSize = true;
+            lbl27kUp.Location = new Point(337, 6);
+            lbl27kUp.Name = "lbl27kUp";
+            lbl27kUp.Size = new Size(19, 16);
+            lbl27kUp.TabIndex = 33;
+            lbl27kUp.Text = "00";
+            // 
+            // lbl7500Down
+            // 
+            lbl7500Down.AutoSize = true;
+            lbl7500Down.Location = new Point(262, 66);
+            lbl7500Down.Name = "lbl7500Down";
+            lbl7500Down.Size = new Size(19, 16);
+            lbl7500Down.TabIndex = 34;
+            lbl7500Down.Text = "00";
+            // 
+            // lbl30KDown
+            // 
+            lbl30KDown.AutoSize = true;
+            lbl30KDown.Location = new Point(262, 95);
+            lbl30KDown.Name = "lbl30KDown";
+            lbl30KDown.Size = new Size(19, 16);
+            lbl30KDown.TabIndex = 35;
+            lbl30KDown.Text = "00";
+            // 
+            // lbl7500Up
+            // 
+            lbl7500Up.AutoSize = true;
+            lbl7500Up.Location = new Point(337, 66);
+            lbl7500Up.Name = "lbl7500Up";
+            lbl7500Up.Size = new Size(19, 16);
+            lbl7500Up.TabIndex = 36;
+            lbl7500Up.Text = "00";
+            // 
+            // lbl30KUP
+            // 
+            lbl30KUP.AutoSize = true;
+            lbl30KUP.Location = new Point(337, 95);
+            lbl30KUP.Name = "lbl30KUP";
+            lbl30KUP.Size = new Size(19, 16);
+            lbl30KUP.TabIndex = 37;
+            lbl30KUP.Text = "00";
             // 
             // Form1
             // 
@@ -843,7 +1008,7 @@
             AutoValidate = AutoValidate.Disable;
             BackColor = Color.FromArgb(32, 32, 32);
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(700, 366);
             Controls.Add(tabControl1);
             DoubleBuffered = true;
             ForeColor = SystemColors.ActiveCaptionText;
@@ -944,5 +1109,19 @@
         private Button btn7500;
         private Label label16;
         private Label lbl7500Track;
+        private Label lbl30kStatus;
+        private TextBox txt30kHK;
+        private Button btn30k;
+        private ComboBox cbo30k;
+        private Label lbl30kTrack;
+        private Label label17;
+        private Label lbl3074Up;
+        private Label lbl3074down;
+        private Label lbl30KDown;
+        private Label lbl7500Down;
+        private Label lbl27kUp;
+        private Label lbl27kdown;
+        private Label lbl30KUP;
+        private Label lbl7500Up;
     }
 }

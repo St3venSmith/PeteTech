@@ -18,7 +18,7 @@ namespace PeteTech
         private DataPoints dataPoints;
 
 
-        public SoundPlayer player = new SoundPlayer();
+
 
 
         private HotkeyHelper hotkey1; // Helper for Pbox
@@ -28,7 +28,10 @@ namespace PeteTech
         private HotkeyHelper hotkey5; // helper for fusion breachz
         private HotkeyHelper hotkey6; // helper for multi
         private HotkeyHelper hotkey7; // helper for 7500
+        private HotkeyHelper hotkey8; // for 30k
+        private WinDiverts winDiverts;
         private Macros macros;
+        private PortDataRecorder _portDataRecorder;
         private GlobalKeyListener _keyListener;
 
 
@@ -39,12 +42,16 @@ namespace PeteTech
 
             Form form = this;
 
+            _portDataRecorder = new PortDataRecorder();
+            _portDataRecorder.DataUsageUpdated += UpdateLabels;
+            _portDataRecorder.Start();
 
+            FontDialog fontDialog1 = new();
 
-            FontDialog fontDialog1 = new FontDialog();
+            ColorDialog colorDialog1 = new();
+            ColorDialog colorDialog2 = new();
 
-            ColorDialog colorDialog1 = new ColorDialog();
-            ColorDialog colorDialog2 = new ColorDialog();
+            winDiverts = new WinDiverts();
 
 
 
@@ -66,12 +73,13 @@ namespace PeteTech
                 lbl27kTrack.Text = dataPoints.Duration27K.ToString(@"dd\.hh\:mm\:ss");
                 lbl3074Track.Text = dataPoints.Duration3074.ToString(@"dd\.hh\:mm\:ss");
                 lbl7500Track.Text = dataPoints.Duration7500.ToString(@"dd\.hh\:mm\:ss");
+                lbl30kTrack.Text = dataPoints.Duration30k.ToString(@"dd\.hh\:mm\:ss");
                 lblDCtrack.Text = dataPoints.DataPoint3.ToString();
                 lblFBTrack.Text = dataPoints.DataPoint4.ToString();
                 lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
                 lblSoloTrack.Text = dataPoints.DataPoint2.ToString();
                 lblFullPause.Text = dataPoints.DataPoint1.ToString();
-                
+
             }
             else if (!Directory.Exists(filePath))
             {
@@ -96,7 +104,7 @@ namespace PeteTech
 
 
             macros = new Macros();
-
+            
 
 
 
@@ -104,6 +112,7 @@ namespace PeteTech
             macros.Duration27KChanged += Macros_Duration27KChanged;
             macros.Duration3074Changed += Macros_Duration3074Changed;
             macros.Duration7500Changed += Macros_Duration7500Changed;
+            macros.Duration30KChanged += Macros_Duration30KChanged;
 
 
             // Create instances of HotkeyHelper for each TextBox
@@ -114,11 +123,14 @@ namespace PeteTech
             hotkey5 = new HotkeyHelper(txtFBHK, macros);
             hotkey6 = new HotkeyHelper(txtMulti, macros);
             hotkey7 = new HotkeyHelper(txt7500HK, macros);
+            hotkey8 = new HotkeyHelper(txt30kHK, macros);
+
 
 
             macros.OnUpdateLbl27Status += UpdateLbl27Status;
             macros.OnUpdateLbl3074Status += UpdateLbl3074Status;
             macros.OnUpdateLbl7500Status += UpdateLbl7500Status;
+            macros.OnUpdateLbl30KStatus += UpdateLbl30KStatus;
             macros.DataPoint1Incremented += Macros_DataPoint1Incremented; // full pause
             macros.DataPoint2Incremented += Macros_DataPoint2Incremented; // solo
             macros.DataPoint3Incremented += Macros_DataPoint3Incremented; // dc box
@@ -133,10 +145,42 @@ namespace PeteTech
             cbo3074.Text = "in/out";
             cmbo27k.Text = "in/out";
             cbo7500.Text = "in/out";
+            cbo30k.Text = "in/out";
+
+           
         }
 
 
-
+        private async void UpdateLabels(string filterName,double dataIn, double dataOut)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateLabels(filterName, dataIn, dataOut)));
+            }
+            else
+            {
+                switch (filterName)
+                {
+                    case "3074":
+                        lbl3074down.Text = $"{dataIn:F2}KB";
+                        lbl3074Up.Text = $"{dataOut:F2}KB";
+                        break;
+                    case "27k":
+                        lbl27kdown.Text = $"{dataIn:F2}KB";
+                        lbl27kUp.Text = $"{dataOut:F2}KB";
+                        break;
+                    case "7500":
+                        lbl7500Down.Text = $"{dataIn:F2}KB";
+                        lbl7500Up.Text = $"{dataOut:F2}KB";
+                        break;
+                    case "30k":
+                       lbl30KDown.Text = $"{dataIn:F2}KB";
+                       lbl30KUP.Text = $"{dataOut:F2}KB";
+                        break;
+                }
+                
+            }
+        }
 
 
         // Event handler
@@ -186,6 +230,13 @@ namespace PeteTech
             lbl7500Status.Text = status;
         }
 
+        private void UpdateLbl30KStatus(string status)
+        {
+            lbl30kStatus.Text = status;
+        }
+
+        
+
         private void Macros_Duration27KChanged(object? sender, EventArgs e)
         {
             dataPoints.SetDuration27K(macros.Duration27K);
@@ -206,6 +257,13 @@ namespace PeteTech
             lbl7500Track.Text = dataPoints.Duration7500.ToString(@"dd\.hh\:mm\:ss");
         }
 
+        private void Macros_Duration30KChanged(object? sender, EventArgs e)
+        {
+            dataPoints.SetDuration30k(macros.Duration30k);
+            dataPoints.SaveDataPoints();
+            lbl30kTrack.Text = dataPoints.Duration30k.ToString(@"dd\.hh\:mm\:ss");
+        }
+
         // Expose FPS Bar value as a property
         public int FpsBarValue
         {
@@ -213,16 +271,22 @@ namespace PeteTech
             set => tbFpsBar.Value = value; // Set a new value
         }
 
-        public void UpdateFormLabels(string lbltS, string lbltrs, string lbltrx)
+        public void UpdateFormLabels(string lbltS, string lbltrs, string lbltrx, string lbltrT)
         {
             lbl27Status.Text = macros.lbltS;
             lbl3074Status.Text = macros.lbltrS;
             lbl7500Status.Text = macros.lbltrx;
+            lbl30kStatus.Text = macros.lbltrT;
         }
 
         private void txt7500HK_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbo30k_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            macros.dStatus = cbo30k.Text;
         }
 
         private async void btn7500_Click(object sender, EventArgs e)
@@ -327,6 +391,54 @@ namespace PeteTech
 
         }
 
+        private async void btn30k_Click(object sender, EventArgs e)
+        {
+            if (cbo30k.Text == "in/out")
+            {
+                if (macros.RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled30k = false;
+                    await macros.Disable30k();
+
+                }
+                else
+                {
+                    macros.RulesEnabled30k = true;
+                    await macros.Enable30k();
+
+                }
+            }
+            else if (cbo30k.Text == "in")
+            {
+                if (macros.RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled30k = false;
+                    await macros.Disable30k();
+                }
+                else
+                {
+                    macros.RulesEnabled30k = true;
+                    await macros.Enable30k();
+
+                }
+            }
+            else if (cbo30k.Text == "out")
+            {
+                if (macros.RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    macros.RulesEnabled30k = false;
+                    await macros.Disable30k();
+
+                }
+                else
+                {
+                    macros.RulesEnabled30k = true;
+                    await macros.Enable30k();
+
+                }
+            }
+        }
+
         private async void btn3074_Click(object sender, EventArgs e)
         {
             if (cbo3074.Text == "in/out")
@@ -387,7 +499,6 @@ namespace PeteTech
             if (this.chkAutoBuffer.Checked == true)
             {
                 macros.isBufferOn = true;
-
             }
             else
             {
@@ -400,7 +511,6 @@ namespace PeteTech
             if (this.chkSounds.Checked == true)
             {
                 macros.isSoundOn = true;
-
             }
             else
             {
@@ -431,6 +541,7 @@ namespace PeteTech
 
         protected override async void OnFormClosed(FormClosedEventArgs e)
         {
+            _portDataRecorder.Stop();
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             await macros.Disable27K();
             await macros.Disable3074();
@@ -626,6 +737,9 @@ namespace PeteTech
 
         }
 
-       
+        private void txt30kHK_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

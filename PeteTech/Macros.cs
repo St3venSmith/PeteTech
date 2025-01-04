@@ -16,7 +16,7 @@ namespace PeteTech
 
 
 
-        public WinDiverts WinDiverts;
+        
 
         public int x;
         public int y;
@@ -24,10 +24,12 @@ namespace PeteTech
         private Stopwatch _stopwatch27K = new Stopwatch();
         private Stopwatch _stopwatch3074 = new Stopwatch();
         private Stopwatch _stopwatch7500 = new Stopwatch();
+        private Stopwatch _stopwatch30k = new Stopwatch();
         public TimeSpan Duration27K { get; private set; }
         public TimeSpan Duration3074 { get; private set; }
 
         public TimeSpan Duration7500 { get; private set; }
+        public TimeSpan Duration30k { get; private set; }
         public int FpsValue { get; set; }
 
         public string? Pmessage;
@@ -36,13 +38,17 @@ namespace PeteTech
 
         public string? tStatus { get; set; }
 
-        public string? sStatus { get; set; } // label for 27k
+        public string? sStatus { get; set; }
+
+        public string? dStatus { get; set; }
 
         public string? lbltS; // label for 27k
 
         public string? lbltrS; // lable for 3074
 
         public string? lbltrx; // label for 7500
+
+        public string? lbltrT; // label for 30k
 
 
 
@@ -57,6 +63,7 @@ namespace PeteTech
         private bool _rulesEnabledDC;
 
         private bool _rulesEnabled7500;
+        private bool _rulesEnabled30k;
 
 
 
@@ -185,6 +192,38 @@ namespace PeteTech
             }
         }
 
+        public bool RulesEnabled30k
+        {
+            get { return _rulesEnabled30k; }
+            set
+            {
+                if (_rulesEnabled30k != value)
+                {
+                    _rulesEnabled30k = value;
+                    if (_rulesEnabled30k)
+                    {
+                        if (isSoundOn)
+                        {
+                            player.Play();
+                        }
+                        _stopwatch30k.Start();
+                    }
+                    else
+                    {
+                        if (isSoundOn)
+                        {
+                            player2.Play();
+                        }
+                        _stopwatch30k.Stop();
+                        Duration30k += _stopwatch30k.Elapsed;
+                        _stopwatch30k.Reset();
+                        OnDuration30KChanged();
+                    }
+                    UpdateLabels();
+                }
+            }
+        }
+
 
         public bool RulesEnabled27K
         {
@@ -226,10 +265,15 @@ namespace PeteTech
         public event EventHandler? Duration27KChanged;
         public event EventHandler? Duration3074Changed;
         public event EventHandler? Duration7500Changed;
+        public event EventHandler? Duration30KChanged;
 
         protected virtual void OnDuration27KChanged()
         {
             Duration27KChanged?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnDuration30KChanged()
+        {
+            Duration30KChanged?.Invoke(this, EventArgs.Empty);
         }
         protected virtual void OnDuration3074Changed()
         {
@@ -258,6 +302,7 @@ namespace PeteTech
         public event Action<string> OnUpdateLbl27Status;
         public event Action<string> OnUpdateLbl3074Status;
         public event Action<string> OnUpdateLbl7500Status;
+        public event Action<string> OnUpdateLbl30KStatus;
 
         // Importing the Windows API functions for key events
         [DllImport("user32.dll", SetLastError = true)]
@@ -470,41 +515,79 @@ namespace PeteTech
                 }
             }
         }
+
+
+
+        public async void txt30kHK()
+        {
+            if (dStatus == "in/out")
+            {
+                if (RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    RulesEnabled30k = false;
+                    await Disable30k();
+                }
+                else
+                {
+                    RulesEnabled30k = true;
+                    await Enable30k();
+                }
+            }
+            else if (dStatus == "in")
+            {
+                if (RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    RulesEnabled30k = false;
+                    await Disable30k();
+                }
+                else
+                {
+                    RulesEnabled30k = true;
+                    await Enable30k();
+                }
+            }
+            else if (dStatus == "out")
+            {
+                if (RulesEnabled30k)  // Check if the rules are enabled
+                {
+                    RulesEnabled30k = false;
+                    await Disable30k();
+                }
+                else
+                {
+                    RulesEnabled30k = true;
+                    await Enable30k();
+                }
+            }
+        }
+
+
         public async void txtMulti()
         {
 
 
+            RulesEnabled27K = true;
+            RulesEnabled3074 = true;
 
+            
 
             await Enable3074();
-
+            await Enable27K();
+            await Task.Delay(300);
             MouseDown();
-
-            // 283 is the area code for Ohio
-            // thus i name thee ohio tech
-            await Task.Delay(40);
-            Process_Suspend("focused");
-            await Task.Delay(283);
-            Process_Resume("focused");
-            await Task.Delay(40);
-            Process_Suspend("focused");
-            await Task.Delay(283);
-            Process_Resume("focused");
-            await Task.Delay(40);
-            Process_Suspend("focused");
-            await Task.Delay(283);
-            Process_Resume("focused");
-            await Task.Delay(40);
-            Process_Suspend("focused");
-            await Task.Delay(283);
-            Process_Resume("focused");
-            await Task.Delay(40);
-            Process_Suspend("focused");
-            await Task.Delay(283);
-            Process_Resume("focused");
-            await Task.Delay(40);
+            await Task.Delay(600);
             MouseUp();
+            await Task.Delay(1050);
+
+            RulesEnabled27K = false;
+            RulesEnabled3074 = false;
+
             await Disable3074();
+            await Disable27K();
+            MouseUp();
+
+              
+            
             //Noob likes Futa and Cake Farts
 
         }
@@ -823,23 +906,37 @@ namespace PeteTech
             await Task.Run(() =>
             {
 
-
-                if (!isBufferOn)
-                {
-                    WinDiverts.Start3074(RulesEnabled3074, tStatus);
-
-                }
+                WinDiverts.Start3074(RulesEnabled3074, tStatus, isBufferOn);
+           
             });
 
+        }
+
+        public async Task Enable30k()
+        {
+            await Task.Run(() =>
+            {
+
+                WinDiverts.Start30k(RulesEnabled30k, dStatus, isBufferOn);
+
+            });
+
+        }
+
+        public async Task Disable30k()
+        {
+            await Task.Run(() =>
+            {
+                WinDiverts.Start30k(RulesEnabled30k, dStatus, isBufferOn);
+                return Task.CompletedTask;
+            });
         }
         public async Task Enable7500()
         {
             await Task.Run(() =>
             {
-                if (!isBufferOn)
-                {
-                    WinDiverts.Start7500(RulesEnabled7500, sStatus);
-                }
+                WinDiverts.Start7500(RulesEnabled7500, sStatus, isBufferOn);
+                
             });
         }
 
@@ -847,7 +944,7 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
-                WinDiverts.Start7500(RulesEnabled7500, sStatus);
+                WinDiverts.Start7500(RulesEnabled7500, sStatus, isBufferOn);
                 return Task.CompletedTask;
             });
         }
@@ -855,7 +952,7 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
-                WinDiverts.Start3074(RulesEnabled3074, tStatus);
+                WinDiverts.Start3074(RulesEnabled3074, tStatus, isBufferOn);
                 return Task.CompletedTask;
             });
         }
@@ -864,11 +961,8 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
-
-                if (!isBufferOn)
-                {
-                    WinDiverts.Start27K(RulesEnabled27K, kStatus);
-                }
+                WinDiverts.Start27K(RulesEnabled27K, kStatus, isBufferOn);
+                
 
             });
         }
@@ -878,7 +972,7 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
-                WinDiverts.Start27K(RulesEnabled27K, kStatus);
+                WinDiverts.Start27K(RulesEnabled27K, kStatus, isBufferOn);
                 return Task.CompletedTask;
             });
 
@@ -915,9 +1009,12 @@ namespace PeteTech
             lbltS = RulesEnabled27K ? "ON" : "OFF";
             lbltrS = RulesEnabled3074 ? "ON" : "OFF";
             lbltrx = RulesEnabled7500 ? "ON" : "OFF";
+            lbltrT = RulesEnabled30k ? "ON" : "OFF";
             OnUpdateLbl27Status?.Invoke(lbltS);
             OnUpdateLbl3074Status?.Invoke(lbltrS);
             OnUpdateLbl7500Status?.Invoke(lbltrx);
+            OnUpdateLbl30KStatus?.Invoke(lbltrT);
+
 
         }
 
