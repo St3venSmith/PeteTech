@@ -732,10 +732,23 @@ namespace PeteTech
 
         }
 
-        private void btnAFK_Click(object sender, EventArgs e)
-        {
 
+
+        private CancellationTokenSource _afkCancellationTokenSource = new CancellationTokenSource();
+
+        private async void btnAFK_Click(object sender, EventArgs e)
+        {
+            isAFK = !isAFK;
+
+            if (!isAFK)
+            {
+                _afkCancellationTokenSource.Cancel();
+                _afkCancellationTokenSource = new CancellationTokenSource();
+            }
+
+            await macros.txtAFK(isAFK, _afkCancellationTokenSource.Token);
         }
+
 
         private void txt30kHK_TextChanged(object sender, EventArgs e)
         {

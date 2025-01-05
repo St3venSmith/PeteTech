@@ -92,12 +92,12 @@ namespace PeteTech
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
 
-        public async void MouseDown()
+        public static void MouseDown()
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
         }
 
-        public void MouseUp()
+        public static void MouseUp()
         {
             mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
@@ -393,7 +393,7 @@ namespace PeteTech
         const uint INPUT_MOUSE = 0;
 
 
-        public void MoveMouseTo(int x, int y)
+        public static void MoveMouseTo(int x, int y)
         {
             // Get the current screen dimensions
             int screenWidth = GetSystemMetrics(0);
@@ -446,25 +446,48 @@ namespace PeteTech
         // amour slots
         // arm slot  1400, 370
         // class slot 1400, 800
-        public async void txtAFK()
+        public async Task txtAFK(bool isafk, CancellationToken externalToken)
         {
-            await Task.Delay(10);
-            KeyDown(VKC.VK_1);
-            await Task.Delay(200);
-            KeyUp(VKC.VK_1);
-            await Task.Delay(500);
-            MoveMouseTo(1400, 800);
-            await Task.Delay(200);
-            MoveMouseTo(1500, 800);
-            await Task.Delay(300);
-            MouseDown();
-            await Task.Delay(300);
-            MouseUp();
-            await Task.Delay(300);
-            KeyDown(VKC.VK_1);
-            await Task.Delay(200);
-            KeyUp(VKC.VK_1);
+            var combinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(externalToken);
+            var combinedToken = combinedTokenSource.Token;
+
+            try
+            {
+                while (isafk && !combinedToken.IsCancellationRequested)
+                {
+                    await Task.Delay(5000, combinedToken);
+                    await Task.Delay(10, combinedToken);
+                    KeyDown(VKC.VK_I);
+                    await Task.Delay(200, combinedToken);
+                    KeyUp(VKC.VK_I);
+                    await Task.Delay(500, combinedToken);
+                    MoveMouseTo(1400, 800);
+                    await Task.Delay(200, combinedToken);
+                    MoveMouseTo(1500, 800);
+                    await Task.Delay(300, combinedToken);
+                    MouseDown();
+                    await Task.Delay(300, combinedToken);
+                    MouseUp();
+                    await Task.Delay(300, combinedToken);
+                    KeyDown(VKC.VK_I);
+                    await Task.Delay(200, combinedToken);
+                    KeyUp(VKC.VK_I);
+
+                    await Task.Delay(20000, combinedToken);
+
+                    if (!isafk)
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // Handle task cancellation
+            }
         }
+
+
 
         public async void txt7500HK()
         {
@@ -828,7 +851,7 @@ namespace PeteTech
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-                    MessageBox.Show("Solo script Stopped");
+                    
                     RulesEnabled27K = false;
                     await Disable27K();
 

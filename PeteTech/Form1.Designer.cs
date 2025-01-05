@@ -36,6 +36,12 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl30KUP = new Label();
+            lbl7500Up = new Label();
+            lbl30KDown = new Label();
+            lbl7500Down = new Label();
+            lbl27kUp = new Label();
+            lbl27kdown = new Label();
             lbl3074Up = new Label();
             lbl3074down = new Label();
             lbl30kStatus = new Label();
@@ -107,12 +113,7 @@
             colorDialog1 = new ColorDialog();
             colorDialog2 = new ColorDialog();
             fontDialog2 = new FontDialog();
-            lbl27kdown = new Label();
-            lbl27kUp = new Label();
-            lbl7500Down = new Label();
-            lbl30KDown = new Label();
-            lbl7500Up = new Label();
-            lbl30KUP = new Label();
+            notifyIcon1 = new NotifyIcon(components);
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -255,6 +256,60 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
             // 
+            // lbl30KUP
+            // 
+            lbl30KUP.AutoSize = true;
+            lbl30KUP.Location = new Point(337, 95);
+            lbl30KUP.Name = "lbl30KUP";
+            lbl30KUP.Size = new Size(19, 16);
+            lbl30KUP.TabIndex = 37;
+            lbl30KUP.Text = "00";
+            // 
+            // lbl7500Up
+            // 
+            lbl7500Up.AutoSize = true;
+            lbl7500Up.Location = new Point(337, 66);
+            lbl7500Up.Name = "lbl7500Up";
+            lbl7500Up.Size = new Size(19, 16);
+            lbl7500Up.TabIndex = 36;
+            lbl7500Up.Text = "00";
+            // 
+            // lbl30KDown
+            // 
+            lbl30KDown.AutoSize = true;
+            lbl30KDown.Location = new Point(262, 95);
+            lbl30KDown.Name = "lbl30KDown";
+            lbl30KDown.Size = new Size(19, 16);
+            lbl30KDown.TabIndex = 35;
+            lbl30KDown.Text = "00";
+            // 
+            // lbl7500Down
+            // 
+            lbl7500Down.AutoSize = true;
+            lbl7500Down.Location = new Point(262, 66);
+            lbl7500Down.Name = "lbl7500Down";
+            lbl7500Down.Size = new Size(19, 16);
+            lbl7500Down.TabIndex = 34;
+            lbl7500Down.Text = "00";
+            // 
+            // lbl27kUp
+            // 
+            lbl27kUp.AutoSize = true;
+            lbl27kUp.Location = new Point(337, 6);
+            lbl27kUp.Name = "lbl27kUp";
+            lbl27kUp.Size = new Size(19, 16);
+            lbl27kUp.TabIndex = 33;
+            lbl27kUp.Text = "00";
+            // 
+            // lbl27kdown
+            // 
+            lbl27kdown.AutoSize = true;
+            lbl27kdown.Location = new Point(262, 6);
+            lbl27kdown.Name = "lbl27kdown";
+            lbl27kdown.Size = new Size(19, 16);
+            lbl27kdown.TabIndex = 32;
+            lbl27kdown.Text = "00";
+            // 
             // lbl3074Up
             // 
             lbl3074Up.AutoSize = true;
@@ -289,7 +344,7 @@
             txt30kHK.Name = "txt30kHK";
             txt30kHK.Size = new Size(21, 22);
             txt30kHK.TabIndex = 28;
-            toolTip1.SetToolTip(txt30kHK, "Keybind for 3074");
+            toolTip1.SetToolTip(txt30kHK, "Keybind for 30K");
             txt30kHK.TextChanged += txt30kHK_TextChanged;
             // 
             // btn30k
@@ -304,7 +359,7 @@
             btn30k.Size = new Size(109, 26);
             btn30k.TabIndex = 27;
             btn30k.Text = "30k";
-            toolTip1.SetToolTip(btn30k, "Limits 3074: Can be used to Unload Doors");
+            toolTip1.SetToolTip(btn30k, "Limits 30K: Used to stop Joining ");
             btn30k.UseVisualStyleBackColor = true;
             btn30k.Click += btn30k_Click;
             // 
@@ -336,7 +391,7 @@
             txt7500HK.Name = "txt7500HK";
             txt7500HK.Size = new Size(21, 22);
             txt7500HK.TabIndex = 24;
-            toolTip1.SetToolTip(txt7500HK, "Keybind for 3074");
+            toolTip1.SetToolTip(txt7500HK, "Keybind for 7500");
             txt7500HK.TextChanged += txt7500HK_TextChanged;
             // 
             // btn7500
@@ -351,7 +406,7 @@
             btn7500.Size = new Size(109, 26);
             btn7500.TabIndex = 23;
             btn7500.Text = "7500";
-            toolTip1.SetToolTip(btn7500, "Limits 3074: Can be used to Unload Doors");
+            toolTip1.SetToolTip(btn7500, "Limits 7500: Api");
             btn7500.UseVisualStyleBackColor = true;
             btn7500.Click += btn7500_Click;
             // 
@@ -947,59 +1002,10 @@
             // 
             pageSetupDialog1.ShowHelp = true;
             // 
-            // lbl27kdown
+            // notifyIcon1
             // 
-            lbl27kdown.AutoSize = true;
-            lbl27kdown.Location = new Point(262, 6);
-            lbl27kdown.Name = "lbl27kdown";
-            lbl27kdown.Size = new Size(19, 16);
-            lbl27kdown.TabIndex = 32;
-            lbl27kdown.Text = "00";
-            // 
-            // lbl27kUp
-            // 
-            lbl27kUp.AutoSize = true;
-            lbl27kUp.Location = new Point(337, 6);
-            lbl27kUp.Name = "lbl27kUp";
-            lbl27kUp.Size = new Size(19, 16);
-            lbl27kUp.TabIndex = 33;
-            lbl27kUp.Text = "00";
-            // 
-            // lbl7500Down
-            // 
-            lbl7500Down.AutoSize = true;
-            lbl7500Down.Location = new Point(262, 66);
-            lbl7500Down.Name = "lbl7500Down";
-            lbl7500Down.Size = new Size(19, 16);
-            lbl7500Down.TabIndex = 34;
-            lbl7500Down.Text = "00";
-            // 
-            // lbl30KDown
-            // 
-            lbl30KDown.AutoSize = true;
-            lbl30KDown.Location = new Point(262, 95);
-            lbl30KDown.Name = "lbl30KDown";
-            lbl30KDown.Size = new Size(19, 16);
-            lbl30KDown.TabIndex = 35;
-            lbl30KDown.Text = "00";
-            // 
-            // lbl7500Up
-            // 
-            lbl7500Up.AutoSize = true;
-            lbl7500Up.Location = new Point(337, 66);
-            lbl7500Up.Name = "lbl7500Up";
-            lbl7500Up.Size = new Size(19, 16);
-            lbl7500Up.TabIndex = 36;
-            lbl7500Up.Text = "00";
-            // 
-            // lbl30KUP
-            // 
-            lbl30KUP.AutoSize = true;
-            lbl30KUP.Location = new Point(337, 95);
-            lbl30KUP.Name = "lbl30KUP";
-            lbl30KUP.Size = new Size(19, 16);
-            lbl30KUP.TabIndex = 37;
-            lbl30KUP.Text = "00";
+            notifyIcon1.Text = "notifyIcon1";
+            notifyIcon1.Visible = true;
             // 
             // Form1
             // 
@@ -1123,5 +1129,6 @@
         private Label lbl27kdown;
         private Label lbl30KUP;
         private Label lbl7500Up;
+        private NotifyIcon notifyIcon1;
     }
 }
