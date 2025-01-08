@@ -114,6 +114,8 @@
             colorDialog2 = new ColorDialog();
             fontDialog2 = new FontDialog();
             notifyIcon1 = new NotifyIcon(components);
+            label18 = new Label();
+            lblmultitrack = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -641,6 +643,8 @@
             // tabPage4
             // 
             tabPage4.BackColor = Color.Gray;
+            tabPage4.Controls.Add(lblmultitrack);
+            tabPage4.Controls.Add(label18);
             tabPage4.Controls.Add(lbl30kTrack);
             tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(lbl7500Track);
@@ -1007,6 +1011,24 @@
             notifyIcon1.Text = "notifyIcon1";
             notifyIcon1.Visible = true;
             // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(3, 178);
+            label18.Name = "label18";
+            label18.Size = new Size(127, 15);
+            label18.TabIndex = 22;
+            label18.Text = "Number of multishots:";
+            // 
+            // lblmultitrack
+            // 
+            lblmultitrack.AutoSize = true;
+            lblmultitrack.Location = new Point(136, 178);
+            lblmultitrack.Name = "lblmultitrack";
+            lblmultitrack.Size = new Size(62, 15);
+            lblmultitrack.TabIndex = 23;
+            lblmultitrack.Text = "multiTrack";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1130,5 +1152,7 @@
         private Label lbl30KUP;
         private Label lbl7500Up;
         private NotifyIcon notifyIcon1;
+        private Label lblmultitrack;
+        private Label label18;
     }
 }

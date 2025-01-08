@@ -20,9 +20,9 @@ namespace PeteTech
         public static string filter3074 = "udp.SrcPort == 3074 or udp.DstPort == 3074"; // Combined for both directions
         public static string filter27k = "udp.SrcPort >= 27015 and udp.SrcPort <= 27200 or udp.DstPort >= 27015 and udp.DstPort <= 27200";
         public static string filter7500 = "tcp.SrcPort >= 7500 and tcp.SrcPort <= 7509 or tcp.DstPort >= 7500 and tcp.DstPort <= 7509"; // Combined for both directions
-        public static string filter30k = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000 or tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000";
+        public static string filter30k = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000 or tcp.DstPort <= 30009 and tcp.DstPort >= 30000";
 
-        public async Task Start()
+        public Task Start()
         {
             isRunning = true;
 
@@ -33,6 +33,7 @@ namespace PeteTech
             Task.Run(() => CapturePackets("30k", filter30k));
             Task.Run(() => ProcessPackets());
             Task.Run(() => MonitorDataUsage());
+            return Task.CompletedTask;
         }
 
         public void Stop()
@@ -123,7 +124,7 @@ namespace PeteTech
                     }
 
                     // Wait for 1 second
-                    await Task.Delay(1000);
+                    await Task.Delay(500);
                 }
             }
             catch (Exception ex)

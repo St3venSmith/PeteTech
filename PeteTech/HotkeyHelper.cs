@@ -146,6 +146,25 @@ namespace PeteTech
                     return true;
                 }
             }
+
+            // Check for arrow keys
+            if (targetKey.Equals("Left", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Left)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Right", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Right)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Up", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Up)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Down", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Down)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -155,6 +174,13 @@ namespace PeteTech
             if (e.KeyCode >= Keys.F1 && e.KeyCode <= Keys.F12)
             {
                 // Update the TextBox text with the function key name
+                _textBox.Text = e.KeyCode.ToString();
+                e.Handled = true; // Mark the event as handled
+            }
+            // Check if the pressed key is an arrow key
+            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                // Update the TextBox text with the arrow key name
                 _textBox.Text = e.KeyCode.ToString();
                 e.Handled = true; // Mark the event as handled
             }
@@ -170,3 +196,4 @@ namespace PeteTech
         }
     }
 }
+

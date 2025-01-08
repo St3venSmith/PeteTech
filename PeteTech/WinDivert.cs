@@ -9,20 +9,19 @@ namespace PeteTech
 
 
         // Thread-safe queue for packets
-        private static ConcurrentQueue<(WinDivertPacket, WinDivertAddress)> packetQueue = new();
-        private static bool isRunning = true;
+        
+        private static List<(WinDivertPacket, WinDivertAddress)> recordedPackets = new(); // To store recorded packets
 
-        // Data counters
-        private static long downloadBytes = 0;
-        private static long uploadBytes = 0;
-
+        
+        private static bool isRecording = false; // New flag for recording packets
 
         private static WinDivert? l3074;
         private static WinDivert? l27k;
         private static WinDivert? l7500;
         private static WinDivert? l30k;
 
-       
+
+
 
         public bool Buffering;
 
@@ -35,6 +34,9 @@ namespace PeteTech
         /// <summary>
         /// Filters for download (in) and upload (out)
         /// </summary>
+
+
+        
 
         // 3074 Filters
         public static string filter3074 = "udp.SrcPort == 3074 or udp.DstPort == 3074"; // Combined for both directions
@@ -52,25 +54,26 @@ namespace PeteTech
         public static string filter7500OUT = "tcp.DstPort >= 7500 and tcp.DstPort <= 7509"; // Upload (out)
 
         // 30k Filters
-        public static string filter30k = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000 or tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000";
+        public static string filter30k = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000 or tcp.DstPort <= 30009 and tcp.DstPort >= 30000";
         public static string filter30kIN = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000";
-        public static string filter30kOUT = "tcp.SrcPort <= 30009 and tcp.SrcPort >= 30000";
+        public static string filter30kOUT = "tcp.DstPort <= 30009 and tcp.DstPort >= 30000";
 
-        
+       
+
 
         public bool unlimit = true;
 
         // Cancellation token to control loop termination
         private static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-       
+
 
 
 
 
         public static async void Start3074(bool Enabled, string Status, bool BUFF)
         {
-            
+
 
             try
             {
@@ -114,21 +117,18 @@ namespace PeteTech
 
                 int packetLen = l3074.Recv(packet, addr);
 
-               
-                
+
+
 
                 // Handle buffering logic
                 if (!BUFF && Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     l3074.Send(packet, addr, new CancellationToken());
-                    
-
-                  
                 }
                 else
                 {
 
-                    
+
                     // Buffering logic with cancellation and Enabled checks
                     Random rand = new Random();
                     int randUnlimit = rand.Next(100, 200);
@@ -136,7 +136,7 @@ namespace PeteTech
 
                     while (BUFF && Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
                     {
-                       
+
                         //UpdateDownloadStatus?.Invoke(download);
 
                         // Dispose and recreate WinDivert if necessary
@@ -164,8 +164,8 @@ namespace PeteTech
                             }
                         }
 
-                       
-                       
+
+
                         l3074.Send(packet, addr, _cancellationTokenSource.Token);
 
                         await Task.Delay(randLimit, _cancellationTokenSource.Token);
@@ -178,7 +178,7 @@ namespace PeteTech
 
                         Debug.WriteLine($"Bufferbloat enabled. Packet Length: {packetLen} bytes");
 
-                        
+
 
                         // Break if Enabled is false
                         if (!Enabled || !BUFF)
@@ -247,8 +247,8 @@ namespace PeteTech
                 else
                 {
                     Random rand = new Random();
-                    int randUnlimit = rand.Next(300, 500);
-                    int randLimit = rand.Next(3000, 4000);
+                    int randUnlimit = rand.Next(1, 1);
+                    int randLimit = rand.Next(2000, 3000);
 
                     while (BUFF && Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
                     {
@@ -345,7 +345,7 @@ namespace PeteTech
                 if (!BUFF)
                 {
                     Console.WriteLine($"Packet received: Length {packetLen} bytes");
-                    l30k.Send(packet, addr, new CancellationToken());
+                    // l30k.Send(packet, addr, new CancellationToken());
                 }
                 else
                 {
@@ -407,7 +407,6 @@ namespace PeteTech
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-
         public static async void Start27K(bool Enabled, string Status, bool BUFF)
         {
             try
@@ -420,9 +419,20 @@ namespace PeteTech
                         l27k = null;
                     }
 
+                    // Send recorded data and clear buffer when stopping
+                    if (isRecording)
+                    {
+                        SendRecordedData();
+                        recordedPackets.Clear();
+                        isRecording = false;
+                    }
+
                     _cancellationTokenSource.Cancel();
                     return;
                 }
+
+                // Start recording when enabled
+                isRecording = true;
 
                 _cancellationTokenSource = new CancellationTokenSource();
 
@@ -444,21 +454,27 @@ namespace PeteTech
 
                 WinDivertPacket packet = new WinDivertPacket(65535);
                 WinDivertAddress addr = new WinDivertAddress();
-                int packetLen = l27k.Recv(packet, addr);
 
-                if (!BUFF)
+                while (Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
-                    l27k.Send(packet, addr, new CancellationToken());
-                }
-                else
-                {
-                    Random rand = new Random();
-                    int randUnlimit = rand.Next(50, 80);
-                    int randLimit = rand.Next(3000, 4000);
+                    int packetLen = l27k.Recv(packet, addr);
 
-                    while (BUFF && Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
+                    if (isRecording)
                     {
+                        recordedPackets.Add((packet.Clone(), addr.Clone()));
+                    }
+
+                    if (!BUFF)
+                    {
+                        Console.WriteLine($"Packet received: Length {packetLen} bytes");
+                        
+                    }
+                    else
+                    {
+                        Random rand = new Random();
+                        int randUnlimit = rand.Next(50, 80);
+                        int randLimit = rand.Next(3000, 4000);
+
                         if (l27k != null)
                         {
                             l27k.Dispose();
@@ -493,12 +509,7 @@ namespace PeteTech
                             l27k = null;
                         }
 
-                        Debug.WriteLine($"Bufferbloat is now enabled. Packet Length: {packetLen} bytes");
-
-                        if (!Enabled || !BUFF)
-                        {
-                            break;
-                        }
+                        Debug.WriteLine($"Bufferbloat enabled. Packet Length: {packetLen} bytes");
                     }
                 }
             }
@@ -511,6 +522,22 @@ namespace PeteTech
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-    }
 
+        private static void SendRecordedData()
+        {
+            foreach (var (packet, addr) in recordedPackets)
+            {
+                if (l27k != null)
+                {
+                    l27k.Send(packet, addr, new CancellationToken());
+                }
+            }
+
+            Console.WriteLine($"Sent {recordedPackets.Count} recorded packets.");
+        }
+
+       
+
+    }
 }
+

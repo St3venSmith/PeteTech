@@ -75,6 +75,7 @@ namespace PeteTech
         public event EventHandler DataPoint3Incremented;
         public event EventHandler DataPoint4Incremented;
         public event EventHandler DataPoint5Incremented;
+        public event EventHandler DataPoint6Incremented;
 
 
 
@@ -122,6 +123,11 @@ namespace PeteTech
         protected virtual void OnDataPoint5Incremented()
         {
             DataPoint5Incremented?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnDataPoint6Incremented()
+        {
+            DataPoint6Incremented?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -589,28 +595,25 @@ namespace PeteTech
         {
 
 
-            RulesEnabled27K = true;
-            RulesEnabled3074 = true;
+            
 
             
 
-            await Enable3074();
-            await Enable27K();
+            txt3074HK();
+            txt27HK();
+
             await Task.Delay(300);
             MouseDown();
             await Task.Delay(600);
             MouseUp();
             await Task.Delay(1050);
 
-            RulesEnabled27K = false;
-            RulesEnabled3074 = false;
-
-            await Disable3074();
-            await Disable27K();
+            txt27HK();
+            txt3074HK();
             MouseUp();
 
-              
-            
+            OnDataPoint6Incremented();
+
             //Noob likes Futa and Cake Farts
 
         }
@@ -889,7 +892,9 @@ namespace PeteTech
                 player.Play();
             }
             await EnableDC();
-            await Task.Delay(1000);
+            
+            await Task.Delay(500);
+            
             await DisableDC();
             if (isSoundOn)
             {
@@ -903,9 +908,9 @@ namespace PeteTech
             await Task.Run(() =>
             {
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-30-tcp-in\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-30-udp-in\" profile=any remoteport=30000-30009 protocol=udp interfacetype=any");
+                
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-30-tcp-out\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
-                RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-30-udp-out\" profile=any remoteport=30000-30009 protocol=udp interfacetype=any");
+                
             });
 
         }
@@ -914,9 +919,9 @@ namespace PeteTech
             await Task.Run(() =>
             {
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-tcp-in\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-udp-in\"");
+                
                 RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-tcp-out\"");
-                RunCommand("netsh advfirewall firewall delete rule name=\"d2limit-30-udp-out\"");
+                
             });
         }
 

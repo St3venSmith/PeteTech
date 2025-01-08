@@ -9,17 +9,16 @@ namespace PeteTech
     public partial class Form1 : Form
     {
 
+
+
         public bool soundOn;
         public int delayPBox;
         public bool bufferON;
         public bool buffer;
 
         public bool isAFK = false;
+        public bool isSolo = false;
         private DataPoints dataPoints;
-
-
-
-
 
         private HotkeyHelper hotkey1; // Helper for Pbox
         private HotkeyHelper hotkey2; // Helper for Pause
@@ -79,6 +78,7 @@ namespace PeteTech
                 lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
                 lblSoloTrack.Text = dataPoints.DataPoint2.ToString();
                 lblFullPause.Text = dataPoints.DataPoint1.ToString();
+                lblmultitrack.Text = dataPoints.DataPoint6.ToString();  
 
             }
             else if (!Directory.Exists(filePath))
@@ -86,11 +86,14 @@ namespace PeteTech
                 lblDateTrack.Text = "No Data";
                 lbl27kTrack.Text = "No Data";
                 lbl3074Track.Text = "No Data";
+                lbl7500Track.Text = "No Data";
+                lbl30kTrack.Text = "No Data";
                 lblDCtrack.Text = "No Data";
                 lblFBTrack.Text = "No Data";
                 lblPboxTrack.Text = "No Data";
                 lblSoloTrack.Text = "No Data";
                 lblFullPause.Text = "No Data";
+                lblmultitrack.Text = "No Data";
             }
 
 
@@ -105,10 +108,6 @@ namespace PeteTech
 
             macros = new Macros();
             
-
-
-
-
             macros.Duration27KChanged += Macros_Duration27KChanged;
             macros.Duration3074Changed += Macros_Duration3074Changed;
             macros.Duration7500Changed += Macros_Duration7500Changed;
@@ -136,6 +135,7 @@ namespace PeteTech
             macros.DataPoint3Incremented += Macros_DataPoint3Incremented; // dc box
             macros.DataPoint4Incremented += Macros_DataPoint4Incremented; // fb box
             macros.DataPoint5Incremented += Macros_DataPoint5Incremented; // p box
+            macros.DataPoint6Incremented += Macros_DataPoint6Incremented; // multi
 
 
             // Attach Scroll event handler
@@ -213,6 +213,13 @@ namespace PeteTech
             // Handle the event (e.g., update a label or perform some action)
             dataPoints.UpdateDataPoint(5, 1); // Increment DataPoint1 in DataPoints
             lblPboxTrack.Text = dataPoints.DataPoint5.ToString(); // Update the label
+        }
+
+        private void Macros_DataPoint6Incremented(object? sender, EventArgs e)
+        {
+            // Handle the event (e.g., update a label or perform some action)
+            dataPoints.UpdateDataPoint(6, 1); // Increment DataPoint1 in DataPoints
+            lblmultitrack.Text = dataPoints.DataPoint6.ToString(); // Update the label
         }
 
         private void UpdateLbl27Status(string status)
@@ -487,9 +494,10 @@ namespace PeteTech
             }
 
         }
-        private void btnSolo_Click(object sender, EventArgs e)
+        private async void btnSolo_Click(object sender, EventArgs e)
         {
-            macros.SoloScript();
+            
+            await macros.SoloScript();
         }
 
 
@@ -541,11 +549,12 @@ namespace PeteTech
 
         protected override async void OnFormClosed(FormClosedEventArgs e)
         {
-            _portDataRecorder.Stop();
+            
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             await macros.Disable27K();
             await macros.Disable3074();
             await macros.Disable7500();
+            await macros.Disable30k();
             dataPoints.SaveDataPoints();
             base.OnFormClosed(e);
         }
@@ -630,8 +639,15 @@ namespace PeteTech
                 label13.ForeColor = colorDialog1.Color;
                 label14.ForeColor = colorDialog1.Color;
                 label15.ForeColor = colorDialog1.Color;
+                label16.ForeColor = colorDialog1.Color;
+                label17.ForeColor = colorDialog1.Color;
+                label18.ForeColor = colorDialog1.Color;
+
                 lbl27Status.ForeColor = colorDialog1.Color;
                 lbl3074Status.ForeColor = colorDialog1.Color;
+                lbl7500Status.ForeColor = colorDialog1.Color;
+                lbl30kStatus.ForeColor = colorDialog1.Color;
+                lblmultitrack.ForeColor = colorDialog1.Color;   
                 lblFPS.ForeColor = colorDialog1.Color;
                 lblDateTrack.ForeColor = colorDialog1.Color;
                 lblFullPause.ForeColor = colorDialog1.Color;
@@ -663,13 +679,7 @@ namespace PeteTech
         private void btnChangeFont_Click(object sender, EventArgs e)
         {
             if (fontDialog1.ShowDialog() == DialogResult.OK)
-
             {
-
-                // Apply the selected font to a textbox (named "textBox1" in this example)
-
-
-
                 lblFPS.Font = fontDialog1.Font;
                 lbl27kTrack.Font = fontDialog1.Font;
                 lbl3074Track.Font = fontDialog1.Font;
@@ -693,6 +703,12 @@ namespace PeteTech
                 label13.Font = fontDialog1.Font;
                 label14.Font = fontDialog1.Font;
                 label15.Font = fontDialog1.Font;
+                label16.Font = fontDialog1.Font;
+                label17.Font = fontDialog1.Font;
+                label18.Font = fontDialog1.Font;
+                lbl7500Track.Font = fontDialog1.Font;
+                lbl30kTrack.Font = fontDialog1.Font;
+                lblmultitrack.Font = fontDialog1.Font;
                 lbl27Status.Font = fontDialog1.Font;
                 lbl3074Status.Font = fontDialog1.Font;
                 lblDateTrack.Font = fontDialog1.Font;
@@ -711,8 +727,6 @@ namespace PeteTech
                 tabControl1.Font = fontDialog1.Font;
                 btnTheme.Font = fontDialog1.Font;
                 lblMulti.Font = fontDialog1.Font;
-
-
             }
         }
 
@@ -727,7 +741,6 @@ namespace PeteTech
                 tabControl1.TabPages[3].BackColor = colorDialog1.Color;
                 tabControl1.TabPages[4].BackColor = colorDialog1.Color;
                 tabControl1.TabPages[5].BackColor = colorDialog1.Color;
-
             }
 
         }
