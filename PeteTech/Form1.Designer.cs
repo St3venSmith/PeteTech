@@ -74,6 +74,8 @@
             txtPboxMessage = new TextBox();
             label5 = new Label();
             tabPage4 = new TabPage();
+            lblmultitrack = new Label();
+            label18 = new Label();
             lbl30kTrack = new Label();
             label17 = new Label();
             lbl7500Track = new Label();
@@ -99,6 +101,8 @@
             tabPage2 = new TabPage();
             label1 = new Label();
             tabPage5 = new TabPage();
+            btnOverlayKey = new Button();
+            btnOverlay = new Button();
             btnTheme = new Button();
             btnColor = new Button();
             btnChangeFont = new Button();
@@ -114,8 +118,7 @@
             colorDialog2 = new ColorDialog();
             fontDialog2 = new FontDialog();
             notifyIcon1 = new NotifyIcon(components);
-            label18 = new Label();
-            lblmultitrack = new Label();
+            colorDialog3 = new ColorDialog();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -206,7 +209,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.Gray;
-            tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
+            tabPage1.BackgroundImage = Properties.Resources.ptplus_1;
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
             tabPage1.Controls.Add(lbl30KUP);
@@ -510,7 +513,7 @@
             // tbFpsBar
             // 
             tbFpsBar.AutoSize = false;
-            tbFpsBar.BackColor = SystemColors.MenuBar;
+            tbFpsBar.BackColor = SystemColors.ScrollBar;
             tbFpsBar.Location = new Point(3, 211);
             tbFpsBar.Maximum = 255;
             tbFpsBar.Minimum = 30;
@@ -672,6 +675,24 @@
             tabPage4.Size = new Size(692, 338);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Stats";
+            // 
+            // lblmultitrack
+            // 
+            lblmultitrack.AutoSize = true;
+            lblmultitrack.Location = new Point(136, 178);
+            lblmultitrack.Name = "lblmultitrack";
+            lblmultitrack.Size = new Size(62, 15);
+            lblmultitrack.TabIndex = 23;
+            lblmultitrack.Text = "multiTrack";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(3, 178);
+            label18.Name = "label18";
+            label18.Size = new Size(127, 15);
+            label18.TabIndex = 22;
+            label18.Text = "Number of multishots:";
             // 
             // lbl30kTrack
             // 
@@ -909,6 +930,8 @@
             // tabPage5
             // 
             tabPage5.BackColor = Color.Gray;
+            tabPage5.Controls.Add(btnOverlayKey);
+            tabPage5.Controls.Add(btnOverlay);
             tabPage5.Controls.Add(btnTheme);
             tabPage5.Controls.Add(btnColor);
             tabPage5.Controls.Add(btnChangeFont);
@@ -919,6 +942,26 @@
             tabPage5.Size = new Size(692, 338);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Looks";
+            // 
+            // btnOverlayKey
+            // 
+            btnOverlayKey.Location = new Point(489, 21);
+            btnOverlayKey.Name = "btnOverlayKey";
+            btnOverlayKey.Size = new Size(75, 23);
+            btnOverlayKey.TabIndex = 6;
+            btnOverlayKey.Text = "Overylay Color";
+            btnOverlayKey.UseVisualStyleBackColor = true;
+            btnOverlayKey.Click += btnOverlayKey_Click;
+            // 
+            // btnOverlay
+            // 
+            btnOverlay.Location = new Point(408, 21);
+            btnOverlay.Name = "btnOverlay";
+            btnOverlay.Size = new Size(75, 23);
+            btnOverlay.TabIndex = 5;
+            btnOverlay.Text = "Overlay Toggle";
+            btnOverlay.UseVisualStyleBackColor = true;
+            btnOverlay.Click += btnOverlay_Click;
             // 
             // btnTheme
             // 
@@ -1011,24 +1054,6 @@
             notifyIcon1.Text = "notifyIcon1";
             notifyIcon1.Visible = true;
             // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(3, 178);
-            label18.Name = "label18";
-            label18.Size = new Size(127, 15);
-            label18.TabIndex = 22;
-            label18.Text = "Number of multishots:";
-            // 
-            // lblmultitrack
-            // 
-            lblmultitrack.AutoSize = true;
-            lblmultitrack.Location = new Point(136, 178);
-            lblmultitrack.Name = "lblmultitrack";
-            lblmultitrack.Size = new Size(62, 15);
-            lblmultitrack.TabIndex = 23;
-            lblmultitrack.Text = "multiTrack";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1046,7 +1071,6 @@
             Name = "Form1";
             Opacity = 0.9D;
             Text = "PeteTech +";
-            TopMost = true;
             TransparencyKey = Color.FromArgb(192, 255, 255);
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -1154,5 +1178,8 @@
         private NotifyIcon notifyIcon1;
         private Label lblmultitrack;
         private Label label18;
+        private Button btnOverlay;
+        private Button btnOverlayKey;
+        private ColorDialog colorDialog3;
     }
 }

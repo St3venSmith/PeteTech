@@ -17,6 +17,7 @@ namespace PeteTech
 
 
         
+        
 
         public int x;
         public int y;
@@ -64,8 +65,13 @@ namespace PeteTech
 
         private bool _rulesEnabled7500;
         private bool _rulesEnabled30k;
+        private Overlayklarity? overlayInstance;
 
 
+        public event EventHandler? RulesEnabled27KChanged;
+
+        
+       
 
         /// <summary>
         /// Events for Stat tracking things
@@ -77,7 +83,8 @@ namespace PeteTech
         public event EventHandler DataPoint5Incremented;
         public event EventHandler DataPoint6Incremented;
 
-
+        // Constructor to initialize overlayklarity
+       
 
 
 
@@ -130,6 +137,7 @@ namespace PeteTech
             DataPoint6Incremented?.Invoke(this, EventArgs.Empty);
         }
 
+       
 
         public bool RulesEnabled3074
         {
@@ -139,8 +147,8 @@ namespace PeteTech
 
                 if (_rulesEnabled3074 != value)
                 {
-
                     _rulesEnabled3074 = value;
+                    
                     if (_rulesEnabled3074)
                     {
                         if (isSoundOn)
@@ -159,7 +167,6 @@ namespace PeteTech
                         Duration3074 += _stopwatch3074.Elapsed;
                         _stopwatch3074.Reset();
                         OnDuration3074Changed();
-
                     }
                     UpdateLabels();
                 }
@@ -174,6 +181,7 @@ namespace PeteTech
                 if (_rulesEnabled7500 != value)
                 {
                     _rulesEnabled7500 = value;
+                    
                     if (_rulesEnabled7500)
                     {
                         if (isSoundOn)
@@ -206,6 +214,7 @@ namespace PeteTech
                 if (_rulesEnabled30k != value)
                 {
                     _rulesEnabled30k = value;
+                    
                     if (_rulesEnabled30k)
                     {
                         if (isSoundOn)
@@ -230,18 +239,15 @@ namespace PeteTech
             }
         }
 
-
         public bool RulesEnabled27K
         {
             get { return _rulesEnabled27K; }
             set
             {
-
                 if (_rulesEnabled27K != value)
                 {
-
                     _rulesEnabled27K = value;
-
+                    OnRulesEnabled27KChanged();
                     if (_rulesEnabled27K)
                     {
                         if (isSoundOn)
@@ -249,7 +255,6 @@ namespace PeteTech
                             player.Play();
                         }
                         _stopwatch27K.Start();
-
                     }
                     else
                     {
@@ -257,13 +262,14 @@ namespace PeteTech
                         {
                             player2.Play();
                         }
-
                         _stopwatch27K.Stop();
                         Duration27K += _stopwatch27K.Elapsed;
                         _stopwatch27K.Reset();
                         OnDuration27KChanged();
+                        
                     }
                     UpdateLabels();
+                   
                 }
             }
         }
@@ -272,6 +278,20 @@ namespace PeteTech
         public event EventHandler? Duration3074Changed;
         public event EventHandler? Duration7500Changed;
         public event EventHandler? Duration30KChanged;
+
+        public event EventHandler? Pic27kChanged;
+
+        protected virtual void OnPic27kChanged()
+        {
+            Pic27kChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnRulesEnabled27KChanged()
+        {
+            RulesEnabled27KChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+
 
         protected virtual void OnDuration27KChanged()
         {
@@ -724,20 +744,19 @@ namespace PeteTech
 
         public async void txt27HK()
         {
-
             if (kStatus == "in/out")
             {
                 if (RulesEnabled27K)  // Check if the rules are enabled
                 {
-
                     RulesEnabled27K = false;
                     await Disable27K();
+                    
                 }
                 else
                 {
                     RulesEnabled27K = true;
                     await Enable27K();
-
+                    
                 }
             }
             else if (kStatus == "in")
@@ -746,16 +765,12 @@ namespace PeteTech
                 {
                     RulesEnabled27K = false;
                     await Disable27K();
-
-
                 }
                 else
                 {
                     RulesEnabled27K = true;
                     await Enable27K();
-
                 }
-
             }
             else if (kStatus == "out")
             {
@@ -769,7 +784,6 @@ namespace PeteTech
                     RulesEnabled27K = true;
                     await Enable27K();
                 }
-
             }
         }
 
@@ -907,6 +921,7 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
+
                 RunCommand("netsh advfirewall firewall add rule dir=in action=block name=\"d2limit-30-tcp-in\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
                 
                 RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-30-tcp-out\" profile=any remoteport=30000-30009 protocol=tcp interfacetype=any");
@@ -925,15 +940,12 @@ namespace PeteTech
             });
         }
 
-        public void Enable27kTCPIN()
-        {
-            RunCommand("netsh advfirewall firewall add rule dir=out action=block name=\"d2limit-27k-tcp-out\" profile=any remoteport=27015-27200 protocol=tcp interfacetype=any");
-        }
+        
         public async Task Enable3074()
         {
             await Task.Run(() =>
             {
-
+                
                 WinDiverts.Start3074(RulesEnabled3074, tStatus, isBufferOn);
            
             });
@@ -980,6 +992,7 @@ namespace PeteTech
         {
             await Task.Run(() =>
             {
+                
                 WinDiverts.Start3074(RulesEnabled3074, tStatus, isBufferOn);
                 return Task.CompletedTask;
             });
@@ -1042,9 +1055,11 @@ namespace PeteTech
             OnUpdateLbl3074Status?.Invoke(lbltrS);
             OnUpdateLbl7500Status?.Invoke(lbltrx);
             OnUpdateLbl30KStatus?.Invoke(lbltrT);
+            
+
 
 
         }
-
+        
     }
 }

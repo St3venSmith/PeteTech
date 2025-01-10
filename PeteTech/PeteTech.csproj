@@ -17,6 +17,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\Resources\27000_limit_off.png" />
+    <None Remove="Properties\Resources\27000_limit_on.png" />
+    <None Remove="Properties\Resources\30000_limit_off.png" />
+    <None Remove="Properties\Resources\30000_limit_on.png" />
+    <None Remove="Properties\Resources\3074_limit_off.png" />
+    <None Remove="Properties\Resources\3074_limit_on.png" />
+    <None Remove="Properties\Resources\7500_limit_off.png" />
+    <None Remove="Properties\Resources\7500_limit_on.png" />
+    <None Remove="Properties\Resources\ptplus_1.png" />
     <None Remove="Properties\Resources\SoundOFFPeteTechCut.wav" />
     <None Remove="Properties\Resources\SoundONPeteTechCut.wav" />
   </ItemGroup>
@@ -26,6 +35,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources\27000_limit_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\27000_limit_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\30000_limit_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\30000_limit_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\3074_limit_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\3074_limit_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\7500_limit_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\7500_limit_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\ptplus_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources\SoundOFFPeteTechCut.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

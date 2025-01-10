@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Media;
+using System.Drawing;
 using Microsoft.VisualBasic.Devices;
 
 namespace PeteTech
@@ -16,6 +17,7 @@ namespace PeteTech
         public bool bufferON;
         public bool buffer;
 
+        private bool overlay = false;
         public bool isAFK = false;
         public bool isSolo = false;
         private DataPoints dataPoints;
@@ -32,6 +34,7 @@ namespace PeteTech
         private Macros macros;
         private PortDataRecorder _portDataRecorder;
         private GlobalKeyListener _keyListener;
+        private Overlayklarity overlayForm;
 
 
 
@@ -40,6 +43,9 @@ namespace PeteTech
             InitializeComponent();
 
             Form form = this;
+            
+
+
 
             _portDataRecorder = new PortDataRecorder();
             _portDataRecorder.DataUsageUpdated += UpdateLabels;
@@ -78,7 +84,7 @@ namespace PeteTech
                 lblPboxTrack.Text = dataPoints.DataPoint5.ToString();
                 lblSoloTrack.Text = dataPoints.DataPoint2.ToString();
                 lblFullPause.Text = dataPoints.DataPoint1.ToString();
-                lblmultitrack.Text = dataPoints.DataPoint6.ToString();  
+                lblmultitrack.Text = dataPoints.DataPoint6.ToString();
 
             }
             else if (!Directory.Exists(filePath))
@@ -107,7 +113,8 @@ namespace PeteTech
 
 
             macros = new Macros();
-            
+            overlayForm = new Overlayklarity();
+
             macros.Duration27KChanged += Macros_Duration27KChanged;
             macros.Duration3074Changed += Macros_Duration3074Changed;
             macros.Duration7500Changed += Macros_Duration7500Changed;
@@ -147,11 +154,11 @@ namespace PeteTech
             cbo7500.Text = "in/out";
             cbo30k.Text = "in/out";
 
-           
+
         }
 
 
-        private async void UpdateLabels(string filterName,double dataIn, double dataOut)
+        private async void UpdateLabels(string filterName, double dataIn, double dataOut)
         {
             if (InvokeRequired)
             {
@@ -174,11 +181,11 @@ namespace PeteTech
                         lbl7500Up.Text = $"{dataOut:F2}KB";
                         break;
                     case "30k":
-                       lbl30KDown.Text = $"{dataIn:F2}KB";
-                       lbl30KUP.Text = $"{dataOut:F2}KB";
+                        lbl30KDown.Text = $"{dataIn:F2}KB";
+                        lbl30KUP.Text = $"{dataOut:F2}KB";
                         break;
                 }
-                
+
             }
         }
 
@@ -225,24 +232,60 @@ namespace PeteTech
         private void UpdateLbl27Status(string status)
         {
             lbl27Status.Text = status;
+
+            if (status == "ON")
+            {
+                overlayForm.Toggle27kImage(true);
+            }
+            else if (status == "OFF")
+            {
+                overlayForm.Toggle27kImage(false);
+            }
         }
 
         private void UpdateLbl3074Status(string status)
         {
             lbl3074Status.Text = status;
+
+            if (status == "ON")
+            {
+                overlayForm.Toggle3074KImage(true);
+            }
+            else if (status == "OFF")
+            {
+                overlayForm.Toggle3074KImage(false);
+            }
         }
 
         private void UpdateLbl7500Status(string status)
         {
             lbl7500Status.Text = status;
+
+            if (status == "ON")
+            {
+                overlayForm.Toggle7500Image(true);
+            }
+            else if (status == "OFF")
+            {
+                overlayForm.Toggle7500Image(false);
+            }
         }
 
         private void UpdateLbl30KStatus(string status)
         {
             lbl30kStatus.Text = status;
+
+            if (status == "ON")
+            {
+                overlayForm.Toggle30KImage(true);
+            }
+            else if (status == "OFF")
+            {
+                overlayForm.Toggle30KImage(false);
+            }
         }
 
-        
+
 
         private void Macros_Duration27KChanged(object? sender, EventArgs e)
         {
@@ -284,6 +327,7 @@ namespace PeteTech
             lbl3074Status.Text = macros.lbltrS;
             lbl7500Status.Text = macros.lbltrx;
             lbl30kStatus.Text = macros.lbltrT;
+
         }
 
         private void txt7500HK_TextChanged(object sender, EventArgs e)
@@ -496,7 +540,7 @@ namespace PeteTech
         }
         private async void btnSolo_Click(object sender, EventArgs e)
         {
-            
+
             await macros.SoloScript();
         }
 
@@ -549,7 +593,7 @@ namespace PeteTech
 
         protected override async void OnFormClosed(FormClosedEventArgs e)
         {
-            
+
             _keyListener.UnhookKeyboardHook(); // Stop listening for global keys when the form is closed
             await macros.Disable27K();
             await macros.Disable3074();
@@ -647,7 +691,7 @@ namespace PeteTech
                 lbl3074Status.ForeColor = colorDialog1.Color;
                 lbl7500Status.ForeColor = colorDialog1.Color;
                 lbl30kStatus.ForeColor = colorDialog1.Color;
-                lblmultitrack.ForeColor = colorDialog1.Color;   
+                lblmultitrack.ForeColor = colorDialog1.Color;
                 lblFPS.ForeColor = colorDialog1.Color;
                 lblDateTrack.ForeColor = colorDialog1.Color;
                 lblFullPause.ForeColor = colorDialog1.Color;
@@ -766,6 +810,35 @@ namespace PeteTech
         private void txt30kHK_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+
+
+        void btnOverlay_Click(object sender, EventArgs e)
+        {
+            overlay = !overlay;
+
+            if (overlay)
+            {
+                if (overlayForm.IsDisposed)
+                {
+                    overlayForm = new Overlayklarity();
+                }
+                overlayForm.Show();
+            }
+            else
+            {
+                overlayForm.Hide();
+            }
+        }
+
+        private void btnOverlayKey_Click(object sender, EventArgs e)
+        {
+            if (colorDialog3.ShowDialog() == DialogResult.OK)
+            {
+                overlayForm.BackColor = colorDialog3.Color;
+                overlayForm.TransparencyKey = colorDialog3.Color;
+            }
         }
     }
 }
