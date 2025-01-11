@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -17,8 +18,11 @@ namespace PeteTech
         private const int WS_EX_TRANSPARENT = 0x00000020;
 
         private Macros macros;
-
+        private PortDataRecorder _portDataRecorder;
         
+
+
+
 
         public Overlayklarity()
         {
@@ -29,6 +33,7 @@ namespace PeteTech
             this.TransparencyKey = System.Drawing.Color.Black;
             this.AllowTransparency = true;
             this.StartPosition = FormStartPosition.Manual;
+            
         }
 
         private void Overlayklarity_Load(object sender, EventArgs e)
@@ -39,6 +44,7 @@ namespace PeteTech
             int formHeight = this.Height;
             int yPos = (screenHeight - formHeight) / 2;
             this.Location = new System.Drawing.Point(0, yPos);
+
         }
 
         private void ApplyClickThroughStyle()
@@ -54,6 +60,37 @@ namespace PeteTech
             }
         }
 
+        public async void UpdateLabels2(string filterName, double dataIn, double dataOut)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateLabels2(filterName, dataIn, dataOut)));
+            }
+            else
+            {
+                switch (filterName)
+                {
+                    case "3074":
+                        lbl3074InO.Text = $"{dataIn:F2}";
+                        lbl3074OutO.Text = $"{dataOut:F2}";
+                        break;
+                    case "27k":
+                        lbl27kinO.Text = $"{dataIn:F2}";
+                        lbl27KOutO.Text = $"{dataOut:F2}";
+
+                        break;
+                    case "7500":
+                        lbl7500Ino.Text = $"{dataIn:F2}";
+                        lbl7500OutO.Text = $"{dataOut:F2}";
+                        break;
+                    case "30k":
+                       lbl30KinO.Text = $"{dataIn:F2}";
+                       lbl30KOutO.Text = $"{dataOut:F2}";
+                        break;
+                }
+
+            }
+        }
         // Toggle method
         public void Toggle27kImage(bool State)
         {
@@ -99,6 +136,11 @@ namespace PeteTech
             {
                 pic30000On.Visible = false;
             }
+        }
+
+        private void pic27kOn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

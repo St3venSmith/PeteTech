@@ -36,6 +36,14 @@
             pic3700On = new PictureBox();
             pic7500On = new PictureBox();
             pic30000On = new PictureBox();
+            lbl27kinO = new Label();
+            lbl27KOutO = new Label();
+            lbl3074InO = new Label();
+            lbl3074OutO = new Label();
+            lbl7500Ino = new Label();
+            lbl7500OutO = new Label();
+            lbl30KinO = new Label();
+            lbl30KOutO = new Label();
             ((System.ComponentModel.ISupportInitialize)pic27koff).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic3700off).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic7500off).BeginInit();
@@ -101,6 +109,7 @@
             pic27kOn.TabIndex = 4;
             pic27kOn.TabStop = false;
             pic27kOn.Visible = false;
+            pic27kOn.Click += pic27kOn_Click;
             // 
             // pic3700On
             // 
@@ -138,11 +147,107 @@
             pic30000On.TabStop = false;
             pic30000On.Visible = false;
             // 
+            // lbl27kinO
+            // 
+            lbl27kinO.AutoSize = true;
+            lbl27kinO.BackColor = Color.White;
+            lbl27kinO.ForeColor = SystemColors.ControlText;
+            lbl27kinO.Location = new Point(31, 55);
+            lbl27kinO.Name = "lbl27kinO";
+            lbl27kinO.Size = new Size(13, 15);
+            lbl27kinO.TabIndex = 8;
+            lbl27kinO.Text = "1";
+            // 
+            // lbl27KOutO
+            // 
+            lbl27KOutO.AutoSize = true;
+            lbl27KOutO.BackColor = Color.White;
+            lbl27KOutO.ForeColor = SystemColors.ControlText;
+            lbl27KOutO.Location = new Point(66, 67);
+            lbl27KOutO.Name = "lbl27KOutO";
+            lbl27KOutO.Size = new Size(13, 15);
+            lbl27KOutO.TabIndex = 9;
+            lbl27KOutO.Text = "1";
+            // 
+            // lbl3074InO
+            // 
+            lbl3074InO.AutoSize = true;
+            lbl3074InO.BackColor = Color.White;
+            lbl3074InO.ForeColor = SystemColors.ControlText;
+            lbl3074InO.Location = new Point(31, 149);
+            lbl3074InO.Name = "lbl3074InO";
+            lbl3074InO.Size = new Size(13, 15);
+            lbl3074InO.TabIndex = 10;
+            lbl3074InO.Text = "1";
+            // 
+            // lbl3074OutO
+            // 
+            lbl3074OutO.AutoSize = true;
+            lbl3074OutO.BackColor = Color.White;
+            lbl3074OutO.ForeColor = SystemColors.ControlText;
+            lbl3074OutO.Location = new Point(66, 163);
+            lbl3074OutO.Name = "lbl3074OutO";
+            lbl3074OutO.Size = new Size(13, 15);
+            lbl3074OutO.TabIndex = 11;
+            lbl3074OutO.Text = "1";
+            // 
+            // lbl7500Ino
+            // 
+            lbl7500Ino.AutoSize = true;
+            lbl7500Ino.BackColor = Color.White;
+            lbl7500Ino.ForeColor = SystemColors.ControlText;
+            lbl7500Ino.Location = new Point(31, 242);
+            lbl7500Ino.Name = "lbl7500Ino";
+            lbl7500Ino.Size = new Size(13, 15);
+            lbl7500Ino.TabIndex = 12;
+            lbl7500Ino.Text = "1";
+            // 
+            // lbl7500OutO
+            // 
+            lbl7500OutO.AutoSize = true;
+            lbl7500OutO.BackColor = Color.White;
+            lbl7500OutO.ForeColor = SystemColors.ControlText;
+            lbl7500OutO.Location = new Point(66, 254);
+            lbl7500OutO.Name = "lbl7500OutO";
+            lbl7500OutO.Size = new Size(13, 15);
+            lbl7500OutO.TabIndex = 13;
+            lbl7500OutO.Text = "1";
+            // 
+            // lbl30KinO
+            // 
+            lbl30KinO.AutoSize = true;
+            lbl30KinO.BackColor = Color.White;
+            lbl30KinO.ForeColor = SystemColors.ControlText;
+            lbl30KinO.Location = new Point(31, 334);
+            lbl30KinO.Name = "lbl30KinO";
+            lbl30KinO.Size = new Size(13, 15);
+            lbl30KinO.TabIndex = 14;
+            lbl30KinO.Text = "1";
+            // 
+            // lbl30KOutO
+            // 
+            lbl30KOutO.AutoSize = true;
+            lbl30KOutO.BackColor = Color.White;
+            lbl30KOutO.ForeColor = SystemColors.ControlText;
+            lbl30KOutO.Location = new Point(66, 349);
+            lbl30KOutO.Name = "lbl30KOutO";
+            lbl30KOutO.Size = new Size(13, 15);
+            lbl30KOutO.TabIndex = 15;
+            lbl30KOutO.Text = "1";
+            // 
             // Overlayklarity
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(120, 390);
+            Controls.Add(lbl30KOutO);
+            Controls.Add(lbl30KinO);
+            Controls.Add(lbl7500OutO);
+            Controls.Add(lbl7500Ino);
+            Controls.Add(lbl3074OutO);
+            Controls.Add(lbl3074InO);
+            Controls.Add(lbl27KOutO);
+            Controls.Add(lbl27kinO);
             Controls.Add(pic30000On);
             Controls.Add(pic7500On);
             Controls.Add(pic3700On);
@@ -166,6 +271,7 @@
             ((System.ComponentModel.ISupportInitialize)pic7500On).EndInit();
             ((System.ComponentModel.ISupportInitialize)pic30000On).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -178,5 +284,13 @@
         private PictureBox pic3700On;
         private PictureBox pic7500On;
         private PictureBox pic30000On;
+        private Label lbl27kinO;
+        private Label lbl27KOutO;
+        private Label lbl3074InO;
+        private Label lbl3074OutO;
+        private Label lbl7500Ino;
+        private Label lbl7500OutO;
+        private Label lbl30KinO;
+        private Label lbl30KOutO;
     }
 }

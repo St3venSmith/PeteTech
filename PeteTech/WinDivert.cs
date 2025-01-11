@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using WindivertDotnet;
 
 namespace PeteTech
@@ -19,9 +20,6 @@ namespace PeteTech
         private static WinDivert? l27k;
         private static WinDivert? l7500;
         private static WinDivert? l30k;
-
-
-
 
         public bool Buffering;
 
@@ -73,8 +71,6 @@ namespace PeteTech
 
         public static async void Start3074(bool Enabled, string Status, bool BUFF)
         {
-
-
             try
             {
                 // Check if Enabled is false, exit immediately
@@ -342,6 +338,8 @@ namespace PeteTech
                 WinDivertAddress addr = new WinDivertAddress();
                 int packetLen = l30k.Recv(packet, addr);
 
+                
+
                 if (!BUFF)
                 {
                     Console.WriteLine($"Packet received: Length {packetLen} bytes");
@@ -522,6 +520,12 @@ namespace PeteTech
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
+
+
+
+
+
 
         private static void SendRecordedData()
         {

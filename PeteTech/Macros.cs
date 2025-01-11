@@ -907,7 +907,7 @@ namespace PeteTech
             }
             await EnableDC();
             
-            await Task.Delay(500);
+            await Task.Delay(1000);
             
             await DisableDC();
             if (isSoundOn)
@@ -1055,11 +1055,6 @@ namespace PeteTech
             OnUpdateLbl3074Status?.Invoke(lbltrS);
             OnUpdateLbl7500Status?.Invoke(lbltrx);
             OnUpdateLbl30KStatus?.Invoke(lbltrT);
-            
-
-
-
         }
-        
     }
 }

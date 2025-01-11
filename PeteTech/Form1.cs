@@ -171,21 +171,40 @@ namespace PeteTech
                     case "3074":
                         lbl3074down.Text = $"{dataIn:F2}KB";
                         lbl3074Up.Text = $"{dataOut:F2}KB";
+                        if (overlayForm != null)
+                        {
+                            overlayForm.UpdateLabels2(filterName, dataIn, dataOut);
+                        }
+
                         break;
                     case "27k":
                         lbl27kdown.Text = $"{dataIn:F2}KB";
                         lbl27kUp.Text = $"{dataOut:F2}KB";
+                        if (overlayForm != null)
+                        {
+                            overlayForm.UpdateLabels2(filterName, dataIn, dataOut);
+                        }
+
                         break;
                     case "7500":
                         lbl7500Down.Text = $"{dataIn:F2}KB";
                         lbl7500Up.Text = $"{dataOut:F2}KB";
+                        if (overlayForm != null)
+                        {
+                            overlayForm.UpdateLabels2(filterName, dataIn, dataOut);
+                        }
+
                         break;
                     case "30k":
                         lbl30KDown.Text = $"{dataIn:F2}KB";
                         lbl30KUP.Text = $"{dataOut:F2}KB";
+                        if (overlayForm != null)
+                        {
+                            overlayForm.UpdateLabels2(filterName, dataIn, dataOut);
+                        }
+
                         break;
                 }
-
             }
         }
 

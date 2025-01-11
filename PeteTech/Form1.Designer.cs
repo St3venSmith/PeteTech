@@ -162,12 +162,11 @@
             // 
             // chkAutoBuffer
             // 
-            chkAutoBuffer.Appearance = Appearance.Button;
             chkAutoBuffer.AutoSize = true;
-            chkAutoBuffer.Location = new Point(3, 128);
+            chkAutoBuffer.Location = new Point(3, 121);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
-            chkAutoBuffer.Size = new Size(78, 26);
+            chkAutoBuffer.Size = new Size(87, 20);
             chkAutoBuffer.TabIndex = 2;
             chkAutoBuffer.Text = "Auto Buffer";
             toolTip1.SetToolTip(chkAutoBuffer, "Buffers the limit held");
@@ -176,13 +175,12 @@
             // 
             // chkSounds
             // 
-            chkSounds.Appearance = Appearance.Button;
             chkSounds.BackColor = Color.Transparent;
             chkSounds.FlatAppearance.BorderColor = Color.Red;
-            chkSounds.Location = new Point(87, 128);
+            chkSounds.Location = new Point(90, 118);
             chkSounds.Margin = new Padding(3, 2, 3, 2);
             chkSounds.Name = "chkSounds";
-            chkSounds.Size = new Size(55, 26);
+            chkSounds.Size = new Size(67, 26);
             chkSounds.TabIndex = 3;
             chkSounds.Text = "Sounds";
             toolTip1.SetToolTip(chkSounds, "Turns sound on to let you know if you are limiting");
@@ -371,6 +369,7 @@
             // cbo30k
             // 
             cbo30k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo30k.DropDownStyle = ComboBoxStyle.DropDownList;
             cbo30k.FormattingEnabled = true;
             cbo30k.Items.AddRange(new object[] { "in/out", "in", "out" });
             cbo30k.Location = new Point(3, 92);
@@ -418,6 +417,7 @@
             // cbo7500
             // 
             cbo7500.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo7500.DropDownStyle = ComboBoxStyle.DropDownList;
             cbo7500.FormattingEnabled = true;
             cbo7500.Items.AddRange(new object[] { "in/out", "in", "out" });
             cbo7500.Location = new Point(3, 62);
@@ -470,6 +470,7 @@
             // cbo3074
             // 
             cbo3074.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo3074.DropDownStyle = ComboBoxStyle.DropDownList;
             cbo3074.FormattingEnabled = true;
             cbo3074.Items.AddRange(new object[] { "in/out", "in", "out" });
             cbo3074.Location = new Point(3, 32);
@@ -482,6 +483,7 @@
             // cmbo27k
             // 
             cmbo27k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cmbo27k.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbo27k.FormattingEnabled = true;
             cmbo27k.Items.AddRange(new object[] { "in/out", "in", "out" });
             cmbo27k.Location = new Point(3, 2);
@@ -947,9 +949,10 @@
             // 
             btnOverlayKey.Location = new Point(489, 21);
             btnOverlayKey.Name = "btnOverlayKey";
-            btnOverlayKey.Size = new Size(75, 23);
+            btnOverlayKey.Size = new Size(99, 23);
             btnOverlayKey.TabIndex = 6;
             btnOverlayKey.Text = "Overylay Color";
+            toolTip1.SetToolTip(btnOverlayKey, "Changes the outline of the overlay boxes");
             btnOverlayKey.UseVisualStyleBackColor = true;
             btnOverlayKey.Click += btnOverlayKey_Click;
             // 
@@ -960,6 +963,7 @@
             btnOverlay.Size = new Size(75, 23);
             btnOverlay.TabIndex = 5;
             btnOverlay.Text = "Overlay Toggle";
+            toolTip1.SetToolTip(btnOverlay, "toggle overlay: Game Must Be In Windowed Fullscreen");
             btnOverlay.UseVisualStyleBackColor = true;
             btnOverlay.Click += btnOverlay_Click;
             // 

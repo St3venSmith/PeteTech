@@ -10,6 +10,7 @@ namespace PeteTech
     {
         // Thread-safe queue for packets
         public event Action<string, double, double> DataUsageUpdated;
+        public event Action<string, double, double> DataUsageUpdated2;
         private static ConcurrentQueue<(string, WinDivertPacket, WinDivertAddress)> packetQueue = new();
         private static bool isRunning = true;
 
@@ -117,6 +118,7 @@ namespace PeteTech
                         
 
                         DataUsageUpdated?.Invoke(filterName, downloadKB, uploadKB);
+                        
 
                         // Reset counters
                         downloadBytes[filterName] = 0;
