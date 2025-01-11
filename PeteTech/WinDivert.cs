@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using WindivertDotnet;
+using static WindivertDotnet.IFilter;
 
 namespace PeteTech
 {
@@ -20,6 +21,8 @@ namespace PeteTech
         private static WinDivert? l27k;
         private static WinDivert? l7500;
         private static WinDivert? l30k;
+
+        private static IFilter.ITcp filter;
 
         public bool Buffering;
 
@@ -336,6 +339,9 @@ namespace PeteTech
 
                 WinDivertPacket packet = new WinDivertPacket(65535);
                 WinDivertAddress addr = new WinDivertAddress();
+
+                
+
                 int packetLen = l30k.Recv(packet, addr);
 
                 
@@ -521,8 +527,7 @@ namespace PeteTech
             }
         }
 
-
-
+        
 
 
 
@@ -543,5 +548,6 @@ namespace PeteTech
        
 
     }
+   
 }
 
