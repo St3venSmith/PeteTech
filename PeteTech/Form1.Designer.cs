@@ -119,6 +119,8 @@
             fontDialog2 = new FontDialog();
             notifyIcon1 = new NotifyIcon(components);
             colorDialog3 = new ColorDialog();
+            label19 = new Label();
+            txtNLBM = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -1024,6 +1026,8 @@
             // tabPage6
             // 
             tabPage6.BackColor = Color.Gray;
+            tabPage6.Controls.Add(txtNLBM);
+            tabPage6.Controls.Add(label19);
             tabPage6.Controls.Add(txtMulti);
             tabPage6.Controls.Add(lblMulti);
             tabPage6.Location = new Point(4, 24);
@@ -1057,6 +1061,23 @@
             // 
             notifyIcon1.Text = "notifyIcon1";
             notifyIcon1.Visible = true;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(3, 178);
+            label19.Name = "label19";
+            label19.Size = new Size(94, 15);
+            label19.TabIndex = 2;
+            label19.Text = "NLBible Special: ";
+            // 
+            // txtNLBM
+            // 
+            txtNLBM.Location = new Point(93, 175);
+            txtNLBM.MaxLength = 1;
+            txtNLBM.Name = "txtNLBM";
+            txtNLBM.Size = new Size(25, 23);
+            txtNLBM.TabIndex = 3;
             // 
             // Form1
             // 
@@ -1185,5 +1206,7 @@
         private Button btnOverlay;
         private Button btnOverlayKey;
         private ColorDialog colorDialog3;
+        private TextBox txtNLBM;
+        private Label label19;
     }
 }

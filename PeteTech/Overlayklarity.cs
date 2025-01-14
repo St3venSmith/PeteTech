@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Runtime.InteropServices;
+using System.Drawing;
+
 using System.Windows.Forms;
+
 
 namespace PeteTech
 {
@@ -20,6 +23,9 @@ namespace PeteTech
         private Macros macros;
         private PortDataRecorder _portDataRecorder;
         
+       
+
+
 
 
 

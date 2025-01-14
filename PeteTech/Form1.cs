@@ -30,11 +30,14 @@ namespace PeteTech
         private HotkeyHelper hotkey6; // helper for multi
         private HotkeyHelper hotkey7; // helper for 7500
         private HotkeyHelper hotkey8; // for 30k
+        private HotkeyHelper hotkey9; // for NLB
         private WinDiverts winDiverts;
         private Macros macros;
         private PortDataRecorder _portDataRecorder;
         private GlobalKeyListener _keyListener;
         private Overlayklarity overlayForm;
+
+        
 
 
 
@@ -130,6 +133,7 @@ namespace PeteTech
             hotkey6 = new HotkeyHelper(txtMulti, macros);
             hotkey7 = new HotkeyHelper(txt7500HK, macros);
             hotkey8 = new HotkeyHelper(txt30kHK, macros);
+            hotkey9 = new HotkeyHelper(txtNLBM, macros);
 
 
 

@@ -11,12 +11,10 @@ namespace PeteTech
         private readonly object _targetClass; // Target class containing the methods
         private IntPtr _keyboardHookID = IntPtr.Zero; // Hook ID
         private HookProc _hookProc; // Hook callback delegate
-        private bool _keyProcessed = false; // Flag to track if the key has been processed
 
         // Hook constants
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
-        private const int WM_KEYUP = 0x0101;
 
         // Import user32.dll functions
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -59,37 +57,28 @@ namespace PeteTech
 
         private int KeyPressCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0)
+            if (nCode >= 0 && (int)wParam == WM_KEYDOWN) // Check if a key is being pressed
             {
-                if ((int)wParam == WM_KEYDOWN && !_keyProcessed) // Check if a key is being pressed and not already processed
+                int vkCode = Marshal.ReadInt32(lParam); // Get the virtual key code from lParam
+                char pressedKey = MapVirtualKeyToChar((uint)vkCode); // Map VK to actual char
+
+                Debug.WriteLine($"Key Pressed: {pressedKey} (VK Code: {vkCode})");
+
+                if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
                 {
-                    _keyProcessed = true; // Mark the key as processed
+                    string targetKey = _textBox.Text; // TextBox text
 
-                    int vkCode = Marshal.ReadInt32(lParam); // Get the virtual key code from lParam
-                    char pressedKey = MapVirtualKeyToChar((uint)vkCode); // Map VK to actual char
+                    Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetKey}");
 
-                    Debug.WriteLine($"Key Pressed: {pressedKey} (VK Code: {vkCode})");
-
-                    if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
+                    if (IsFunctionKey(targetKey, vkCode) || pressedKey.ToString().Equals(targetKey, StringComparison.OrdinalIgnoreCase)) // Match function key or regular key
                     {
-                        string targetKey = _textBox.Text; // TextBox text
-
-                        Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetKey}");
-
-                        if (IsFunctionKey(targetKey, vkCode) || pressedKey.ToString().Equals(targetKey, StringComparison.OrdinalIgnoreCase)) // Match function key or regular key
-                        {
-                            Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
-                            InvokeMethodFromClass();
-                        }
-                        else
-                        {
-                            Debug.WriteLine($"Key mismatch: {pressedKey} != {targetKey}");
-                        }
+                        Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
+                        InvokeMethodFromClass();
                     }
-                }
-                else if ((int)wParam == WM_KEYUP) // Reset the flag when the key is released
-                {
-                    _keyProcessed = false;
+                    else
+                    {
+                        Debug.WriteLine($"Key mismatch: {pressedKey} != {targetKey}");
+                    }
                 }
             }
 
@@ -207,3 +196,4 @@ namespace PeteTech
         }
     }
 }
+

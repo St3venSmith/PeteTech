@@ -13,16 +13,19 @@ namespace PeteTech
         // Thread-safe queue for packets
         
         private static List<(WinDivertPacket, WinDivertAddress)> recordedPackets = new(); // To store recorded packets
+        private static List<(WinDivertPacket, WinDivertAddress)> recordedPackets2 = new(); // To store recorded packets
 
-        
+
         private static bool isRecording = false; // New flag for recording packets
+        private static bool isRecording2 = false; // New flag for recording packets
 
         private static WinDivert? l3074;
         private static WinDivert? l27k;
         private static WinDivert? l7500;
         private static WinDivert? l30k;
+        private static WinDivert? lgiga;
 
-        private static IFilter.ITcp filter;
+
 
         public bool Buffering;
 
@@ -212,9 +215,24 @@ namespace PeteTech
                         l7500 = null;
                     }
 
+                    // Send recorded data and clear buffer when stopping
+                    if (isRecording)
+                    {
+                        
+                        
+                        SendRecordedData2();
+                        recordedPackets2.Clear();
+                        isRecording2 = false;
+                    }
+
+                   
+
                     _cancellationTokenSource.Cancel();
                     return;
                 }
+
+                // Start recording when enabled
+                isRecording2 = true;
 
                 _cancellationTokenSource = new CancellationTokenSource();
 
@@ -236,26 +254,35 @@ namespace PeteTech
 
                 WinDivertPacket packet = new WinDivertPacket(65535);
                 WinDivertAddress addr = new WinDivertAddress();
-                int packetLen = l7500.Recv(packet, addr);
 
-                if (!BUFF)
+                while (Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    Console.WriteLine($"Packet received: Length {packetLen} bytes");
-                    l7500.Send(packet, addr, new CancellationToken());
-                }
-                else
-                {
-                    Random rand = new Random();
-                    int randUnlimit = rand.Next(1, 1);
-                    int randLimit = rand.Next(2000, 3000);
 
-                    while (BUFF && Enabled && !_cancellationTokenSource.Token.IsCancellationRequested)
+                    
+                    int packetLen = l7500.Recv(packet, addr);
+
+                    if (isRecording)
                     {
+                        recordedPackets2.Add((packet.Clone(), addr.Clone()));
+                    }
+
+                    if (!BUFF)
+                    {
+                        Console.WriteLine($"Packet received: Length {packetLen} bytes");
+
+                    }
+                    else
+                    {
+                        Random rand = new Random();
+                        int randUnlimit = rand.Next(50, 80);
+                        int randLimit = rand.Next(3000, 4000);
+
                         if (l7500 != null)
                         {
                             l7500.Dispose();
                             l7500 = null;
                         }
+
                         await Task.Delay(randUnlimit, _cancellationTokenSource.Token);
 
                         if (l7500 == null)
@@ -284,12 +311,7 @@ namespace PeteTech
                             l7500 = null;
                         }
 
-                        Debug.WriteLine($"Bufferbloat is now enabled. Packet Length: {packetLen} bytes");
-
-                        if (!Enabled || !BUFF)
-                        {
-                            break;
-                        }
+                        Debug.WriteLine($"Bufferbloat enabled. Packet Length: {packetLen} bytes");
                     }
                 }
             }
@@ -527,11 +549,6 @@ namespace PeteTech
             }
         }
 
-        
-
-
-
-
         private static void SendRecordedData()
         {
             foreach (var (packet, addr) in recordedPackets)
@@ -545,7 +562,19 @@ namespace PeteTech
             Console.WriteLine($"Sent {recordedPackets.Count} recorded packets.");
         }
 
-       
+        private static void SendRecordedData2()
+        {
+            foreach (var (packet, addr) in recordedPackets)
+            {
+                if (l7500 != null)
+                {
+                    l7500.Send(packet, addr, new CancellationToken());
+                }
+            }
+
+            Console.WriteLine($"Sent {recordedPackets.Count} recorded packets.");
+        }
+
 
     }
    

@@ -610,15 +610,59 @@ namespace PeteTech
             }
         }
 
+        public async void txtNLBM()
+        {
+
+            KeyDown(VKC.VK_I);
+            await Task.Delay(150);
+            KeyUp(VKC.VK_I);
+
+            txt7500HK();
+            await Task.Delay(150);
+
+            MoveMouseTo(500, 500);
+            await Task.Delay(250);
+            MoveMouseTo(400, 500);
+            await Task.Delay(250);
+            MouseDown();
+            await Task.Delay(150);
+            MouseUp();
+
+            KeyDown(VKC.VK_ESCAPE);
+            await Task.Delay(150);
+            KeyUp(VKC.VK_ESCAPE);
+
+            await Task.Delay(100);
+
+            txt7500HK();
+            txt3074HK();
+            txt27HK();
+
+            
+            MouseDown();
+            await Task.Delay(2000);
+            MouseUp();
+            await Task.Delay(1050);
+
+            txt27HK();
+            txt3074HK();
+            MouseUp();
+
+
+
+
+
+
+
+
+
+
+
+
+        }
 
         public async void txtMulti()
         {
-
-
-            
-
-            
-
             txt3074HK();
             txt27HK();
 
@@ -635,7 +679,6 @@ namespace PeteTech
             OnDataPoint6Incremented();
 
             //Noob likes Futa and Cake Farts
-
         }
 
 
