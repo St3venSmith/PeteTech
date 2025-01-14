@@ -117,38 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SoundOFFPeteTechCut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SoundOFFPeteTechCut.wav;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SoundONPeteTechCut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SoundONPeteTechCut.wav;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="27000_limit_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\27000_limit_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="30000_limit_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\30000_limit_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="27000_limit_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\27000_limit_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="30000_limit_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\30000_limit_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="3074_limit_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\3074_limit_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="7500_limit_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\7500_limit_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="7500_limit_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\7500_limit_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="3074_limit_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\3074_limit_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ptplus_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ptplus_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

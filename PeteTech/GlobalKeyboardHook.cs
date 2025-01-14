@@ -30,6 +30,7 @@ namespace PeteTech
         private IntPtr _keyboardHookID = IntPtr.Zero;
         private HookProc _hookProc;
         private Form _form;
+        private Overlayklarity overlayInstance;
 
         public GlobalKeyListener(Form form)
         {

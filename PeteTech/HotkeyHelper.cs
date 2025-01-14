@@ -11,10 +11,12 @@ namespace PeteTech
         private readonly object _targetClass; // Target class containing the methods
         private IntPtr _keyboardHookID = IntPtr.Zero; // Hook ID
         private HookProc _hookProc; // Hook callback delegate
+        private bool _keyProcessed = false; // Flag to track if the key has been processed
 
         // Hook constants
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
+        private const int WM_KEYUP = 0x0101;
 
         // Import user32.dll functions
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -57,28 +59,37 @@ namespace PeteTech
 
         private int KeyPressCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && (int)wParam == WM_KEYDOWN) // Check if a key is being pressed
+            if (nCode >= 0)
             {
-                int vkCode = Marshal.ReadInt32(lParam); // Get the virtual key code from lParam
-                char pressedKey = MapVirtualKeyToChar((uint)vkCode); // Map VK to actual char
-
-                Debug.WriteLine($"Key Pressed: {pressedKey} (VK Code: {vkCode})");
-
-                if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
+                if ((int)wParam == WM_KEYDOWN && !_keyProcessed) // Check if a key is being pressed and not already processed
                 {
-                    string targetKey = _textBox.Text; // TextBox text
+                    _keyProcessed = true; // Mark the key as processed
 
-                    Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetKey}");
+                    int vkCode = Marshal.ReadInt32(lParam); // Get the virtual key code from lParam
+                    char pressedKey = MapVirtualKeyToChar((uint)vkCode); // Map VK to actual char
 
-                    if (IsFunctionKey(targetKey, vkCode) || pressedKey.ToString().Equals(targetKey, StringComparison.OrdinalIgnoreCase)) // Match function key or regular key
+                    Debug.WriteLine($"Key Pressed: {pressedKey} (VK Code: {vkCode})");
+
+                    if (_textBox != null && !string.IsNullOrEmpty(_textBox.Text))
                     {
-                        Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
-                        InvokeMethodFromClass();
+                        string targetKey = _textBox.Text; // TextBox text
+
+                        Debug.WriteLine($"TextBox '{_textBox.Name}' Target Key: {targetKey}");
+
+                        if (IsFunctionKey(targetKey, vkCode) || pressedKey.ToString().Equals(targetKey, StringComparison.OrdinalIgnoreCase)) // Match function key or regular key
+                        {
+                            Debug.WriteLine($"Key matched. Invoking method for {_textBox.Name}");
+                            InvokeMethodFromClass();
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"Key mismatch: {pressedKey} != {targetKey}");
+                        }
                     }
-                    else
-                    {
-                        Debug.WriteLine($"Key mismatch: {pressedKey} != {targetKey}");
-                    }
+                }
+                else if ((int)wParam == WM_KEYUP) // Reset the flag when the key is released
+                {
+                    _keyProcessed = false;
                 }
             }
 
@@ -146,6 +157,25 @@ namespace PeteTech
                     return true;
                 }
             }
+
+            // Check for arrow keys
+            if (targetKey.Equals("Left", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Left)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Right", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Right)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Up", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Up)
+            {
+                return true;
+            }
+            if (targetKey.Equals("Down", StringComparison.OrdinalIgnoreCase) && vkCode == (int)Keys.Down)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -155,6 +185,13 @@ namespace PeteTech
             if (e.KeyCode >= Keys.F1 && e.KeyCode <= Keys.F12)
             {
                 // Update the TextBox text with the function key name
+                _textBox.Text = e.KeyCode.ToString();
+                e.Handled = true; // Mark the event as handled
+            }
+            // Check if the pressed key is an arrow key
+            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                // Update the TextBox text with the arrow key name
                 _textBox.Text = e.KeyCode.ToString();
                 e.Handled = true; // Mark the event as handled
             }

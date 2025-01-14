@@ -36,6 +36,22 @@
             chkSounds = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            lbl30KUP = new Label();
+            lbl7500Up = new Label();
+            lbl30KDown = new Label();
+            lbl7500Down = new Label();
+            lbl27kUp = new Label();
+            lbl27kdown = new Label();
+            lbl3074Up = new Label();
+            lbl3074down = new Label();
+            lbl30kStatus = new Label();
+            txt30kHK = new TextBox();
+            btn30k = new Button();
+            cbo30k = new ComboBox();
+            lbl7500Status = new Label();
+            txt7500HK = new TextBox();
+            btn7500 = new Button();
+            cbo7500 = new ComboBox();
             btnAFK = new Button();
             btnDC = new Button();
             lbl3074Status = new Label();
@@ -58,6 +74,12 @@
             txtPboxMessage = new TextBox();
             label5 = new Label();
             tabPage4 = new TabPage();
+            lblmultitrack = new Label();
+            label18 = new Label();
+            lbl30kTrack = new Label();
+            label17 = new Label();
+            lbl7500Track = new Label();
+            label16 = new Label();
             lblSoloTrack = new Label();
             lblDCtrack = new Label();
             lblFBTrack = new Label();
@@ -79,6 +101,8 @@
             tabPage2 = new TabPage();
             label1 = new Label();
             tabPage5 = new TabPage();
+            btnOverlayKey = new Button();
+            btnOverlay = new Button();
             btnTheme = new Button();
             btnColor = new Button();
             btnChangeFont = new Button();
@@ -92,6 +116,9 @@
             pageSetupDialog1 = new PageSetupDialog();
             colorDialog1 = new ColorDialog();
             colorDialog2 = new ColorDialog();
+            fontDialog2 = new FontDialog();
+            notifyIcon1 = new NotifyIcon(components);
+            colorDialog3 = new ColorDialog();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbFpsBar).BeginInit();
@@ -135,12 +162,11 @@
             // 
             // chkAutoBuffer
             // 
-            chkAutoBuffer.Appearance = Appearance.Button;
             chkAutoBuffer.AutoSize = true;
-            chkAutoBuffer.Location = new Point(3, 60);
+            chkAutoBuffer.Location = new Point(3, 121);
             chkAutoBuffer.Margin = new Padding(3, 2, 3, 2);
             chkAutoBuffer.Name = "chkAutoBuffer";
-            chkAutoBuffer.Size = new Size(78, 26);
+            chkAutoBuffer.Size = new Size(87, 20);
             chkAutoBuffer.TabIndex = 2;
             chkAutoBuffer.Text = "Auto Buffer";
             toolTip1.SetToolTip(chkAutoBuffer, "Buffers the limit held");
@@ -149,13 +175,12 @@
             // 
             // chkSounds
             // 
-            chkSounds.Appearance = Appearance.Button;
             chkSounds.BackColor = Color.Transparent;
             chkSounds.FlatAppearance.BorderColor = Color.Red;
-            chkSounds.Location = new Point(87, 60);
+            chkSounds.Location = new Point(90, 118);
             chkSounds.Margin = new Padding(3, 2, 3, 2);
             chkSounds.Name = "chkSounds";
-            chkSounds.Size = new Size(55, 26);
+            chkSounds.Size = new Size(67, 26);
             chkSounds.TabIndex = 3;
             chkSounds.Text = "Sounds";
             toolTip1.SetToolTip(chkSounds, "Turns sound on to let you know if you are limiting");
@@ -175,16 +200,32 @@
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(700, 338);
+            tabControl1.Size = new Size(700, 366);
             tabControl1.SizeMode = TabSizeMode.FillToRight;
             tabControl1.TabIndex = 4;
             // 
             // tabPage1
             // 
-            tabPage1.BackColor = Color.White;
-            tabPage1.BackgroundImage = (Image)resources.GetObject("tabPage1.BackgroundImage");
+            tabPage1.BackColor = Color.Gray;
+            tabPage1.BackgroundImage = Properties.Resources.ptplus_1;
             tabPage1.BackgroundImageLayout = ImageLayout.Zoom;
             tabPage1.BorderStyle = BorderStyle.FixedSingle;
+            tabPage1.Controls.Add(lbl30KUP);
+            tabPage1.Controls.Add(lbl7500Up);
+            tabPage1.Controls.Add(lbl30KDown);
+            tabPage1.Controls.Add(lbl7500Down);
+            tabPage1.Controls.Add(lbl27kUp);
+            tabPage1.Controls.Add(lbl27kdown);
+            tabPage1.Controls.Add(lbl3074Up);
+            tabPage1.Controls.Add(lbl3074down);
+            tabPage1.Controls.Add(lbl30kStatus);
+            tabPage1.Controls.Add(txt30kHK);
+            tabPage1.Controls.Add(btn30k);
+            tabPage1.Controls.Add(cbo30k);
+            tabPage1.Controls.Add(lbl7500Status);
+            tabPage1.Controls.Add(txt7500HK);
+            tabPage1.Controls.Add(btn7500);
+            tabPage1.Controls.Add(cbo7500);
             tabPage1.Controls.Add(btnAFK);
             tabPage1.Controls.Add(btnDC);
             tabPage1.Controls.Add(lbl3074Status);
@@ -207,20 +248,188 @@
             tabPage1.Controls.Add(chkSounds);
             tabPage1.Controls.Add(btn27K);
             tabPage1.Controls.Add(chkAutoBuffer);
-            tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabPage1.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             tabPage1.ForeColor = Color.FromArgb(32, 32, 32);
             tabPage1.ImageKey = "(none)";
             tabPage1.Location = new Point(4, 24);
             tabPage1.Margin = new Padding(3, 2, 3, 2);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3, 2, 3, 2);
-            tabPage1.Size = new Size(692, 310);
+            tabPage1.Size = new Size(692, 338);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home";
             // 
+            // lbl30KUP
+            // 
+            lbl30KUP.AutoSize = true;
+            lbl30KUP.Location = new Point(337, 95);
+            lbl30KUP.Name = "lbl30KUP";
+            lbl30KUP.Size = new Size(19, 16);
+            lbl30KUP.TabIndex = 37;
+            lbl30KUP.Text = "00";
+            // 
+            // lbl7500Up
+            // 
+            lbl7500Up.AutoSize = true;
+            lbl7500Up.Location = new Point(337, 66);
+            lbl7500Up.Name = "lbl7500Up";
+            lbl7500Up.Size = new Size(19, 16);
+            lbl7500Up.TabIndex = 36;
+            lbl7500Up.Text = "00";
+            // 
+            // lbl30KDown
+            // 
+            lbl30KDown.AutoSize = true;
+            lbl30KDown.Location = new Point(262, 95);
+            lbl30KDown.Name = "lbl30KDown";
+            lbl30KDown.Size = new Size(19, 16);
+            lbl30KDown.TabIndex = 35;
+            lbl30KDown.Text = "00";
+            // 
+            // lbl7500Down
+            // 
+            lbl7500Down.AutoSize = true;
+            lbl7500Down.Location = new Point(262, 66);
+            lbl7500Down.Name = "lbl7500Down";
+            lbl7500Down.Size = new Size(19, 16);
+            lbl7500Down.TabIndex = 34;
+            lbl7500Down.Text = "00";
+            // 
+            // lbl27kUp
+            // 
+            lbl27kUp.AutoSize = true;
+            lbl27kUp.Location = new Point(337, 6);
+            lbl27kUp.Name = "lbl27kUp";
+            lbl27kUp.Size = new Size(19, 16);
+            lbl27kUp.TabIndex = 33;
+            lbl27kUp.Text = "00";
+            // 
+            // lbl27kdown
+            // 
+            lbl27kdown.AutoSize = true;
+            lbl27kdown.Location = new Point(262, 6);
+            lbl27kdown.Name = "lbl27kdown";
+            lbl27kdown.Size = new Size(19, 16);
+            lbl27kdown.TabIndex = 32;
+            lbl27kdown.Text = "00";
+            // 
+            // lbl3074Up
+            // 
+            lbl3074Up.AutoSize = true;
+            lbl3074Up.Location = new Point(337, 35);
+            lbl3074Up.Name = "lbl3074Up";
+            lbl3074Up.Size = new Size(19, 16);
+            lbl3074Up.TabIndex = 31;
+            lbl3074Up.Text = "00";
+            // 
+            // lbl3074down
+            // 
+            lbl3074down.AutoSize = true;
+            lbl3074down.Location = new Point(262, 35);
+            lbl3074down.Name = "lbl3074down";
+            lbl3074down.Size = new Size(19, 16);
+            lbl3074down.TabIndex = 30;
+            lbl3074down.Text = "00";
+            // 
+            // lbl30kStatus
+            // 
+            lbl30kStatus.AutoSize = true;
+            lbl30kStatus.Location = new Point(215, 95);
+            lbl30kStatus.Name = "lbl30kStatus";
+            lbl30kStatus.Size = new Size(28, 16);
+            lbl30kStatus.TabIndex = 29;
+            lbl30kStatus.Text = "OFF";
+            // 
+            // txt30kHK
+            // 
+            txt30kHK.Location = new Point(188, 92);
+            txt30kHK.MaxLength = 1;
+            txt30kHK.Name = "txt30kHK";
+            txt30kHK.Size = new Size(21, 22);
+            txt30kHK.TabIndex = 28;
+            toolTip1.SetToolTip(txt30kHK, "Keybind for 30K");
+            txt30kHK.TextChanged += txt30kHK_TextChanged;
+            // 
+            // btn30k
+            // 
+            btn30k.AutoSize = true;
+            btn30k.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn30k.FlatStyle = FlatStyle.Popup;
+            btn30k.ForeColor = SystemColors.ActiveCaptionText;
+            btn30k.Location = new Point(76, 90);
+            btn30k.Margin = new Padding(3, 2, 3, 2);
+            btn30k.Name = "btn30k";
+            btn30k.Size = new Size(109, 26);
+            btn30k.TabIndex = 27;
+            btn30k.Text = "30k";
+            toolTip1.SetToolTip(btn30k, "Limits 30K: Used to stop Joining ");
+            btn30k.UseVisualStyleBackColor = true;
+            btn30k.Click += btn30k_Click;
+            // 
+            // cbo30k
+            // 
+            cbo30k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo30k.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbo30k.FormattingEnabled = true;
+            cbo30k.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo30k.Location = new Point(3, 92);
+            cbo30k.Name = "cbo30k";
+            cbo30k.Size = new Size(67, 24);
+            cbo30k.TabIndex = 26;
+            toolTip1.SetToolTip(cbo30k, "Select Option");
+            cbo30k.SelectedIndexChanged += cbo30k_SelectedIndexChanged;
+            // 
+            // lbl7500Status
+            // 
+            lbl7500Status.AutoSize = true;
+            lbl7500Status.Location = new Point(215, 66);
+            lbl7500Status.Name = "lbl7500Status";
+            lbl7500Status.Size = new Size(28, 16);
+            lbl7500Status.TabIndex = 25;
+            lbl7500Status.Text = "OFF";
+            // 
+            // txt7500HK
+            // 
+            txt7500HK.Location = new Point(188, 63);
+            txt7500HK.MaxLength = 1;
+            txt7500HK.Name = "txt7500HK";
+            txt7500HK.Size = new Size(21, 22);
+            txt7500HK.TabIndex = 24;
+            toolTip1.SetToolTip(txt7500HK, "Keybind for 7500");
+            txt7500HK.TextChanged += txt7500HK_TextChanged;
+            // 
+            // btn7500
+            // 
+            btn7500.AutoSize = true;
+            btn7500.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            btn7500.FlatStyle = FlatStyle.Popup;
+            btn7500.ForeColor = SystemColors.ActiveCaptionText;
+            btn7500.Location = new Point(76, 61);
+            btn7500.Margin = new Padding(3, 2, 3, 2);
+            btn7500.Name = "btn7500";
+            btn7500.Size = new Size(109, 26);
+            btn7500.TabIndex = 23;
+            btn7500.Text = "7500";
+            toolTip1.SetToolTip(btn7500, "Limits 7500: Api");
+            btn7500.UseVisualStyleBackColor = true;
+            btn7500.Click += btn7500_Click;
+            // 
+            // cbo7500
+            // 
+            cbo7500.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo7500.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbo7500.FormattingEnabled = true;
+            cbo7500.Items.AddRange(new object[] { "in/out", "in", "out" });
+            cbo7500.Location = new Point(3, 62);
+            cbo7500.Name = "cbo7500";
+            cbo7500.Size = new Size(67, 24);
+            cbo7500.TabIndex = 22;
+            toolTip1.SetToolTip(cbo7500, "Select Option");
+            cbo7500.SelectedIndexChanged += cbo7500_SelectedIndexChanged;
+            // 
             // btnAFK
             // 
-            btnAFK.Location = new Point(158, 225);
+            btnAFK.Location = new Point(158, 293);
             btnAFK.Name = "btnAFK";
             btnAFK.Size = new Size(75, 25);
             btnAFK.TabIndex = 21;
@@ -231,7 +440,7 @@
             // btnDC
             // 
             btnDC.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnDC.Location = new Point(82, 225);
+            btnDC.Location = new Point(82, 293);
             btnDC.Name = "btnDC";
             btnDC.Size = new Size(70, 26);
             btnDC.TabIndex = 20;
@@ -261,6 +470,7 @@
             // cbo3074
             // 
             cbo3074.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cbo3074.DropDownStyle = ComboBoxStyle.DropDownList;
             cbo3074.FormattingEnabled = true;
             cbo3074.Items.AddRange(new object[] { "in/out", "in", "out" });
             cbo3074.Location = new Point(3, 32);
@@ -273,6 +483,7 @@
             // cmbo27k
             // 
             cmbo27k.AutoCompleteCustomSource.AddRange(new string[] { "in/out", "in", "out" });
+            cmbo27k.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbo27k.FormattingEnabled = true;
             cmbo27k.Items.AddRange(new object[] { "in/out", "in", "out" });
             cmbo27k.Location = new Point(3, 2);
@@ -285,7 +496,7 @@
             // lblFPS
             // 
             lblFPS.AutoSize = true;
-            lblFPS.Location = new Point(397, 152);
+            lblFPS.Location = new Point(397, 220);
             lblFPS.Name = "lblFPS";
             lblFPS.Size = new Size(38, 16);
             lblFPS.TabIndex = 15;
@@ -294,7 +505,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(362, 152);
+            label4.Location = new Point(362, 220);
             label4.Name = "label4";
             label4.Size = new Size(29, 16);
             label4.TabIndex = 14;
@@ -304,8 +515,8 @@
             // tbFpsBar
             // 
             tbFpsBar.AutoSize = false;
-            tbFpsBar.BackColor = SystemColors.MenuBar;
-            tbFpsBar.Location = new Point(3, 143);
+            tbFpsBar.BackColor = SystemColors.ScrollBar;
+            tbFpsBar.Location = new Point(3, 211);
             tbFpsBar.Maximum = 255;
             tbFpsBar.Minimum = 30;
             tbFpsBar.Name = "tbFpsBar";
@@ -319,7 +530,7 @@
             // btnSolo
             // 
             btnSolo.AutoSize = true;
-            btnSolo.Location = new Point(3, 225);
+            btnSolo.Location = new Point(3, 293);
             btnSolo.Name = "btnSolo";
             btnSolo.Size = new Size(73, 26);
             btnSolo.TabIndex = 12;
@@ -330,7 +541,7 @@
             // 
             // txtFBHK
             // 
-            txtFBHK.Location = new Point(90, 194);
+            txtFBHK.Location = new Point(90, 262);
             txtFBHK.MaxLength = 1;
             txtFBHK.Name = "txtFBHK";
             txtFBHK.Size = new Size(29, 22);
@@ -340,7 +551,7 @@
             // lblFusion
             // 
             lblFusion.AutoSize = true;
-            lblFusion.Location = new Point(3, 197);
+            lblFusion.Location = new Point(3, 265);
             lblFusion.Name = "lblFusion";
             lblFusion.Size = new Size(81, 16);
             lblFusion.TabIndex = 10;
@@ -366,7 +577,7 @@
             // 
             // txtPauseHotKey
             // 
-            txtPauseHotKey.Location = new Point(41, 87);
+            txtPauseHotKey.Location = new Point(41, 155);
             txtPauseHotKey.MaxLength = 1;
             txtPauseHotKey.Name = "txtPauseHotKey";
             txtPauseHotKey.Size = new Size(29, 22);
@@ -376,7 +587,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(3, 90);
+            label3.Location = new Point(3, 158);
             label3.Name = "label3";
             label3.Size = new Size(38, 16);
             label3.TabIndex = 6;
@@ -387,7 +598,7 @@
             txtPboxHotKey.BackColor = SystemColors.HighlightText;
             txtPboxHotKey.ForeColor = SystemColors.WindowText;
             txtPboxHotKey.HideSelection = false;
-            txtPboxHotKey.Location = new Point(41, 115);
+            txtPboxHotKey.Location = new Point(41, 183);
             txtPboxHotKey.MaxLength = 1;
             txtPboxHotKey.Name = "txtPboxHotKey";
             txtPboxHotKey.Size = new Size(29, 22);
@@ -398,7 +609,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(3, 118);
+            label2.Location = new Point(3, 186);
             label2.Name = "label2";
             label2.Size = new Size(34, 16);
             label2.TabIndex = 4;
@@ -407,14 +618,14 @@
             // 
             // tabPage3
             // 
+            tabPage3.BackColor = Color.Gray;
             tabPage3.Controls.Add(txtPboxMessage);
             tabPage3.Controls.Add(label5);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(692, 310);
+            tabPage3.Size = new Size(692, 338);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Settings";
-            tabPage3.UseVisualStyleBackColor = true;
             // 
             // txtPboxMessage
             // 
@@ -436,6 +647,13 @@
             // 
             // tabPage4
             // 
+            tabPage4.BackColor = Color.Gray;
+            tabPage4.Controls.Add(lblmultitrack);
+            tabPage4.Controls.Add(label18);
+            tabPage4.Controls.Add(lbl30kTrack);
+            tabPage4.Controls.Add(label17);
+            tabPage4.Controls.Add(lbl7500Track);
+            tabPage4.Controls.Add(label16);
             tabPage4.Controls.Add(lblSoloTrack);
             tabPage4.Controls.Add(lblDCtrack);
             tabPage4.Controls.Add(lblFBTrack);
@@ -456,10 +674,63 @@
             tabPage4.Controls.Add(label6);
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(692, 310);
+            tabPage4.Size = new Size(692, 338);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Stats";
-            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lblmultitrack
+            // 
+            lblmultitrack.AutoSize = true;
+            lblmultitrack.Location = new Point(136, 178);
+            lblmultitrack.Name = "lblmultitrack";
+            lblmultitrack.Size = new Size(62, 15);
+            lblmultitrack.TabIndex = 23;
+            lblmultitrack.Text = "multiTrack";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(3, 178);
+            label18.Name = "label18";
+            label18.Size = new Size(127, 15);
+            label18.TabIndex = 22;
+            label18.Text = "Number of multishots:";
+            // 
+            // lbl30kTrack
+            // 
+            lbl30kTrack.AutoSize = true;
+            lbl30kTrack.Location = new Point(118, 81);
+            lbl30kTrack.Name = "lbl30kTrack";
+            lbl30kTrack.Size = new Size(65, 15);
+            lbl30kTrack.TabIndex = 21;
+            lbl30kTrack.Text = "lbl30kTrack";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(3, 82);
+            label17.Name = "label17";
+            label17.Size = new Size(103, 15);
+            label17.TabIndex = 20;
+            label17.Text = "Time Holding 30k:";
+            // 
+            // lbl7500Track
+            // 
+            lbl7500Track.AutoSize = true;
+            lbl7500Track.Location = new Point(116, 66);
+            lbl7500Track.Name = "lbl7500Track";
+            lbl7500Track.Size = new Size(58, 15);
+            lbl7500Track.TabIndex = 19;
+            lbl7500Track.Text = "7500Track";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(3, 67);
+            label16.Name = "label16";
+            label16.Size = new Size(109, 15);
+            label16.TabIndex = 18;
+            label16.Text = "Time Holding 7500:";
             // 
             // lblSoloTrack
             // 
@@ -515,7 +786,7 @@
             // 
             lbl27kTrack.AutoEllipsis = true;
             lbl27kTrack.AutoSize = true;
-            lbl27kTrack.Location = new Point(110, 66);
+            lbl27kTrack.Location = new Point(116, 36);
             lbl27kTrack.Name = "lbl27kTrack";
             lbl27kTrack.Size = new Size(52, 15);
             lbl27kTrack.TabIndex = 12;
@@ -589,7 +860,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(3, 66);
+            label10.Location = new Point(3, 37);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 4;
@@ -598,7 +869,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(3, 51);
+            label9.Location = new Point(3, 52);
             label9.Name = "label9";
             label9.Size = new Size(107, 15);
             label9.TabIndex = 3;
@@ -637,15 +908,15 @@
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.Gray;
             tabPage2.Controls.Add(label1);
             tabPage2.Location = new Point(4, 24);
             tabPage2.Margin = new Padding(3, 2, 3, 2);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 2, 3, 2);
-            tabPage2.Size = new Size(692, 310);
+            tabPage2.Size = new Size(692, 338);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Credits";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -660,6 +931,9 @@
             // 
             // tabPage5
             // 
+            tabPage5.BackColor = Color.Gray;
+            tabPage5.Controls.Add(btnOverlayKey);
+            tabPage5.Controls.Add(btnOverlay);
             tabPage5.Controls.Add(btnTheme);
             tabPage5.Controls.Add(btnColor);
             tabPage5.Controls.Add(btnChangeFont);
@@ -667,10 +941,31 @@
             tabPage5.Controls.Add(trcTrans);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(692, 310);
+            tabPage5.Size = new Size(692, 338);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Looks";
-            tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // btnOverlayKey
+            // 
+            btnOverlayKey.Location = new Point(489, 21);
+            btnOverlayKey.Name = "btnOverlayKey";
+            btnOverlayKey.Size = new Size(99, 23);
+            btnOverlayKey.TabIndex = 6;
+            btnOverlayKey.Text = "Overylay Color";
+            toolTip1.SetToolTip(btnOverlayKey, "Changes the outline of the overlay boxes");
+            btnOverlayKey.UseVisualStyleBackColor = true;
+            btnOverlayKey.Click += btnOverlayKey_Click;
+            // 
+            // btnOverlay
+            // 
+            btnOverlay.Location = new Point(408, 21);
+            btnOverlay.Name = "btnOverlay";
+            btnOverlay.Size = new Size(75, 23);
+            btnOverlay.TabIndex = 5;
+            btnOverlay.Text = "Overlay Toggle";
+            toolTip1.SetToolTip(btnOverlay, "toggle overlay: Game Must Be In Windowed Fullscreen");
+            btnOverlay.UseVisualStyleBackColor = true;
+            btnOverlay.Click += btnOverlay_Click;
             // 
             // btnTheme
             // 
@@ -728,14 +1023,14 @@
             // 
             // tabPage6
             // 
+            tabPage6.BackColor = Color.Gray;
             tabPage6.Controls.Add(txtMulti);
             tabPage6.Controls.Add(lblMulti);
             tabPage6.Location = new Point(4, 24);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new Size(692, 310);
+            tabPage6.Size = new Size(692, 338);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Scum";
-            tabPage6.UseVisualStyleBackColor = true;
             // 
             // txtMulti
             // 
@@ -758,6 +1053,11 @@
             // 
             pageSetupDialog1.ShowHelp = true;
             // 
+            // notifyIcon1
+            // 
+            notifyIcon1.Text = "notifyIcon1";
+            notifyIcon1.Visible = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -765,7 +1065,7 @@
             AutoValidate = AutoValidate.Disable;
             BackColor = Color.FromArgb(32, 32, 32);
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(700, 366);
             Controls.Add(tabControl1);
             DoubleBuffered = true;
             ForeColor = SystemColors.ActiveCaptionText;
@@ -774,8 +1074,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Opacity = 0.9D;
-            Text = "PeteTech";
-            TopMost = true;
+            Text = "PeteTech +";
             TransparencyKey = Color.FromArgb(192, 255, 255);
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -859,5 +1158,32 @@
         private TextBox txtMulti;
         private Label lblMulti;
         private Button btnAFK;
+        private ComboBox cbo7500;
+        private FontDialog fontDialog2;
+        private Label lbl7500Status;
+        private TextBox txt7500HK;
+        private Button btn7500;
+        private Label label16;
+        private Label lbl7500Track;
+        private Label lbl30kStatus;
+        private TextBox txt30kHK;
+        private Button btn30k;
+        private ComboBox cbo30k;
+        private Label lbl30kTrack;
+        private Label label17;
+        private Label lbl3074Up;
+        private Label lbl3074down;
+        private Label lbl30KDown;
+        private Label lbl7500Down;
+        private Label lbl27kUp;
+        private Label lbl27kdown;
+        private Label lbl30KUP;
+        private Label lbl7500Up;
+        private NotifyIcon notifyIcon1;
+        private Label lblmultitrack;
+        private Label label18;
+        private Button btnOverlay;
+        private Button btnOverlayKey;
+        private ColorDialog colorDialog3;
     }
 }

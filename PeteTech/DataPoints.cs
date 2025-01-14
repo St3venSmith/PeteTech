@@ -17,10 +17,14 @@ namespace PeteTech
         public int DataPoint3 { get; set; }
         public int DataPoint4 { get; set; }
         public int DataPoint5 { get; set; }
+
+        public int DataPoint6 { get; set; }
         public TimeSpan Duration27K { get; set; }
         public TimeSpan Duration3074 { get; set; }
+        public TimeSpan Duration7500 { get; set; }
 
-           
+        public TimeSpan Duration30k { get; set; }
+
 
         public DataPoints()
         {
@@ -44,6 +48,9 @@ namespace PeteTech
                         DataPoint5 = int.Parse(lines[4]);
                         Duration27K = TimeSpan.Parse(lines[5]);
                         Duration3074 = TimeSpan.Parse(lines[6]);
+                        Duration7500 = TimeSpan.Parse(lines[7]);
+                        Duration30k = TimeSpan.Parse(lines[8]);
+                        DataPoint6 = int.Parse(lines[9]);
                     }
                     Console.WriteLine("Data points loaded successfully.");
                 }
@@ -62,7 +69,7 @@ namespace PeteTech
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath))
+                using (StreamWriter writer = new(filePath))
                 {
                     writer.WriteLine(DataPoint1);
                     writer.WriteLine(DataPoint2);
@@ -71,6 +78,9 @@ namespace PeteTech
                     writer.WriteLine(DataPoint5);
                     writer.WriteLine(Duration27K);
                     writer.WriteLine(Duration3074);
+                    writer.WriteLine(Duration7500);
+                    writer.WriteLine(Duration30k);
+                    writer.WriteLine(DataPoint6);
                 }
                 Console.WriteLine("Data points saved successfully.");
             }
@@ -104,6 +114,9 @@ namespace PeteTech
                         DataPoint5 = 0;
                         Duration27K = TimeSpan.Zero;
                         Duration3074 = TimeSpan.Zero;
+                        Duration7500 = TimeSpan.Zero;
+                        Duration30k = TimeSpan.Zero;
+                        DataPoint6 = 0;
 
                         // Save the initialized data points to the file
                         SaveDataPoints();
@@ -140,6 +153,9 @@ namespace PeteTech
                 case 5:
                     DataPoint5 = value;
                     break;
+                case 6:
+                    DataPoint6 = value;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 1 and 5.");
             }
@@ -171,6 +187,7 @@ namespace PeteTech
                 3 => DataPoint3,
                 4 => DataPoint4,
                 5 => DataPoint5,
+                6 => DataPoint6,
                 _ => throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 1 and 5."),
             };
         }
@@ -189,14 +206,16 @@ namespace PeteTech
             
         }
 
-        public TimeSpan GetDuration27K()
+        public void SetDuration7500(TimeSpan duration)
         {
-            return Duration27K;
+
+            Duration7500 += duration;
+
         }
 
-        public TimeSpan GetDuration3074()
+        public void SetDuration30k(TimeSpan duration)
         {
-            return Duration3074;
+            Duration30k += duration;
         }
     }
 }
